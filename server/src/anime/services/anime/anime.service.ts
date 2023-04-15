@@ -16,7 +16,7 @@ export class AnimeService {
   }
 
   async getAnimeBySlug(slug: string): Promise<Anime> {
-    return this.animeModel.findOne({ slug });
+    return await this.animeModel.findOne({ slug });
   }
 
   async patchAnimeBySlug(

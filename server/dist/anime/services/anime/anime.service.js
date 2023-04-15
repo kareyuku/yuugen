@@ -27,7 +27,7 @@ let AnimeService = class AnimeService {
         return createdAnime;
     }
     async getAnimeBySlug(slug) {
-        return this.animeModel.findOne({ slug });
+        return await this.animeModel.findOne({ slug });
     }
     async patchAnimeBySlug(slug, animeDto) {
         return await this.animeModel.findOneAndUpdate({ slug }, animeDto, {

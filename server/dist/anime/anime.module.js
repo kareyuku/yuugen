@@ -12,18 +12,31 @@ const anime_controller_1 = require("./controllers/anime/anime.controller");
 const anime_service_1 = require("./services/anime/anime.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const anime_schema_1 = require("../schemas/anime.schema");
+const reviews_controller_1 = require("./controllers/reviews/reviews.controller");
+const reviews_service_1 = require("./services/reviews/reviews.service");
+const review_schema_1 = require("../schemas/review.schema");
 let AnimeModule = class AnimeModule {
 };
 AnimeModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: anime_schema_1.Anime.name, schema: anime_schema_1.AnimeSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: anime_schema_1.Anime.name, schema: anime_schema_1.AnimeSchema },
+                {
+                    name: review_schema_1.Review.name,
+                    schema: review_schema_1.ReviewSchema,
+                },
+            ]),
         ],
-        controllers: [anime_controller_1.AnimeController],
+        controllers: [anime_controller_1.AnimeController, reviews_controller_1.ReviewsController],
         providers: [
             {
                 provide: "ANIME_SERVICE",
                 useClass: anime_service_1.AnimeService,
+            },
+            {
+                provide: "REVIEW_SERVICE",
+                useClass: reviews_service_1.ReviewsService,
             },
         ],
     })

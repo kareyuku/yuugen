@@ -1,6 +1,5 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Transform, Exclude } from "class-transformer";
-import { link } from "fs";
 import { Date, HydratedDocument, Types } from "mongoose";
 
 export type AnimeDocument = HydratedDocument<Anime>;
