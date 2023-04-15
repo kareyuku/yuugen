@@ -9,6 +9,7 @@ import EpisodePage from "./pages/episodePage";
 import AddAnimePage from "./pages/addAnimePage";
 import ProfilePage from "./pages/profilePage";
 import AdminPage from "./pages/adminPage";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
         element: <AnimePage/>
     },
     {
-        path: "/anime/:name/episode/:number",
+        path: "/anime/:name/episode/:episodeNumber",
         element: <EpisodePage/>
     },
     {
@@ -35,8 +36,6 @@ const router = createBrowserRouter([
         element: <AdminPage/>
     }
 ])
-
-// test
 
 export default () => {
  return (

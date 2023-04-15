@@ -118,7 +118,6 @@ export default () => {
                         <Link to="/">
                         <Avatar src={'https://media.discordapp.net/attachments/1000161200497233972/1096452529434411219/render1.png?width=671&height=671'} />
                         </Link>
-                        <Text>Dodaj Anime</Text>
                     </Flex>
                     <Flex alignItems={'center'} gap={3}>
                         <input className='melancholy__search' type="search" placeholder="Wyszukaj anime..." />
