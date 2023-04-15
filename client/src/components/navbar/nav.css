@@ -1,0 +1,39 @@
+header {
+    display: flex;
+    justify-content: space-between  ;
+    background: #131624;
+}
+
+header button {
+    background: #EC4882;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    height: fit-content;
+}
+
+.melancholy__button {
+    background: #EC4882;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    height: fit-content;
+}
+
+@media screen and (max-width: 1000px) {
+    .melancholy__login__mobile {
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .melancholy__login__mobile img {
+        max-height: 364px;
+        max-width: 364px;
+    }
+}
+
+.melancholy__search {
+    background: #252f49!important;
+    border-radius: 5px!important;
+    outline: none!important;
+    border: none!important;
+    padding: 5px 10px!important;
+}

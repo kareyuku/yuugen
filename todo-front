@@ -1,0 +1,10 @@
+# Routes
+
+"/" Main Page
+"/anime/:animeName" Page of anime
+"/anime/:animeName/episode/" Episode of anime
+
+# Admin Routes
+"/admin" Admin Panel
+Adding anime, users which can upload episode to anime only to assigned anime!!!
+Selecting anime to see on front page
