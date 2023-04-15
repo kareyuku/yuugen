@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateUserDto } from "src/users/dtos/CreateUser.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "src/schemas/user.schema";
-import { Model, ObjectId, Types } from "mongoose";
+import { Model, Types } from "mongoose";
 import { encodePassword } from "src/utils/bcrypt";
 
 @Injectable()
@@ -16,7 +16,7 @@ export class UsersService {
       await createdUser.save();
       return createdUser;
     } catch (err) {
-      throw new HttpException(
+      throw new HttpException( // to do 
         "Nazwa użytkownika bądź adres E-Mail jest już użyty.",
         HttpStatus.CONFLICT
       );

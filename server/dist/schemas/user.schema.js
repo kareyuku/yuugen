@@ -11,22 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSchema = exports.User = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
+const class_transformer_1 = require("class-transformer");
+const mongoose = require("mongoose");
 let User = class User {
 };
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.SchemaTypes.ObjectId }),
-    __metadata("design:type", mongoose_2.Types.ObjectId)
+    (0, class_transformer_1.Transform)(({ value }) => value.toString()),
+    __metadata("design:type", mongoose.Types.ObjectId)
 ], User.prototype, "_id", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Number)
+], User.prototype, "__v", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Date)
+], User.prototype, "updatedAt", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
+    (0, class_transformer_1.Exclude)(),
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
+    (0, class_transformer_1.Exclude)(),
     (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
@@ -39,11 +50,39 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "rank", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Object }),
+    (0, mongoose_1.Prop)({ default: 0, type: Number }),
+    __metadata("design:type", Number)
+], User.prototype, "status", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: 0, type: Number }),
+    __metadata("design:type", Number)
+], User.prototype, "points", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: {
+            watching: [
+                {
+                    type: {
+                        animeId: { type: mongoose.Schema.Types.ObjectId, ref: "Anime" },
+                        progress: { type: String },
+                    },
+                },
+            ],
+            completed: {
+                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
+            },
+            planned: {
+                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
+            },
+            dropped: {
+                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
+            },
+        },
+    }),
     __metadata("design:type", Object)
 ], User.prototype, "animeList", void 0);
 User = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({ timestamps: true })
 ], User);
 exports.User = User;
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);

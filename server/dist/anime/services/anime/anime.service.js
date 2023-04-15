@@ -12,26 +12,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SessionSerializer = void 0;
+exports.AnimeService = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
-const users_service_1 = require("../../users/services/users/users.service");
-let SessionSerializer = class SessionSerializer extends passport_1.PassportSerializer {
-    constructor(userService) {
-        super();
-        this.userService = userService;
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const anime_schema_1 = require("../../../schemas/anime.schema");
+let AnimeService = class AnimeService {
+    constructor(animeModel) {
+        this.animeModel = animeModel;
     }
-    serializeUser(userId, done) {
-        done(null, userId);
+    async createAnime(animeDto) {
+        const createdAnime = new this.animeModel(animeDto);
+        await createdAnime.save();
+        return createdAnime;
     }
-    async deserializeUser(userId, done) {
-        const userDB = await this.userService.findUserById(userId);
-        return userDB ? done(null, userId) : done(null, null);
+    async getAnimeBySlug(slug) {
+        return this.animeModel.findOne({ slug });
+    }
+    async patchAnimeBySlug(slug, animeDto) {
+        return await this.animeModel.findOneAndUpdate({ slug }, animeDto, {
+            returnOriginal: false,
+        });
     }
 };
-SessionSerializer = __decorate([
-    __param(0, (0, common_1.Inject)("USER_SERVICE")),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
-], SessionSerializer);
-exports.SessionSerializer = SessionSerializer;
-//# sourceMappingURL=SessionSerializer.js.map
+AnimeService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
+], AnimeService);
+exports.AnimeService = AnimeService;
+//# sourceMappingURL=anime.service.js.map

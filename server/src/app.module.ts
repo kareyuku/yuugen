@@ -4,6 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { PassportModule } from "@nestjs/passport";
+import { AnimeModule } from './anime/anime.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PassportModule } from "@nestjs/passport";
     }),
     UsersModule,
     AuthModule,
+    AnimeModule,
   ],
   controllers: [],
   providers: [],

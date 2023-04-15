@@ -16,25 +16,41 @@ exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const CreateUser_dto_1 = require("../../dtos/CreateUser.dto");
 const users_service_1 = require("../../services/users/users.service");
+const mongooseClassSerializer_interceptor_1 = require("../../../utils/mongooseClassSerializer.interceptor");
+const user_schema_1 = require("../../../schemas/user.schema");
 let UsersController = class UsersController {
     constructor(userService) {
         this.userService = userService;
     }
-    createUser(createUserDto) {
-        return this.userService.createUser(createUserDto);
+    async createUser(createUserDto) {
+        return await this.userService.createUser(createUserDto) ? "Pomyślnie zarejestrowano." : "Error";
+    }
+    async getUserByUsername(username) {
+        const user = await this.userService.findUserByUsername(username);
+        if (!user)
+            throw new common_1.NotFoundException("Nie znaleziono użytkownika.");
+        return user;
     }
 };
 __decorate([
-    (0, common_1.Post)('create'),
+    (0, common_1.Post)("create"),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreateUser_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUser", null);
+__decorate([
+    (0, common_1.UseInterceptors)((0, mongooseClassSerializer_interceptor_1.default)(user_schema_1.User)),
+    (0, common_1.Get)(":username"),
+    __param(0, (0, common_1.Param)("username")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getUserByUsername", null);
 UsersController = __decorate([
-    (0, common_1.Controller)('users'),
-    __param(0, (0, common_1.Inject)('USER_SERVICE')),
+    (0, common_1.Controller)("users"),
+    __param(0, (0, common_1.Inject)("USER_SERVICE")),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;
