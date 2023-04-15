@@ -14,15 +14,18 @@ import {
     Text
   } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { loginUser, registerUser } from '../../api/auth';
-
-const logged = false;
+import { setCredentials } from '../../auth/authSlice';
 
 export default () => {
 
     const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure()
     const { isOpen: isRegisterOpen, onOpen: onRegisterOpen, onClose: onRegisterClose } = useDisclosure()
+
+    const logged = useSelector(state=> state.auth.isLoggedIn)
+    const dispatch = useDispatch();
 
     const toast = useToast({
         isClosable: true,
@@ -77,9 +80,12 @@ export default () => {
         const [password, setPass] = useState('');
 
         const onLogin = async () => {
-            const status = await loginUser({username, password});
             if(!username || !password) return toast({ description: "Wypełnij wszystkie pola!", status: 'info' })
-            if(status == "Zalogowano!") {
+
+            const data = await loginUser({username, password});
+
+            if(data) {
+                dispatch(setCredentials({username: data.username, avatar: data.avatar}))
                 toast({ description: "Pomyślnie zalogowano!", status: 'success' })
                 onLoginClose();
             } else toast({ description: "Nie poprawna nazwa użytkownika bądź hasło!", status: 'error' })

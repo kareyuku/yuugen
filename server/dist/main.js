@@ -5,8 +5,12 @@ const app_module_1 = require("./app.module");
 const session = require("express-session");
 const passport = require("passport");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
+    const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const MongoStore = require("connect-mongo");
+    app.enableCors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    });
     app.setGlobalPrefix("api");
     app.use(session({
         name: "SESSION_ID",
@@ -18,6 +22,9 @@ async function bootstrap() {
         },
         store: MongoStore.create({
             mongoUrl: process.env.MONGODB_URL,
+            crypto: {
+                secret: "DFGW345gse5tQ@#$R!@DF!#E",
+            },
         }),
     }));
     app.use(passport.initialize());

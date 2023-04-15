@@ -10,7 +10,7 @@ const registerUser = async ({
         console.log(req)
         return req;
     } catch(err) {
-        console.log(123, err.request.response.toJson())
+        console.log(123, err.request.response)
     }
 }
 
@@ -18,10 +18,11 @@ const loginUser = async ({
     username, password
 }) => {
     try {
-        const req = await axios.post(`${api}/auth/login`, {username, password});
-        return "Zalogowano!"
+        const req = await axios.post(`${api}/auth/login`, {username, password}, {withCredentials: true});
+        console.log(await axios.get(`${api}/auth/status`, { withCredentials: true}));
+        return req.data;
     } catch(err) {
-        return "Nie poprawna nazwa użytkownika bądź hasło."
+        return null
     }
 }
 

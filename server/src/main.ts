@@ -4,9 +4,14 @@ import * as session from "express-session";
 import * as passport from "passport";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
   const MongoStore = require("connect-mongo");
+
+  app.enableCors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  });
 
   app.setGlobalPrefix("api");
   app.use(
@@ -20,6 +25,9 @@ async function bootstrap() {
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URL,
+        crypto: {
+          secret: "DFGW345gse5tQ@#$R!@DF!#E",
+        },
       }),
     })
   );
