@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/schemas/user.schema';
-import { Model } from 'mongoose';
-import { encodePassword } from 'src/utils/bcrypt';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { CreateUserDto } from "src/users/dtos/CreateUser.dto";
+import { InjectModel } from "@nestjs/mongoose";
+import { User } from "src/schemas/user.schema";
+import { Model, ObjectId, Types } from "mongoose";
+import { encodePassword } from "src/utils/bcrypt";
 
 @Injectable()
 export class UsersService {
@@ -15,12 +15,19 @@ export class UsersService {
       const createdUser = new this.userModel({ ...userDto, password });
       await createdUser.save();
       return createdUser;
-    } catch(err) {
-      throw new HttpException('Nazwa użytkownika bądź adres E-Mail jest już użyty.', HttpStatus.CONFLICT)
+    } catch (err) {
+      throw new HttpException(
+        "Nazwa użytkownika bądź adres E-Mail jest już użyty.",
+        HttpStatus.CONFLICT
+      );
     }
   }
 
   async findUserByUsername(username: string): Promise<User> {
     return this.userModel.findOne({ username });
+  }
+
+  async findUserById(id: Types.ObjectId): Promise<User> {
+    return this.userModel.findById(id);
   }
 }

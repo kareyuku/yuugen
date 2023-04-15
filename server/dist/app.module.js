@@ -12,6 +12,7 @@ const users_module_1 = require("./users/users.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./auth/auth.module");
+const passport_1 = require("@nestjs/passport");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -20,6 +21,9 @@ AppModule = __decorate([
             config_1.ConfigModule.forRoot(),
             mongoose_1.MongooseModule.forRoot(process.env.MONGODB_URL, {
                 autoIndex: true,
+            }),
+            passport_1.PassportModule.register({
+                session: true,
             }),
             users_module_1.UsersModule,
             auth_module_1.AuthModule,

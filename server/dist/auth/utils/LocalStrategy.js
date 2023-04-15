@@ -26,7 +26,7 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         const user = await this.authService.validateUser(username, password);
         if (!user)
             throw new common_1.UnauthorizedException();
-        return user;
+        return user._id;
     }
 };
 LocalStrategy = __decorate([

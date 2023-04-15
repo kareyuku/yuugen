@@ -30,11 +30,14 @@ let UsersService = class UsersService {
             return createdUser;
         }
         catch (err) {
-            throw new common_1.HttpException('Nazwa użytkownika bądź adres E-Mail jest już użyty.', common_1.HttpStatus.CONFLICT);
+            throw new common_1.HttpException("Nazwa użytkownika bądź adres E-Mail jest już użyty.", common_1.HttpStatus.CONFLICT);
         }
     }
     async findUserByUsername(username) {
         return this.userModel.findOne({ username });
+    }
+    async findUserById(id) {
+        return this.userModel.findById(id);
     }
 };
 UsersService = __decorate([
