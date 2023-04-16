@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HydratedDocument, ObjectId, Types } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 export type ReviewDocument = HydratedDocument<Review>;
 export declare class Review {
     _id: Types.ObjectId;
@@ -30,8 +30,8 @@ export declare class Review {
     updatedAt: Date;
     content: string;
     rate: number;
-    addedTo: ObjectId;
-    addedBy: ObjectId;
+    addedTo: Types.ObjectId;
+    addedBy: Types.ObjectId;
 }
 export declare const ReviewSchema: import("mongoose").Schema<Review, import("mongoose").Model<Review, any, any, any, import("mongoose").Document<unknown, any, Review> & Omit<Review & Required<{
     _id: Types.ObjectId;

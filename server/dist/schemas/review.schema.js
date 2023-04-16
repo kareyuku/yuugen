@@ -33,11 +33,11 @@ __decorate([
 ], Review.prototype, "rate", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true, type: mongoose_2.Types.ObjectId, ref: "Anime" }),
-    __metadata("design:type", Object)
+    __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Review.prototype, "addedTo", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true, type: mongoose_2.Types.ObjectId, ref: "User" }),
-    __metadata("design:type", Object)
+    __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Review.prototype, "addedBy", void 0);
 Review = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })

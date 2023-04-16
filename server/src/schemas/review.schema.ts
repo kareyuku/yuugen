@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Exclude, Transform } from "class-transformer";
-import { HydratedDocument, ObjectId, Types } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 export type ReviewDocument = HydratedDocument<Review>;
 
@@ -20,10 +20,10 @@ export class Review {
   rate: number;
 
   @Prop({ required: true, type: Types.ObjectId, ref: "Anime" })
-  addedTo: ObjectId;
+  addedTo: Types.ObjectId;
 
   @Prop({ required: true, type: Types.ObjectId, ref: "User" })
-  addedBy: ObjectId;
+  addedBy: Types.ObjectId;
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

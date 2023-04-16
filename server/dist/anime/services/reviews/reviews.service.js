@@ -23,14 +23,41 @@ let ReviewsService = class ReviewsService {
         this.reviewModel = reviewModel;
         this.animeService = animeService;
     }
+    async getReviewById(reviewId) {
+        return await this.reviewModel.findById(reviewId);
+    }
     async createReview(user, slug, reviewDto) {
         const anime = await this.animeService.getAnimeBySlug(slug);
         if (!anime)
             throw new common_1.NotFoundException("Nie znaleziono anime o podanym slug.");
         const review = await new this.reviewModel(reviewDto);
-        review.addedBy = new mongoose_2.Schema.Types.ObjectId(user);
-        review.addedTo = new mongoose_2.Schema.Types.ObjectId(anime._id.toString());
-        review.save();
+        review.addedBy = user;
+        review.addedTo = anime._id;
+        try {
+            review.save();
+            return review;
+        }
+        catch (err) {
+            throw new common_1.BadRequestException("Nieprawidłowe dane wejściowe.");
+        }
+    }
+    async editReview(user, reviewId, reviewDto) {
+        const review = await this.getReviewById(reviewId);
+        if (!review)
+            throw new common_1.BadRequestException("Nie znaleziono podanej recenzji.");
+        if (!review.addedBy.equals(user))
+            throw new common_1.ForbiddenException("Nie masz uprawnień, aby edytować tą recenzje.");
+        return await review.updateOne(reviewDto, {
+            new: true,
+        });
+    }
+    async deleteReview(user, reviewId) {
+        const review = await this.getReviewById(reviewId);
+        if (!review)
+            throw new common_1.BadRequestException("Nie znaleziono podanej recenzji.");
+        if (!review.addedBy.equals(user))
+            throw new common_1.ForbiddenException("Nie masz uprawnień, aby usunąć tą recenzje.");
+        return await review.deleteOne();
     }
 };
 ReviewsService = __decorate([

@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewsController = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("mongoose");
 const CreateReview_dto_1 = require("../../dtos/CreateReview.dto");
 const reviews_service_1 = require("../../services/reviews/reviews.service");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
@@ -22,7 +23,13 @@ let ReviewsController = class ReviewsController {
         this.reviewsService = reviewsService;
     }
     async createReview(req, slug, createReviewDto) {
-        return await this.reviewsService.createReview(req.user.toString(), slug, createReviewDto);
+        return await this.reviewsService.createReview(new mongoose_1.Types.ObjectId(req.user.toString()), slug, createReviewDto);
+    }
+    async editReview(req, reviewId, createReviewDto) {
+        return await this.reviewsService.editReview(new mongoose_1.Types.ObjectId(req.user.toString()), new mongoose_1.Types.ObjectId(reviewId), createReviewDto);
+    }
+    async deleteReview(req, reviewId) {
+        await this.reviewsService.deleteReview(new mongoose_1.Types.ObjectId(req.user.toString()), new mongoose_1.Types.ObjectId(reviewId));
     }
 };
 __decorate([
@@ -36,6 +43,25 @@ __decorate([
     __metadata("design:paramtypes", [Object, String, CreateReview_dto_1.CreateReviewDto]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "createReview", null);
+__decorate([
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
+    (0, common_1.Patch)(":reviewId"),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)("reviewId")),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, CreateReview_dto_1.CreateReviewDto]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "editReview", null);
+__decorate([
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
+    (0, common_1.Delete)(":reviewId"),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)("reviewId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "deleteReview", null);
 ReviewsController = __decorate([
     (0, common_1.Controller)("reviews"),
     __param(0, (0, common_1.Inject)("REVIEW_SERVICE")),

@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Inject,
   Param,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -30,9 +32,32 @@ export class ReviewsController {
     @Body() createReviewDto: CreateReviewDto
   ) {
     return await this.reviewsService.createReview(
-      req.user.toString(),
+      new Types.ObjectId(req.user.toString()),
       slug,
       createReviewDto
+    );
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Patch(":reviewId")
+  async editReview(
+    @Req() req: Request,
+    @Param("reviewId") reviewId: string,
+    @Body() createReviewDto: CreateReviewDto
+  ) {
+    return await this.reviewsService.editReview(
+      new Types.ObjectId(req.user.toString()),
+      new Types.ObjectId(reviewId),
+      createReviewDto
+    );
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Delete(":reviewId")
+  async deleteReview(@Req() req: Request, @Param("reviewId") reviewId: string) {
+    await this.reviewsService.deleteReview(
+      new Types.ObjectId(req.user.toString()),
+      new Types.ObjectId(reviewId)
     );
   }
 }
