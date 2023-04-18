@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "/anime/:name",
+    path: "/anime/:slug",
     element: <AnimePage />,
   },
   {

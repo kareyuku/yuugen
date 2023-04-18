@@ -11,7 +11,7 @@ const mostRated = [
     { title: "Rent a Girlfriend!", image: "https://upload.wikimedia.org/wikipedia/en/1/12/Rent-A-Girlfriend_volume_1_cover.jpg", slug: "rent-a-girlfriend"},
     { title: "Dr Stone!", image: "https://fwcdn.pl/fpo/19/40/831940/7892914.3.jpg", slug: "dr-stone"},
     { title: "Kimi no na wa!", image: "https://fwcdn.pl/fpo/00/82/760082/7782990.3.jpg", slug: "kimi-no-na-wa"},
-    { title: "Rent a Girlfriend!", image: "https://upload.wikimedia.org/wikipedia/en/1/12/Rent-A-Girlfriend_volume_1_cover.jpg", slug: "rent-a-girlfriend"},
+    { title: "Naruto", image: "https://upload.wikimedia.org/wikipedia/en/1/12/Rent-A-Girlfriend_volume_1_cover.jpg", slug: "naruto"},
     { title: "Dr Stone!", image: "https://fwcdn.pl/fpo/19/40/831940/7892914.3.jpg", slug: "dr-stone"},
     { title: "Kimi no na wa!", image: "https://fwcdn.pl/fpo/00/82/760082/7782990.3.jpg", slug: "kimi-no-na-wa"},
     { title: "Rent a Girlfriend!", image: "https://upload.wikimedia.org/wikipedia/en/1/12/Rent-A-Girlfriend_volume_1_cover.jpg", slug: "rent-a-girlfriend"},
@@ -40,10 +40,10 @@ const newAdded = [
 export default () => {
 
     const AnimeCard = ({
-        title, image
+        title, image, slug
     }) => {
         return (
-            <Link to={`anime/${title}`}>
+            <Link to={`anime/${slug}`}>
                 <div className="anime__card">
                     <img style={{maxWidth: '500px', maxHeight: '300px'}} src={image} alt="anime" />
                     <div className="anime__card__title">

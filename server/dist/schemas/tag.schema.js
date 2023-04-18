@@ -9,24 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserDto = void 0;
-const class_validator_1 = require("class-validator");
-class CreateUserDto {
-}
+exports.TagSchema = exports.Tag = void 0;
+const mongoose_1 = require("@nestjs/mongoose");
+const class_transformer_1 = require("class-transformer");
+const mongoose_2 = require("mongoose");
+let Tag = class Tag {
+};
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsEmail)(),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
+    (0, class_transformer_1.Transform)(({ value }) => value.toString()),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Tag.prototype, "_id", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(5, 20),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "username", void 0);
+], Tag.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsStrongPassword)(),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
-exports.CreateUserDto = CreateUserDto;
-//# sourceMappingURL=CreateUser.dto.js.map
+    (0, mongoose_1.Prop)({ type: [mongoose_2.Types.ObjectId], ref: "Anime" }),
+    __metadata("design:type", Array)
+], Tag.prototype, "animes", void 0);
+Tag = __decorate([
+    (0, mongoose_1.Schema)({ timestamps: true })
+], Tag);
+exports.Tag = Tag;
+exports.TagSchema = mongoose_1.SchemaFactory.createForClass(Tag);
+//# sourceMappingURL=tag.schema.js.map

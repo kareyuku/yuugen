@@ -2,8 +2,16 @@ import {
     Container, Input, Text
 } from '@chakra-ui/react';
 import Navbar from '../../components/navbar';
+import { createAnime } from '../../api/anime';
 
 export default () => {
+
+    const addAnime = () => {
+        createAnime({
+            
+        });
+    }
+
     return (
         <>
         <Navbar/>
