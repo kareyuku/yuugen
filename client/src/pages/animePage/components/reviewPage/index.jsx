@@ -1,4 +1,4 @@
-import { Avatar, ButtonGroup, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Flex, Text } from '@chakra-ui/react';
 import {FaStar} from 'react-icons/fa';
 import './review.css';
 

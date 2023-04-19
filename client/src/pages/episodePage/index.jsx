@@ -6,7 +6,6 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    BreadcrumbSeparator,
     Text, Flex,
     Button,
     Menu,
@@ -52,6 +51,23 @@ export default () => {
             </Flex>
         )
     }
+
+    const prevEpisode = () => {
+        const episodeInformation = episodes.find(ep => ep.animeSlug == 'Rent a Girlfriend!' && ep.episodeNumber == Number(episodeNumber) - 1);
+        if(episodeInformation) {
+            setCurrentEpisode(episodeInformation);
+            if(episodeInformation?.players[0]) setCurrentPlayer(episodeInformation?.players[0])
+        } else { setCurrentPlayer({}); setCurrentEpisode({}) }
+    }
+
+    const nextEpisode = () => {
+        const episodeInformation = episodes.find(ep => ep.animeSlug == 'Rent a Girlfriend!' && ep.episodeNumber == Number(episodeNumber) + 1);
+        if(episodeInformation) {
+            setCurrentEpisode(episodeInformation);
+            if(episodeInformation?.players[0]) setCurrentPlayer(episodeInformation?.players[0])
+        } else { setCurrentPlayer({}); setCurrentEpisode({}) }
+    }
+
     useEffect(() => {
         const episodeInformation = episodes.find(ep => ep.animeSlug == 'Rent a Girlfriend!' && ep.episodeNumber == Number(episodeNumber));
         console.log(episodes[0], name, episodeNumber)
@@ -61,26 +77,6 @@ export default () => {
             if(episodeInformation?.players[0]) setCurrentPlayer(episodeInformation?.players[0])
         }
     }, [])
-
-    const prevEpisode = () => {
-        const episodeInformation = episodes.find(ep => ep.animeSlug == 'Rent a Girlfriend!' && ep.episodeNumber == Number(episodeNumber) - 1);
-        console.log(episodes[0], name, episodeNumber)
-
-        if(episodeInformation) {
-            setCurrentEpisode(episodeInformation);
-            if(episodeInformation?.players[0]) setCurrentPlayer(episodeInformation?.players[0])
-        } else { setCurrentPlayer({}); setCurrentEpisode({}) }
-    }
-
-    const nextEpisode = () => {
-        const episodeInformation = episodes.find(ep => ep.animeSlug == 'Rent a Girlfriend!' && ep.episodeNumber == Number(episodeNumber) + 1);
-        console.log(episodes[0], name, episodeNumber)
-
-        if(episodeInformation) {
-            setCurrentEpisode(episodeInformation);
-            if(episodeInformation?.players[0]) setCurrentPlayer(episodeInformation?.players[0])
-        } else { setCurrentPlayer({}); setCurrentEpisode({}) }
-    }
 
     return (
         <>

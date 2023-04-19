@@ -126,7 +126,7 @@ export default () => {
                         </Link>
                     </Flex>
                     <Flex alignItems={'center'} gap={3}>
-                        <input className='melancholy__search' type="search" placeholder="Wyszukaj anime..." />
+                        <input style={{width: '100%'}} className='melancholy__search' type="search" placeholder="Wyszukaj anime..." />
                         {logged ? <Avatar/> : <button onClick={onLoginOpen}>Zaloguj się</button> }
                         <LoginModal/>
                         <RegisterModal/>

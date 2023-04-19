@@ -1,15 +1,14 @@
 import {
     Container,
-    Tabs, TabList, TabPanels, Tab, TabPanel
+    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex, Heading
 } from '@chakra-ui/react';
 import Navbar from '../../components/navbar';
-import AnimeBanner from '../../components/animeBanner';
 import ReviewPage from './components/reviewPage';
 import EpisodesPage from './components/episodesPage';
-import InfoPage from './components/infoPage';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getAnime } from '../../api/anime';
+import AnimeHeader from './components/animeHeader';
 
 export default () => {
 
@@ -21,39 +20,46 @@ export default () => {
         const changeAnime = async () => {
             const reqAnime = await getAnime(slug);
             setAnime(reqAnime)
-            
+            console.log(anime)
         }
         changeAnime();
     }, [])
 
+    if(anime?.err) return (
+        <>
+            <Navbar/>
+            <Container mt={5}  maxW={1500}>
+                <Text>Nie znaleziono anime!</Text>
+            </Container>
+        </>
+    )
+
     return (
         <>
             <Navbar/>
+            <AnimeHeader
+                        image={anime?.img}
+                        />
             <Container mt={5} maxWidth={'1500px'}>
-                <AnimeBanner
-                hideButton={true}
-                hideDesc={true}
-                />
-                {anime?.title}
-                <Tabs mt={5}>
-                    <TabList>
-                        <Tab>Informacje</Tab>
-                        <Tab>Odcinki</Tab>
-                        <Tab>Recenzje</Tab>
-                    </TabList>
+                <Flex className='yuugen__header__wrapper'>
+                    <Flex className="yuugen__header__content">
+                        <Tabs mt={5} width={'100%'}>
+                            <TabList>
+                                <Tab>Odcinki</Tab>
+                                <Tab>Recenzje</Tab>
+                            </TabList>
 
-                    <TabPanels>
-                        <TabPanel>
-                            <InfoPage/>
-                        </TabPanel>
-                        <TabPanel>
-                            <EpisodesPage/>
-                        </TabPanel>
-                        <TabPanel>
-                            <ReviewPage/>
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
+                            <TabPanels>
+                                <TabPanel> <EpisodesPage/> </TabPanel>
+                                <TabPanel> <ReviewPage/> </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                    </Flex>
+                    <Flex className="yuugen__header__sidebar" fontSize={14}>
+                        {/* <Heading>Statystyki</Heading>
+                        <Heading>Połączone</Heading> */}
+                    </Flex>
+                </Flex>
             </Container>
         </>
     )

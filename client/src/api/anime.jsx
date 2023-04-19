@@ -5,11 +5,14 @@ const api = axios.create({
 })
 
 const getAnime = async (slug) => {
-    const req = await api.get(`/anime/${slug}`)
-    if(req?.data)
-        return req.data;
-    else 
-        return "uwu"
+    try {
+        const req = await api.get(`/anime/${slug}`)
+        if(req?.data)
+            return req.data;
+    } catch(err) {
+        if(err?.response?.data?.message)
+            return { err: 'Nie znaleziono anime'}
+    }
 }
 
 const createAnime = async ({
