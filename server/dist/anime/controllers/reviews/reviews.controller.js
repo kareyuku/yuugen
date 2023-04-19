@@ -18,6 +18,7 @@ const mongoose_1 = require("mongoose");
 const CreateReview_dto_1 = require("../../dtos/CreateReview.dto");
 const reviews_service_1 = require("../../services/reviews/reviews.service");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
+const responses_1 = require("../../../utils/responses");
 let ReviewsController = class ReviewsController {
     constructor(reviewsService) {
         this.reviewsService = reviewsService;
@@ -30,6 +31,7 @@ let ReviewsController = class ReviewsController {
     }
     async deleteReview(req, reviewId) {
         await this.reviewsService.deleteReview(new mongoose_1.Types.ObjectId(req.user.toString()), new mongoose_1.Types.ObjectId(reviewId));
+        return (0, responses_1.OKResponse)('Pomyślnie usunięto recenzję.');
     }
 };
 __decorate([

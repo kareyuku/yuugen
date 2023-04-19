@@ -13,6 +13,9 @@ export class Anime {
   @Exclude()
   updatedAt: Date;
 
+  @Exclude()
+  __v: number;
+
   @Prop({ required: true, unique: true })
   title: string;
 
@@ -49,26 +52,36 @@ export class Anime {
   };
 
   @Prop({
-    type: Array,
+    type: [
+      {
+        title: { type: String, default: "Brak tytułu" },
+        desc: { type: String },
+        img: { type: String },
+        number: { type: Number },
+        sources: [
+          {
+            group: { type: String },
+          },
+        ],
+      },
+    ],
     default: [],
   })
-  episodes: [
-    {
-      number: number;
-      title: string;
-      desc: string;
-      sources: [
-        {
-          name: string;
-          link: string;
-          uploader: string;
-          group: string;
-        }
-      ];
-    }
-  ];
-  @Prop({ type: Array, default: [] })
-  reviews: [];
+  episodes: {
+    number: number;
+    title: string;
+    img: string;
+    desc: string;
+    sources?: {
+      name: string;
+      link: string;
+      uploader: string;
+      group: string;
+    }[];
+  }[];
+
+  @Prop({ type: [Types.ObjectId], default: [], ref: "Review" })
+  reviews: Types.ObjectId[];
 }
 
 export const AnimeSchema = SchemaFactory.createForClass(Anime);

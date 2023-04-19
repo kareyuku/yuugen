@@ -12,41 +12,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnimeService = void 0;
+exports.TagsService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const anime_schema_1 = require("../../../schemas/anime.schema");
-let AnimeService = class AnimeService {
-    constructor(animeModel) {
-        this.animeModel = animeModel;
+const tag_schema_1 = require("../../../schemas/tag.schema");
+let TagsService = class TagsService {
+    constructor(tagModel) {
+        this.tagModel = tagModel;
     }
-    async createAnime(animeDto) {
-        const createdAnime = new this.animeModel(animeDto);
+    async createTag(tagName) {
+        const tag = new this.tagModel({ name: tagName });
         try {
-            await createdAnime.save();
-            return createdAnime;
+            await tag.save();
+            return tag;
         }
         catch (err) {
-            if (err.keyValue.title)
-                throw new common_1.ConflictException("Anime o takiej nazwie już istnieje.");
-            if (err.keyValue.slug)
-                throw new common_1.ConflictException("Anime o takim slug już istnieje.");
+            if (err.keyValue.name)
+                throw new common_1.ConflictException("Tag o takiej nazwie już istnieje.");
         }
     }
-    async getAnimeBySlug(slug) {
-        return await this.animeModel.findOne({ slug });
-    }
-    async patchAnimeBySlug(slug, animeDto) {
-        return await this.animeModel.findOneAndUpdate({ slug }, animeDto, {
-            returnOriginal: false,
-        });
+    async getAllTags() {
+        return await this.tagModel.find();
     }
 };
-AnimeService = __decorate([
+TagsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
+    __param(0, (0, mongoose_1.InjectModel)(tag_schema_1.Tag.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
-], AnimeService);
-exports.AnimeService = AnimeService;
-//# sourceMappingURL=anime.service.js.map
+], TagsService);
+exports.TagsService = TagsService;
+//# sourceMappingURL=tags.service.js.map

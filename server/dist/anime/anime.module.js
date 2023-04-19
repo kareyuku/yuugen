@@ -16,6 +16,11 @@ const reviews_controller_1 = require("./controllers/reviews/reviews.controller")
 const reviews_service_1 = require("./services/reviews/reviews.service");
 const review_schema_1 = require("../schemas/review.schema");
 const users_module_1 = require("../users/users.module");
+const tags_service_1 = require("./services/tags/tags.service");
+const tags_controller_1 = require("./controllers/tags/tags.controller");
+const tag_schema_1 = require("../schemas/tag.schema");
+const episodes_service_1 = require("./services/episodes/episodes.service");
+const episodes_controller_1 = require("./controllers/episodes/episodes.controller");
 let AnimeModule = class AnimeModule {
 };
 AnimeModule = __decorate([
@@ -23,14 +28,17 @@ AnimeModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([
                 { name: anime_schema_1.Anime.name, schema: anime_schema_1.AnimeSchema },
-                {
-                    name: review_schema_1.Review.name,
-                    schema: review_schema_1.ReviewSchema,
-                },
+                { name: review_schema_1.Review.name, schema: review_schema_1.ReviewSchema },
+                { name: tag_schema_1.Tag.name, schema: tag_schema_1.TagSchema },
             ]),
             users_module_1.UsersModule,
         ],
-        controllers: [anime_controller_1.AnimeController, reviews_controller_1.ReviewsController],
+        controllers: [
+            anime_controller_1.AnimeController,
+            reviews_controller_1.ReviewsController,
+            tags_controller_1.TagsController,
+            episodes_controller_1.EpisodesController,
+        ],
         providers: [
             {
                 provide: "ANIME_SERVICE",
@@ -39,6 +47,14 @@ AnimeModule = __decorate([
             {
                 provide: "REVIEW_SERVICE",
                 useClass: reviews_service_1.ReviewsService,
+            },
+            {
+                provide: "TAGS_SERVICE",
+                useClass: tags_service_1.TagsService,
+            },
+            {
+                provide: "EPISODES_SERVICE",
+                useClass: episodes_service_1.EpisodesService,
             },
         ],
     })

@@ -16,6 +16,7 @@ import { Types } from "mongoose";
 import { CreateReviewDto } from "src/anime/dtos/CreateReview.dto";
 import { ReviewsService } from "src/anime/services/reviews/reviews.service";
 import { AuthenticatedGuard } from "src/auth/utils/LocalGuard";
+import { OKResponse } from "src/utils/responses";
 
 @Controller("reviews")
 export class ReviewsController {
@@ -59,5 +60,6 @@ export class ReviewsController {
       new Types.ObjectId(req.user.toString()),
       new Types.ObjectId(reviewId)
     );
+    return OKResponse('Pomyślnie usunięto recenzję.')
   }
 }

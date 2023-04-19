@@ -6,23 +6,28 @@ import { Anime, AnimeSchema } from "src/schemas/anime.schema";
 import { ReviewsController } from "./controllers/reviews/reviews.controller";
 import { ReviewsService } from "./services/reviews/reviews.service";
 import { Review, ReviewSchema } from "src/schemas/review.schema";
-import { APP_GUARD } from "@nestjs/core";
-import { AdminGuard } from "src/auth/utils/LocalGuard";
-import { UsersService } from "src/users/services/users/users.service";
 import { UsersModule } from "src/users/users.module";
+import { TagsService } from "./services/tags/tags.service";
+import { TagsController } from "./controllers/tags/tags.controller";
+import { Tag, TagSchema } from "src/schemas/tag.schema";
+import { EpisodesService } from "./services/episodes/episodes.service";
+import { EpisodesController } from "./controllers/episodes/episodes.controller";
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Anime.name, schema: AnimeSchema },
-      {
-        name: Review.name,
-        schema: ReviewSchema,
-      },
+      { name: Review.name, schema: ReviewSchema },
+      { name: Tag.name, schema: TagSchema },
     ]),
     UsersModule,
   ],
-  controllers: [AnimeController, ReviewsController],
+  controllers: [
+    AnimeController,
+    ReviewsController,
+    TagsController,
+    EpisodesController,
+  ],
   providers: [
     {
       provide: "ANIME_SERVICE",
@@ -31,6 +36,14 @@ import { UsersModule } from "src/users/users.module";
     {
       provide: "REVIEW_SERVICE",
       useClass: ReviewsService,
+    },
+    {
+      provide: "TAGS_SERVICE",
+      useClass: TagsService,
+    },
+    {
+      provide: "EPISODES_SERVICE",
+      useClass: EpisodesService,
     },
   ],
 })

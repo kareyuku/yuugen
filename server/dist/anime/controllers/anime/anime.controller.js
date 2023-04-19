@@ -17,13 +17,16 @@ const common_1 = require("@nestjs/common");
 const CreateAnime_dto_1 = require("../../dtos/CreateAnime.dto");
 const anime_service_1 = require("../../services/anime/anime.service");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
+const anime_schema_1 = require("../../../schemas/anime.schema");
+const mongooseClassSerializer_interceptor_1 = require("../../../utils/mongooseClassSerializer.interceptor");
+const responses_1 = require("../../../utils/responses");
 let AnimeController = class AnimeController {
     constructor(animeService) {
         this.animeService = animeService;
     }
     async createAnime(createAnimeDto) {
-        console.log(createAnimeDto);
-        return await this.animeService.createAnime(createAnimeDto);
+        await this.animeService.createAnime(createAnimeDto);
+        return (0, responses_1.OKResponse)("Pomyślnie utworzono anime.");
     }
     async getAnimeBySlug(slug) {
         const anime = await this.animeService.getAnimeBySlug(slug);
@@ -46,6 +49,7 @@ __decorate([
 ], AnimeController.prototype, "createAnime", null);
 __decorate([
     (0, common_1.Get)(":slug"),
+    (0, common_1.UseInterceptors)((0, mongooseClassSerializer_interceptor_1.default)(anime_schema_1.Anime)),
     __param(0, (0, common_1.Param)("slug")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

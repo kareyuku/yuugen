@@ -6,5 +6,5 @@ export declare class ReviewsController {
     constructor(reviewsService: ReviewsService);
     createReview(req: Request, slug: string, createReviewDto: CreateReviewDto): Promise<import("../../../schemas/review.schema").Review>;
     editReview(req: Request, reviewId: string, createReviewDto: CreateReviewDto): Promise<import("../../../schemas/review.schema").Review>;
-    deleteReview(req: Request, reviewId: string): Promise<void>;
+    deleteReview(req: Request, reviewId: string): Promise<Object>;
 }

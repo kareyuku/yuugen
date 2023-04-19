@@ -24,6 +24,10 @@ __decorate([
     __metadata("design:type", Object)
 ], Anime.prototype, "updatedAt", void 0);
 __decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Number)
+], Anime.prototype, "__v", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Anime.prototype, "title", void 0);
@@ -65,13 +69,25 @@ __decorate([
 ], Anime.prototype, "stats", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
-        type: Array,
+        type: [
+            {
+                title: { type: String, default: "Brak tytułu" },
+                desc: { type: String },
+                img: { type: String },
+                number: { type: Number },
+                sources: [
+                    {
+                        group: { type: String },
+                    },
+                ],
+            },
+        ],
         default: [],
     }),
     __metadata("design:type", Array)
 ], Anime.prototype, "episodes", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Array, default: [] }),
+    (0, mongoose_1.Prop)({ type: [mongoose_2.Types.ObjectId], default: [], ref: "Review" }),
     __metadata("design:type", Array)
 ], Anime.prototype, "reviews", void 0);
 Anime = __decorate([

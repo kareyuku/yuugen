@@ -23,9 +23,12 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument, Types } from "mongoose";
-export type ReviewDocument = HydratedDocument<Tag>;
+export type TagDocument = HydratedDocument<Tag>;
 export declare class Tag {
     _id: Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+    __v: number;
     name: string;
     animes: [Types.ObjectId];
 }

@@ -20,7 +20,19 @@ __decorate([
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Tag.prototype, "_id", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Date)
+], Tag.prototype, "createdAt", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Date)
+], Tag.prototype, "updatedAt", void 0);
+__decorate([
+    (0, class_transformer_1.Exclude)(),
+    __metadata("design:type", Number)
+], Tag.prototype, "__v", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Tag.prototype, "name", void 0);
 __decorate([

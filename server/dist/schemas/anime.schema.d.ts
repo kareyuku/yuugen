@@ -28,6 +28,7 @@ export declare class Anime {
     _id: Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
+    __v: number;
     title: string;
     title_en: string;
     desc: string;
@@ -43,22 +44,19 @@ export declare class Anime {
         planned: number;
         dropped: number;
     };
-    episodes: [
-        {
-            number: number;
-            title: string;
-            desc: string;
-            sources: [
-                {
-                    name: string;
-                    link: string;
-                    uploader: string;
-                    group: string;
-                }
-            ];
-        }
-    ];
-    reviews: [];
+    episodes: {
+        number: number;
+        title: string;
+        img: string;
+        desc: string;
+        sources?: {
+            name: string;
+            link: string;
+            uploader: string;
+            group: string;
+        }[];
+    }[];
+    reviews: Types.ObjectId[];
 }
 export declare const AnimeSchema: import("mongoose").Schema<Anime, import("mongoose").Model<Anime, any, any, any, import("mongoose").Document<unknown, any, Anime> & Omit<Anime & Required<{
     _id: Types.ObjectId;
