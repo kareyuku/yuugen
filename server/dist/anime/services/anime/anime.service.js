@@ -37,6 +37,13 @@ let AnimeService = class AnimeService {
     async getAnimeBySlug(slug) {
         return await this.animeModel.findOne({ slug });
     }
+    async getAnime(page, limit, sortBy, sortOrder) {
+        return await this.animeModel
+            .find()
+            .sort([[sortBy, sortOrder]])
+            .skip(limit * (page - 1))
+            .limit(limit);
+    }
     async patchAnimeBySlug(slug, animeDto) {
         return await this.animeModel.findOneAndUpdate({ slug }, animeDto, {
             returnOriginal: false,

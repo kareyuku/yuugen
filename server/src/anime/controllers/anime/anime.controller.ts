@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
+import { SortOrder, Types } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
 import { AnimeService } from "src/anime/services/anime/anime.service";
 import { AdminGuard } from "src/auth/utils/LocalGuard";
@@ -39,6 +41,22 @@ export class AnimeController {
     const anime = await this.animeService.getAnimeBySlug(slug);
     if (!anime) throw new NotFoundException("Nie znaleziono anime.");
     return anime;
+  }
+
+  @Get()
+  @UseInterceptors(MongooseClassSerializerInterceptor(Anime))
+  async getAnime(
+    @Query("page") page: string,
+    @Query("limit") limit: string,
+    @Query("sort_by") sortBy: string,
+    @Query("sort_order") sortOrder: string
+  ) {
+    return this.animeService.getAnime(
+      parseInt(page),
+      parseInt(limit),
+      sortBy,
+      sortOrder as SortOrder
+    );
   }
 
   @UseGuards(AdminGuard)

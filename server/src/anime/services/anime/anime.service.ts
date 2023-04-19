@@ -4,7 +4,7 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, SortOrder } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
 import { Anime } from "src/schemas/anime.schema";
 
@@ -29,6 +29,19 @@ export class AnimeService {
     return await this.animeModel.findOne({ slug });
   }
 
+  async getAnime(
+    page: number,
+    limit: number,
+    sortBy: string,
+    sortOrder: SortOrder
+  ): Promise<Anime[]> {
+    return await this.animeModel
+      .find()
+      .sort([[sortBy, sortOrder]])
+      .skip(limit * (page - 1))
+      .limit(limit);
+  }
+
   async patchAnimeBySlug(
     slug: string,
     animeDto: CreateAnimeDto
@@ -37,5 +50,4 @@ export class AnimeService {
       returnOriginal: false,
     });
   }
-
 }

@@ -6,5 +6,6 @@ export declare class AnimeController {
     constructor(animeService: AnimeService);
     createAnime(createAnimeDto: CreateAnimeDto): Promise<Object>;
     getAnimeBySlug(slug: string): Promise<Anime>;
+    getAnime(page: string, limit: string, sortBy: string, sortOrder: string): Promise<Anime[]>;
     patchAnimeBySlug(slug: string, createAnimeDto: CreateAnimeDto): Promise<Anime>;
 }

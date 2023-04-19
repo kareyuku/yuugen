@@ -31,6 +31,10 @@ __decorate([
 ], CreateAnimeDto.prototype, "img", void 0);
 __decorate([
     (0, class_validator_1.Allow)(),
+    __metadata("design:type", Number)
+], CreateAnimeDto.prototype, "rate", void 0);
+__decorate([
+    (0, class_validator_1.Allow)(),
     __metadata("design:type", String)
 ], CreateAnimeDto.prototype, "banner", void 0);
 __decorate([

@@ -12,6 +12,9 @@ export class CreateAnimeDto { // to change limits
 
   @Allow()
   img: string;
+  
+  @Allow()
+  rate: number;
 
   @Allow()
   banner: string;

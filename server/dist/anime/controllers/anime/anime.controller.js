@@ -34,6 +34,9 @@ let AnimeController = class AnimeController {
             throw new common_1.NotFoundException("Nie znaleziono anime.");
         return anime;
     }
+    async getAnime(page, limit, sortBy, sortOrder) {
+        return this.animeService.getAnime(parseInt(page), parseInt(limit), sortBy, sortOrder);
+    }
     async patchAnimeBySlug(slug, createAnimeDto) {
         return await this.animeService.patchAnimeBySlug(slug, createAnimeDto);
     }
@@ -55,6 +58,17 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "getAnimeBySlug", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseInterceptors)((0, mongooseClassSerializer_interceptor_1.default)(anime_schema_1.Anime)),
+    __param(0, (0, common_1.Query)("page")),
+    __param(1, (0, common_1.Query)("limit")),
+    __param(2, (0, common_1.Query)("sort_by")),
+    __param(3, (0, common_1.Query)("sort_order")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], AnimeController.prototype, "getAnime", null);
 __decorate([
     (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     (0, common_1.Patch)(":slug"),
