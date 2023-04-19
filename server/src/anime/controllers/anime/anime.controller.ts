@@ -7,11 +7,13 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
 import { AnimeService } from "src/anime/services/anime/anime.service";
+import { AdminGuard } from "src/auth/utils/LocalGuard";
 
 @Controller("anime")
 export class AnimeController {
@@ -21,7 +23,9 @@ export class AnimeController {
 
   @Post("create")
   @UsePipes(ValidationPipe)
-  async createUser(@Body() createAnimeDto: CreateAnimeDto) {
+  @UseGuards(AdminGuard)
+  async createAnime(@Body() createAnimeDto: CreateAnimeDto) {
+    console.log(createAnimeDto);
     return await this.animeService.createAnime(createAnimeDto);
   }
 
@@ -32,6 +36,7 @@ export class AnimeController {
     return anime;
   }
 
+  @UseGuards(AdminGuard)
   @Patch(":slug")
   async patchAnimeBySlug(
     @Param("slug") slug: string,

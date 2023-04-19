@@ -22,10 +22,11 @@ UsersModule = __decorate([
         controllers: [users_controller_1.UsersController],
         providers: [
             {
-                provide: 'USER_SERVICE',
+                provide: "USER_SERVICE",
                 useClass: users_service_1.UsersService,
             },
         ],
+        exports: ["USER_SERVICE"],
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;

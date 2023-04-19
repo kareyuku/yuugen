@@ -15,6 +15,7 @@ const anime_schema_1 = require("../schemas/anime.schema");
 const reviews_controller_1 = require("./controllers/reviews/reviews.controller");
 const reviews_service_1 = require("./services/reviews/reviews.service");
 const review_schema_1 = require("../schemas/review.schema");
+const users_module_1 = require("../users/users.module");
 let AnimeModule = class AnimeModule {
 };
 AnimeModule = __decorate([
@@ -27,6 +28,7 @@ AnimeModule = __decorate([
                     schema: review_schema_1.ReviewSchema,
                 },
             ]),
+            users_module_1.UsersModule,
         ],
         controllers: [anime_controller_1.AnimeController, reviews_controller_1.ReviewsController],
         providers: [

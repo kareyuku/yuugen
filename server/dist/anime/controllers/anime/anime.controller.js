@@ -16,11 +16,13 @@ exports.AnimeController = void 0;
 const common_1 = require("@nestjs/common");
 const CreateAnime_dto_1 = require("../../dtos/CreateAnime.dto");
 const anime_service_1 = require("../../services/anime/anime.service");
+const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
 let AnimeController = class AnimeController {
     constructor(animeService) {
         this.animeService = animeService;
     }
-    async createUser(createAnimeDto) {
+    async createAnime(createAnimeDto) {
+        console.log(createAnimeDto);
         return await this.animeService.createAnime(createAnimeDto);
     }
     async getAnimeBySlug(slug) {
@@ -36,11 +38,12 @@ let AnimeController = class AnimeController {
 __decorate([
     (0, common_1.Post)("create"),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
+    (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreateAnime_dto_1.CreateAnimeDto]),
     __metadata("design:returntype", Promise)
-], AnimeController.prototype, "createUser", null);
+], AnimeController.prototype, "createAnime", null);
 __decorate([
     (0, common_1.Get)(":slug"),
     __param(0, (0, common_1.Param)("slug")),
@@ -49,6 +52,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AnimeController.prototype, "getAnimeBySlug", null);
 __decorate([
+    (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     (0, common_1.Patch)(":slug"),
     __param(0, (0, common_1.Param)("slug")),
     __param(1, (0, common_1.Body)()),

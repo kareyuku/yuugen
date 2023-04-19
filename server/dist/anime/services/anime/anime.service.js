@@ -23,7 +23,13 @@ let AnimeService = class AnimeService {
     }
     async createAnime(animeDto) {
         const createdAnime = new this.animeModel(animeDto);
-        await createdAnime.save();
+        try {
+            await createdAnime.save();
+        }
+        catch (err) {
+            console.log(err);
+            throw new common_1.BadRequestException("Nie udało się utworzyć anime. Prawdopodobnie próba utworzenia anime o istniejącej nazwie/slug.");
+        }
         return createdAnime;
     }
     async getAnimeBySlug(slug) {

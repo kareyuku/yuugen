@@ -1,21 +1,24 @@
-import { IsNotEmpty } from "class-validator";
+import { Allow, IsNotEmpty } from "class-validator";
 
-export class CreateAnimeDto {
-    @IsNotEmpty()
-    title: string;
+export class CreateAnimeDto { // to change limits
+  @IsNotEmpty()
+  title: string;
 
-    title_en: string;
+  @Allow()
+  title_en: string;
 
-    desc: string;
+  @Allow()
+  desc: string;
 
-    img: string;
-    banner: string;
+  @Allow()
+  img: string;
 
-    @IsNotEmpty()
-    episodeCount: number;
+  @Allow()
+  banner: string;
 
-    @IsNotEmpty()
-    slug: string;
+  @IsNotEmpty()
+  episodeCount: number;
 
-    
+  @IsNotEmpty()
+  slug: string;
 }

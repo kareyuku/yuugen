@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsPositive } from "class-validator";
 
 export class CreateReviewDto {
-    @IsNotEmpty()
-    content: string;
+  @IsNotEmpty()
+  content: string;
 
-    @IsPositive()
-    rate: number;
+  @IsPositive()
+  rate: number;
 }

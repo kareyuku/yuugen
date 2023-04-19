@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
@@ -11,7 +11,14 @@ export class AnimeService {
   // to do error catching
   async createAnime(animeDto: CreateAnimeDto): Promise<Anime> {
     const createdAnime = new this.animeModel(animeDto);
-    await createdAnime.save();
+    try {
+      await createdAnime.save();
+    } catch (err) {
+      console.log(err);
+      throw new BadRequestException(
+        "Nie udało się utworzyć anime. Prawdopodobnie próba utworzenia anime o istniejącej nazwie/slug."
+      );
+    }
     return createdAnime;
   }
 
