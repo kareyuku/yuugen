@@ -12,48 +12,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersController = void 0;
+exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
-const CreateUser_dto_1 = require("../../dtos/CreateUser.dto");
+const mongoose_1 = require("mongoose");
+const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
+const user_schema_1 = require("../../../schemas/user.schema");
 const users_service_1 = require("../../services/users/users.service");
 const mongooseClassSerializer_interceptor_1 = require("../../../utils/mongooseClassSerializer.interceptor");
-const user_schema_1 = require("../../../schemas/user.schema");
-const responses_1 = require("../../../utils/responses");
-let UsersController = class UsersController {
+let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async createUser(createUserDto) {
-        await this.userService.createUser(createUserDto);
-        return (0, responses_1.OKResponse)("Pomyślnie zarejestrowano.");
-    }
-    async getUserByUsername(username) {
-        const user = await this.userService.findUserByUsername(username);
-        if (!user)
-            throw new common_1.NotFoundException("Nie znaleziono użytkownika.");
-        return user;
+    async getUser(req) {
+        return await this.userService.findUserById(new mongoose_1.Types.ObjectId(req.user.toString()));
     }
 };
 __decorate([
-    (0, common_1.Post)("create"),
-    (0, common_1.UsePipes)(common_1.ValidationPipe),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateUser_dto_1.CreateUserDto]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "createUser", null);
-__decorate([
     (0, common_1.UseInterceptors)((0, mongooseClassSerializer_interceptor_1.default)(user_schema_1.User)),
-    (0, common_1.Get)(":username"),
-    __param(0, (0, common_1.Param)("username")),
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "getUserByUsername", null);
-UsersController = __decorate([
-    (0, common_1.Controller)("users"),
+], UserController.prototype, "getUser", null);
+UserController = __decorate([
+    (0, common_1.Controller)("user"),
     __param(0, (0, common_1.Inject)("USER_SERVICE")),
     __metadata("design:paramtypes", [users_service_1.UsersService])
-], UsersController);
-exports.UsersController = UsersController;
-//# sourceMappingURL=users.controller.js.map
+], UserController);
+exports.UserController = UserController;
+//# sourceMappingURL=user.controller.js.map

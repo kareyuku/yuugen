@@ -30,7 +30,14 @@ let UsersService = class UsersService {
             return createdUser;
         }
         catch (err) {
-            throw new common_1.HttpException("Nazwa użytkownika bądź adres E-Mail jest już użyty.", common_1.HttpStatus.CONFLICT);
+            if (err.keyValue.username)
+                throw new common_1.ConflictException("Nazwa użytkownika jest już zajęta.", {
+                    description: "username",
+                });
+            if (err.keyValue.email)
+                throw new common_1.ConflictException("Ten adres e-mail jest już zajęty.", {
+                    description: "email",
+                });
         }
     }
     async findUserByUsername(username) {

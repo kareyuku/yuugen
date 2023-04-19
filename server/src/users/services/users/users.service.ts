@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from "@nestjs/common";
 import { CreateUserDto } from "src/users/dtos/CreateUser.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "src/schemas/user.schema";
@@ -16,10 +21,14 @@ export class UsersService {
       await createdUser.save();
       return createdUser;
     } catch (err) {
-      throw new HttpException( // to do 
-        "Nazwa użytkownika bądź adres E-Mail jest już użyty.",
-        HttpStatus.CONFLICT
-      );
+      if (err.keyValue.username)
+        throw new ConflictException("Nazwa użytkownika jest już zajęta.", {
+          description: "username",
+        });
+      if (err.keyValue.email)
+        throw new ConflictException("Ten adres e-mail jest już zajęty.", {
+          description: "email",
+        });
     }
   }
 

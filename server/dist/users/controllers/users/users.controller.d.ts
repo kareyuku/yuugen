@@ -4,6 +4,6 @@ import { User } from "src/schemas/user.schema";
 export declare class UsersController {
     private readonly userService;
     constructor(userService: UsersService);
-    createUser(createUserDto: CreateUserDto): Promise<"Pomyślnie zarejestrowano." | "Error">;
+    createUser(createUserDto: CreateUserDto): Promise<Object>;
     getUserByUsername(username: string): Promise<User>;
 }

@@ -18,6 +18,22 @@ __decorate([
     __metadata("design:type", String)
 ], CreateAnimeDto.prototype, "title", void 0);
 __decorate([
+    (0, class_validator_1.Allow)(),
+    __metadata("design:type", String)
+], CreateAnimeDto.prototype, "title_en", void 0);
+__decorate([
+    (0, class_validator_1.Allow)(),
+    __metadata("design:type", String)
+], CreateAnimeDto.prototype, "desc", void 0);
+__decorate([
+    (0, class_validator_1.Allow)(),
+    __metadata("design:type", String)
+], CreateAnimeDto.prototype, "img", void 0);
+__decorate([
+    (0, class_validator_1.Allow)(),
+    __metadata("design:type", String)
+], CreateAnimeDto.prototype, "banner", void 0);
+__decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateAnimeDto.prototype, "episodeCount", void 0);

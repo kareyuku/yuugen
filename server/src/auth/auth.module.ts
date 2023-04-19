@@ -4,7 +4,6 @@ import { AuthService } from "./services/auth/auth.service";
 import { UsersService } from "src/users/services/users/users.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { User, UserSchema } from "src/schemas/user.schema";
-import { PassportModule } from "@nestjs/passport";
 import { LocalStrategy } from "./utils/LocalStrategy";
 import { SessionSerializer } from "./utils/SessionSerializer";
 

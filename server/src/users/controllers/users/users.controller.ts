@@ -14,6 +14,7 @@ import { CreateUserDto } from "src/users/dtos/CreateUser.dto";
 import { UsersService } from "src/users/services/users/users.service";
 import MongooseClassSerializerInterceptor from "src/utils/mongooseClassSerializer.interceptor";
 import { User } from "src/schemas/user.schema";
+import { OKResponse } from "src/utils/responses";
 
 @Controller("users")
 export class UsersController {
@@ -24,7 +25,8 @@ export class UsersController {
   @Post("create")
   @UsePipes(ValidationPipe)
   async createUser(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.createUser(createUserDto) ? "Pomyślnie zarejestrowano." : "Error";
+    await this.userService.createUser(createUserDto);
+    return OKResponse("Pomyślnie zarejestrowano.");
   }
 
   @UseInterceptors(MongooseClassSerializerInterceptor(User))
