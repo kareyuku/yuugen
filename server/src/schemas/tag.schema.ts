@@ -19,9 +19,8 @@ export class Tag {
   @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop({type: [Types.ObjectId], ref: "Anime" })
-  animes: [Types.ObjectId]
-
+  @Prop({ type: [Types.ObjectId], ref: "Anime" })
+  animes: [Types.ObjectId];
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

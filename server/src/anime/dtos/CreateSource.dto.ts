@@ -1,12 +1,13 @@
-import { IsNotEmpty } from "class-validator";
+import { Allow, IsNotEmpty } from "class-validator";
 
 export class CreateSourceDto {
-    @IsNotEmpty()
-    name: string
+  @IsNotEmpty()
+  name: string;
 
-    @IsNotEmpty()
-    link: string
+  @IsNotEmpty()
+  link: string;
 
-    @IsNotEmpty()
-    group: string
+  //@IsNotEmpty()
+  @Allow()
+  group: string;
 }

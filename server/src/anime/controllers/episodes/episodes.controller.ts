@@ -28,7 +28,7 @@ export class EpisodesController {
   @Post(":slug")
   @UseGuards(AdminGuard)
   @UsePipes(ValidationPipe)
-  async createEpisode(
+  async createEpisode( // to do dodac slug do dto
     @Body() createEpisodeDto: CreateEpisodeDto,
     @Param("slug") slug: string
   ) {

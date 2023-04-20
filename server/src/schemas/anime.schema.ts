@@ -51,6 +51,18 @@ export class Anime {
     dropped: number;
   };
 
+  @Transform(({ value }) => {
+    value = value.map((episode) => {
+      if (!episode.sources) return episode;
+
+      return episode.sources.map((source) => {
+        source.uploader = source.uploader.toString();
+        return source;
+      });
+    });
+
+    return value;
+  })
   @Prop({
     type: [
       {

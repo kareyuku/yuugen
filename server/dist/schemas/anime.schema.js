@@ -68,6 +68,17 @@ __decorate([
     __metadata("design:type", Object)
 ], Anime.prototype, "stats", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => {
+        value = value.map((episode) => {
+            if (!episode.sources)
+                return episode;
+            return episode.sources.map((source) => {
+                source.uploader = source.uploader.toString();
+                return source;
+            });
+        });
+        return value;
+    }),
     (0, mongoose_1.Prop)({
         type: [
             {
