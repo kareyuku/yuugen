@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Inject,
   Param,
   Patch,
@@ -33,5 +34,11 @@ export class GroupsController {
     @Param("group") group: string
   ) {
     return await this.userService.patchGroup(createGroupDto, group);
+  }
+
+  @UseGuards(AdminGuard)
+  @Delete(":group")
+  async deleteGroup(@Param('group') group: string){
+    
   }
 }

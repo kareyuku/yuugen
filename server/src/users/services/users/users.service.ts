@@ -96,4 +96,8 @@ export class UsersService {
       throw new InternalServerErrorException("Edycja grupy nie powiodła się.");
     }
   }
+
+  async deleteGroup(groupName: string): Promise<void> {
+    
+  }
 }
