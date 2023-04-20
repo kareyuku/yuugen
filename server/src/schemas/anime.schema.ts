@@ -60,23 +60,28 @@ export class Anime {
         number: { type: Number },
         sources: [
           {
-            group: { type: String },
+            name: { type: String },
+            link: { type: String },
+            uploader: { type: Types.ObjectId, ref: "User" },
+            group: { type: String }, // to do ref
+            _id: false,
           },
         ],
       },
     ],
     default: [],
+    _id: false,
   })
   episodes: {
     number: number;
     title: string;
     img: string;
     desc: string;
-    sources?: {
+    sources: {
       name: string;
       link: string;
-      uploader: string;
-      group: string;
+      uploader: Types.ObjectId;
+      group: string; // to do ref
     }[];
   }[];
 

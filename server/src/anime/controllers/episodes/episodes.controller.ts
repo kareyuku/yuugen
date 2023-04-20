@@ -5,14 +5,18 @@ import {
   Inject,
   Param,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
 import { CreateEpisodeDto } from "src/anime/dtos/CreateEpisode.dto";
+import { CreateSourceDto } from "src/anime/dtos/CreateSource.dto";
 import { EpisodesService } from "src/anime/services/episodes/episodes.service";
-import { AdminGuard } from "src/auth/utils/LocalGuard";
+import { AdminGuard, AuthenticatedGuard } from "src/auth/utils/LocalGuard";
 import { OKResponse } from "src/utils/responses";
+import { Request } from "express";
+import { Types } from "mongoose";
 
 @Controller("episodes")
 export class EpisodesController {
@@ -39,6 +43,24 @@ export class EpisodesController {
     @Param("episode") episode: string
   ) {
     await this.episodesService.deleteEpisode(slug, parseInt(episode));
-    return OKResponse('Pomyślnie usunięto epizod.')
+    return OKResponse("Pomyślnie usunięto epizod.");
+  }
+
+  @Post(":slug/:episode")
+  @UsePipes(ValidationPipe)
+  @UseGuards(AuthenticatedGuard)
+  async createSource(
+    @Param("slug") slug: string,
+    @Param("episode") episode: string,
+    @Body() createSourceDto: CreateSourceDto,
+    @Req() req: Request
+  ) {
+    await this.episodesService.createSource(
+      slug,
+      parseInt(episode),
+      createSourceDto,
+      new Types.ObjectId(req.user.toString())
+    );
+    return OKResponse("Pomyślnie dodano źródło.");
   }
 }

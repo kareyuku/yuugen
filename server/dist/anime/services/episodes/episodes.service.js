@@ -29,12 +29,12 @@ let EpisodesService = class EpisodesService {
             throw new common_1.BadRequestException("Nie znaleziono anime o podanym slug.");
         if (anime.episodes.find((episode) => episode.number === episodeDto.number))
             throw new common_1.BadRequestException("Epizod o podanym numerze już istnieje.");
-        anime.episodes.push(Object.assign({}, episodeDto));
+        anime.episodes.push(Object.assign(Object.assign({}, episodeDto), { sources: undefined }));
         try {
             await anime.save();
         }
         catch (_a) {
-            throw new common_1.InternalServerErrorException("Zapisanie anime nie powiodło się.");
+            throw new common_1.InternalServerErrorException("Zapisanie epizodu nie powiodło się.");
         }
     }
     async deleteEpisode(slug, episode) {
@@ -47,6 +47,21 @@ let EpisodesService = class EpisodesService {
         }
         catch (_a) {
             throw new common_1.InternalServerErrorException("Usuwanie epizodu nie powiodło się.");
+        }
+    }
+    async createSource(slug, episode, sourceDto, user) {
+        const anime = await this.animeModel.findOne({ slug });
+        if (!anime)
+            throw new common_1.BadRequestException("Nie znaleziono anime o podanym slug.");
+        const foundEpisodeIndex = anime.episodes.findIndex((epis) => epis.number === episode);
+        if (foundEpisodeIndex === -1)
+            throw new common_1.BadRequestException("Nie znaleziono odcinka o podanym numerze.");
+        anime.episodes[foundEpisodeIndex].sources.push(Object.assign(Object.assign({}, sourceDto), { uploader: user }));
+        try {
+            await anime.save();
+        }
+        catch (_a) {
+            throw new common_1.InternalServerErrorException("Zapisanie źródła nie powiodło się.");
         }
     }
 };

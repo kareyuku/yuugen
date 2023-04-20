@@ -15,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EpisodesController = void 0;
 const common_1 = require("@nestjs/common");
 const CreateEpisode_dto_1 = require("../../dtos/CreateEpisode.dto");
+const CreateSource_dto_1 = require("../../dtos/CreateSource.dto");
 const episodes_service_1 = require("../../services/episodes/episodes.service");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
 const responses_1 = require("../../../utils/responses");
+const mongoose_1 = require("mongoose");
 let EpisodesController = class EpisodesController {
     constructor(episodesService) {
         this.episodesService = episodesService;
@@ -28,7 +30,11 @@ let EpisodesController = class EpisodesController {
     }
     async deleteEpisode(slug, episode) {
         await this.episodesService.deleteEpisode(slug, parseInt(episode));
-        return (0, responses_1.OKResponse)('Pomyślnie usunięto epizod.');
+        return (0, responses_1.OKResponse)("Pomyślnie usunięto epizod.");
+    }
+    async createSource(slug, episode, createSourceDto, req) {
+        await this.episodesService.createSource(slug, parseInt(episode), createSourceDto, new mongoose_1.Types.ObjectId(req.user.toString()));
+        return (0, responses_1.OKResponse)("Pomyślnie dodano źródło.");
     }
 };
 __decorate([
@@ -50,6 +56,18 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], EpisodesController.prototype, "deleteEpisode", null);
+__decorate([
+    (0, common_1.Post)(":slug/:episode"),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
+    __param(0, (0, common_1.Param)("slug")),
+    __param(1, (0, common_1.Param)("episode")),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, CreateSource_dto_1.CreateSourceDto, Object]),
+    __metadata("design:returntype", Promise)
+], EpisodesController.prototype, "createSource", null);
 EpisodesController = __decorate([
     (0, common_1.Controller)("episodes"),
     __param(0, (0, common_1.Inject)("EPISODES_SERVICE")),

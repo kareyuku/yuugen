@@ -49,10 +49,10 @@ export declare class Anime {
         title: string;
         img: string;
         desc: string;
-        sources?: {
+        sources: {
             name: string;
             link: string;
-            uploader: string;
+            uploader: Types.ObjectId;
             group: string;
         }[];
     }[];

@@ -5,10 +5,11 @@ import {
   InternalServerErrorException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { CreateEpisodeDto } from "src/anime/dtos/CreateEpisode.dto";
 import { AnimeService } from "../anime/anime.service";
 import { Anime } from "src/schemas/anime.schema";
+import { CreateSourceDto } from "src/anime/dtos/CreateSource.dto";
 
 @Injectable()
 export class EpisodesService {
@@ -29,12 +30,12 @@ export class EpisodesService {
     if (anime.episodes.find((episode) => episode.number === episodeDto.number))
       throw new BadRequestException("Epizod o podanym numerze już istnieje.");
 
-    anime.episodes.push({ ...episodeDto });
+    anime.episodes.push({ ...episodeDto, sources: undefined });
     try {
       await anime.save();
     } catch {
       throw new InternalServerErrorException(
-        "Zapisanie anime nie powiodło się."
+        "Zapisanie epizodu nie powiodło się."
       );
     }
   }
@@ -53,6 +54,40 @@ export class EpisodesService {
     } catch {
       throw new InternalServerErrorException(
         "Usuwanie epizodu nie powiodło się."
+      );
+    }
+  }
+
+  async createSource(
+    slug: string,
+    episode: number,
+    sourceDto: CreateSourceDto,
+    user: Types.ObjectId
+  ) {
+    const anime = await this.animeModel.findOne({ slug });
+
+    if (!anime)
+      throw new BadRequestException("Nie znaleziono anime o podanym slug.");
+
+    const foundEpisodeIndex = anime.episodes.findIndex(
+      (epis) => epis.number === episode
+    );
+
+    if (foundEpisodeIndex === -1)
+      throw new BadRequestException(
+        "Nie znaleziono odcinka o podanym numerze."
+      );
+
+    anime.episodes[foundEpisodeIndex].sources.push({
+      ...sourceDto,
+      uploader: user,
+    });
+
+    try {
+      await anime.save();
+    } catch {
+      throw new InternalServerErrorException(
+        "Zapisanie źródła nie powiodło się."
       );
     }
   }

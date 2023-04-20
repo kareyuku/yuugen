@@ -77,12 +77,17 @@ __decorate([
                 number: { type: Number },
                 sources: [
                     {
+                        name: { type: String },
+                        link: { type: String },
+                        uploader: { type: mongoose_2.Types.ObjectId, ref: "User" },
                         group: { type: String },
+                        _id: false,
                     },
                 ],
             },
         ],
         default: [],
+        _id: false,
     }),
     __metadata("design:type", Array)
 ], Anime.prototype, "episodes", void 0);
