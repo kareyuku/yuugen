@@ -98,6 +98,6 @@ export class UsersService {
   }
 
   async deleteGroup(groupName: string): Promise<void> {
-    
+   // return await this.groupModel.deleteOne({name: groupName});
   }
 }

@@ -50,7 +50,7 @@ export class Anime {
     planned: number;
     dropped: number;
   };
-
+  /*
   @Transform(({ value }) => {
     value = value.map((episode) => {
       if (!episode.sources) return episode;
@@ -62,7 +62,7 @@ export class Anime {
     });
 
     return value;
-  })
+  })*/
   @Prop({
     type: [
       {
