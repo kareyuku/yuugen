@@ -70,12 +70,13 @@ __decorate([
 __decorate([
     (0, class_transformer_1.Transform)(({ value }) => {
         value = value.map((episode) => {
-            if (!episode.sources)
-                return episode;
-            return episode.sources.map((source) => {
-                source.uploader = source.uploader.toString();
-                return source;
-            });
+            if (episode.sources)
+                episode.sources = episode.sources.map((source) => {
+                    if (source.uploader)
+                        source.uploader = source.uploader.toString();
+                    return source;
+                });
+            return episode;
         });
         return value;
     }),
