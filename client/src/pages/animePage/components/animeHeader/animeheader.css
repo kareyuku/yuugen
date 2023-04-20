@@ -46,4 +46,7 @@
         align-items: center;
         flex-direction: column;
     }
+    .yuugen__header__sidebar {
+        width: 100%;
+    }
 }

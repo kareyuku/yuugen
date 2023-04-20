@@ -50,14 +50,20 @@ export default () => {
         <Navbar/>
         <Container maxWidth={1500} pt={10}>
 
-            <Swiper modules={[Autoplay]} speed={500} autoplay={{delay: 5000, disableOnInteraction: false}} spaceBetween={10} style={{height: '600px'}}>
-                <SwiperSlide height="100%">
+            <Swiper 
+            slidesPerView={1}
+            modules={[Autoplay]} 
+            speed={500} 
+            autoplay={{delay: 5000, disadbleOnInteraction: false}} 
+            style={{height: '600px'}}>
+                <SwiperSlide>
                     <AnimeBanner/>
                 </SwiperSlide>
                 <SwiperSlide>
                     <AnimeBanner/>
                 </SwiperSlide>
             </Swiper>
+
             <Flex mt={10} flexDir={'column'} >
                 <Text fontSize={30} >Najwyżej oceniane</Text>
                 <Text mb={3}>Przeglądaj anime najlepiej ocenianie przez naszych użytkowników</Text>
@@ -65,13 +71,17 @@ export default () => {
 
             <Swiper
             slidesPerView={"auto"}
-            spaceBetween={30}
             pagination={{clickable: true}}
             autoplay={{delay: 3000, disableOnInteraction: false}}
             modules={[Autoplay]}
             >
             {mostRated.map(mAnime => 
-                <SwiperSlide style={{width: 'auto'}}>
+                <SwiperSlide className="yuugen__slider">
+                    <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
+                </SwiperSlide>
+            )}
+                        {mostRated.map(mAnime => 
+                <SwiperSlide className="yuugen__slider">
                     <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
                 </SwiperSlide>
             )}
@@ -82,13 +92,12 @@ export default () => {
 
             <Swiper
             slidesPerView={"auto"}
-            spaceBetween={30}
             pagination={{clickable: true}}
             autoplay={{delay: 3000, disableOnInteraction: false}}
             modules={[Autoplay]}
             >
             {lastUpdated.map(mAnime => 
-                <SwiperSlide style={{width: 'auto'}}>
+                <SwiperSlide className="yuugen__slider">
                     <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
                 </SwiperSlide>
             )}
