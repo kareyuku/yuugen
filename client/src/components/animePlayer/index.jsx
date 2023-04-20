@@ -7,10 +7,12 @@ import {
     Menu,
     MenuButton,
     MenuList,
+    Heading,
   } from '@chakra-ui/react'
 
 import { MdVideoLibrary } from 'react-icons/md'
 import {FaArrowAltCircleLeft, FaArrowAltCircleRight} from 'react-icons/fa'
+import './player.css';
 
 export default ({
     currentEpisode
@@ -36,31 +38,29 @@ export default ({
     })
 
     return (
-        <>
-            <Flex bg={'#252f49'} mt={3} p={5} style={{borderRadius: '20px 20px 0 0'}} justifyContent={'space-between'} alignItems={'center'} >
-                {currentEpisode?.title}
-                {currentSource?.src && <Button bg={'#131624'} _active={{bg: '#252f49'}} _hover={{bg: '#252f49'}} >Zgłoś Player</Button>}
-            </Flex>
+        <Flex width={'100%'} flexDir={'column'}>
+            <Flex className="yuugen-player">
+                {currentSource?.src 
+                    ? <iframe className="responsive-iframe" width={'100%'} src={currentSource?.src} title="Embed video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
+                    : <Text>Przykro nam, ale nie jesteśmy w stanie odnaleźć tego odcinka.</Text>
+                }
+                
+            </Flex>     
 
-            <Flex>
-                {currentSource?.src ? <iframe style={{aspectRatio: 2.5}} width="100%" height="100%" src={currentSource?.src} title="Embed video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
-                                : <Text>Upss... nie udało się nam znaleźć tego odcinka!</Text>}
-            </Flex>
-
-            <Flex justifyContent={'space-between'} bg={'#131624'} p={5} style={{borderRadius: '0 0 20px 20px'}} >
+            <Flex className="yuugen-player-footer">
 
                 <ButtonGroup>
                     <Link to={episodeNumber <= 1 ? "" : `/anime/${slug}/episode/${episodeNumber-1}`}>
-                        <Button bg={'#252f49'} _active={{bg: '#252f49'}} _hover={{bg: '#252f49'}} ><FaArrowAltCircleLeft/></Button>
+                        <Button bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} ><FaArrowAltCircleLeft/></Button>
                     </Link>
                     <Link to={`/anime/${slug}/episode/${Number(episodeNumber)+1}`}>
-                        <Button bg={'#252f49'} _active={{bg: '#252f49'}} _hover={{bg: '#252f49'}} ><FaArrowAltCircleRight/></Button>
+                        <Button bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} ><FaArrowAltCircleRight/></Button>
                     </Link>
                 </ButtonGroup>
 
                 <Menu>
                     <MenuButton 
-                    bg={'#252f49'} _active={{bg: '#252f49'}} _hover={{bg: '#252f49'}} 
+                    bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} 
                     as={Button} rightIcon={<MdVideoLibrary />}>Player</MenuButton>
                     <MenuList border={'none'} bg={'transparent'} gap={3}>
                         {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} src={player.src} author={player.author} />)}
@@ -68,6 +68,6 @@ export default ({
                 </Menu>
 
             </Flex>
-        </>
+        </Flex>
     )
 }

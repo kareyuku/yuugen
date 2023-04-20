@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom"
+import './animeCard.css';
 
 export default ({
     title, image, slug
 }) => {
     return (
         <Link to={`anime/${slug}`}>
-            <div className="anime__card">
-                <img style={{maxWidth: '500px', maxHeight: '300px'}} src={image} alt="anime" />
-                <div className="anime__card__title">
-                    <span>{title}</span>
-                </div>
+            <div>
+                <img src={image}/>
             </div>
+            <span className="anime__card__title">{title}</span>
         </Link>
     )
 }

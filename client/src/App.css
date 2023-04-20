@@ -1,28 +1,8 @@
-.anime__card {
-    display: flex;
-    flex-direction: column;
-    width: 195px;
-    padding: 5px;
-}
-
-.anime__card__title {
-    background: #252f49;
-    text-align: center;
-    padding: 5px;
-    border-radius: 0 0 10px 10px;
-}
-
-.anime__card img {
-    height: 270px;
-    border-radius: 10px 10px 0 0;
-}
-
 .anime__slide__container {
     display: flex;
     align-items: flex-end;
     background-color: #252f49;
     height: 100%;
-    width: 100%;
     border-radius: 25px;
     background-position: center;
     background-size: cover;

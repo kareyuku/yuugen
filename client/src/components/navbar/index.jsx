@@ -1,4 +1,4 @@
-import { Avatar, Container, Flex, Input, InputGroup, useToast } from '@chakra-ui/react';
+import { Avatar, Container, Flex, Img, Input, InputGroup, useToast } from '@chakra-ui/react';
 import './nav.css';
 
 import {
@@ -133,7 +133,7 @@ export default () => {
                 <Flex justifyContent={'space-between'}>
                     <Flex alignItems={'center'} gap={3}>
                         <Link to="/">
-                        <Avatar src={'https://media.discordapp.net/attachments/1000161200497233972/1096452529434411219/render1.png?width=671&height=671'} />
+                        <Img w={16} h={16} src={'https://media.discordapp.net/attachments/1000161200497233972/1096452529434411219/render1.png?width=671&height=671'} />
                         </Link>
                     </Flex>
                     <Flex alignItems={'center'} gap={3}>
