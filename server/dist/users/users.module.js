@@ -13,14 +13,19 @@ const users_service_1 = require("./services/users/users.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../schemas/user.schema");
 const user_controller_1 = require("./controllers/user/user.controller");
+const groups_controller_1 = require("./controllers/groups/groups.controller");
+const group_schema_1 = require("../schemas/group.schema");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
+                { name: group_schema_1.Group.name, schema: group_schema_1.GroupSchema },
+            ]),
         ],
-        controllers: [users_controller_1.UsersController, user_controller_1.UserController],
+        controllers: [users_controller_1.UsersController, user_controller_1.UserController, groups_controller_1.GroupsController],
         providers: [
             {
                 provide: "USER_SERVICE",

@@ -9,21 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateSourceDto = void 0;
+exports.CreateGroupDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateSourceDto {
+class CreateGroupDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateSourceDto.prototype, "name", void 0);
+    __metadata("design:type", Object)
+], CreateGroupDto.prototype, "owner", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateSourceDto.prototype, "link", void 0);
+], CreateGroupDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.Allow)(),
     __metadata("design:type", String)
-], CreateSourceDto.prototype, "group", void 0);
-exports.CreateSourceDto = CreateSourceDto;
-//# sourceMappingURL=CreateSource.dto.js.map
+], CreateGroupDto.prototype, "img", void 0);
+exports.CreateGroupDto = CreateGroupDto;
+//# sourceMappingURL=CreateGroup.dto.js.map

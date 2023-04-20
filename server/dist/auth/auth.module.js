@@ -15,12 +15,16 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../schemas/user.schema");
 const LocalStrategy_1 = require("./utils/LocalStrategy");
 const SessionSerializer_1 = require("./utils/SessionSerializer");
+const group_schema_1 = require("../schemas/group.schema");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
+                { name: group_schema_1.Group.name, schema: group_schema_1.GroupSchema },
+            ]),
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [
