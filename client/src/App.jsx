@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <AnimePage />,
   },
   {
-    path: "/anime/:name/episode/:episodeNumber",
+    path: "/anime/:slug/episode/:episodeNumber",
     element: <EpisodePage />,
   },
   {

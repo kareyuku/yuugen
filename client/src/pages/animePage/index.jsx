@@ -1,6 +1,6 @@
 import {
     Container,
-    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex, Heading
+    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex
 } from '@chakra-ui/react';
 import Navbar from '../../components/navbar';
 import ReviewPage from './components/reviewPage';
@@ -38,8 +38,12 @@ export default () => {
         <>
             <Navbar/>
             <AnimeHeader
-                        image={anime?.img}
-                        />
+            image={anime?.img}
+            desc={anime?.desc}
+            episodeCount={anime?.episodeCount}
+            rate={anime?.rate}
+            title={anime?.title}
+            />
             <Container mt={5} maxWidth={'1500px'}>
                 <Flex className='yuugen__header__wrapper'>
                     <Flex className="yuugen__header__content">
@@ -50,7 +54,7 @@ export default () => {
                             </TabList>
 
                             <TabPanels>
-                                <TabPanel> <EpisodesPage/> </TabPanel>
+                                <TabPanel> <EpisodesPage episodes={anime?.episodes}/> </TabPanel>
                                 <TabPanel> <ReviewPage/> </TabPanel>
                             </TabPanels>
                         </Tabs>

@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { loginUser, registerUser } from '../../api/auth';
+import { loginUser, registerUser, userData } from '../../api/auth';
 import { setCredentials } from '../../auth/authSlice';
 
 export default () => {
@@ -85,7 +85,7 @@ export default () => {
             const data = await loginUser({username, password});
 
             if(data) {
-                dispatch(setCredentials({username: data.username, avatar: data.avatar}))
+                dispatch(setCredentials({username: data.username, avatar: data.avatar, rank: data.rank}))
                 toast({ description: "Pomyślnie zalogowano!", status: 'success' })
                 onLoginClose();
             } else toast({ description: "Nie poprawna nazwa użytkownika bądź hasło!", status: 'error' })
@@ -115,6 +115,17 @@ export default () => {
             </Modal>
         )
     }
+
+    useEffect(() => {
+        const checkIfLoggedIn = async () => {
+            if(localStorage.getItem('isLoggedIn')) {
+                const isLogged = await userData();
+                if(isLogged) dispatch(setCredentials({username: isLogged.username, avatar: isLogged.avatar, rank: isLogged.rank}))
+                else localStorage.removeItem('isLoggedIn')
+            }
+        }
+        checkIfLoggedIn();
+    })
 
     return (
         <header style={{padding: '10px'}}>

@@ -19,11 +19,19 @@ const loginUser = async ({
 }) => {
     try {
         const req = await axios.post(`${api}/auth/login`, {username, password}, {withCredentials: true});
-        console.log(await axios.get(`${api}/auth/status`, { withCredentials: true}));
         return req.data;
     } catch(err) {
         return null
     }
 }
 
-export { registerUser, loginUser }
+const userData = async () => {
+    try {
+        const req = await axios.get(`${api}/user`, {withCredentials: true})
+        return req.data;
+    } catch(err) {
+        return null;
+    }
+}
+
+export { registerUser, loginUser, userData }

@@ -4,11 +4,15 @@ import {
     Input
 } from '@chakra-ui/react';
 
-import {
-    Link
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import { useState } from 'react';
 
-export default () => {
+export default ({
+    episodes
+}) => {
+
+    const [query, setQuery] = useState("");
+
     const Episode = ({
         number, image
     }) => {
@@ -22,10 +26,11 @@ export default () => {
     }
     return (
         <>
-            <Input placeholder='Wyszukaj numer odcinka...' className='melancholy__search' type="number" mb={5} />
+            <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Wyszukaj numer odcinka...' className='melancholy__search' type="number" mb={5} />
             <SimpleGrid columns={{sm: 1, md: 2, lg: 4, xl: 4}} rowGap={5} gap={5}>
-                <Episode number={'1'} image={'https://www.looper.com/img/gallery/every-naruto-shippuden-filler-episode-you-can-skip-according-to-reddit/l-intro-1626971937.jpg'}/>
-                <Episode number={'2'} image={'https://lh3.googleusercontent.com/pAqiOTfKI_MwGapjezMa1Osl4salc0naTRqTJOk_k11jI52WUydYt2EacCGpZMItdV6THEHWldQ=w1440-ns-nd-rj'}/>
+                {episodes && episodes.sort((a, b) => a.number - b.number).filter(episode => episode.number.toString().startsWith(query) ).map(episode => 
+                    <Episode number={episode.number} image={episode.img} />
+                    )}
             </SimpleGrid>
         </>
     )
