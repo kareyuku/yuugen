@@ -50,25 +50,11 @@ export default () => {
                     </BreadcrumbItem>
                 </Breadcrumb>
 
-                <Flex flexDir={'column'} mt={1} gap={3}>
-                    <Text ml={2} fontSize={20}>{currentEpisode?.title && currentEpisode?.title }</Text>
-                    <AnimePlayer
-                    anime={anime}
-                    currentEpisode={currentEpisode}
-                    />
-                    <Flex gap={3} m={0} height={'fit-content'}>
-                        <Flex p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} >
-                            <Text>Grupa: Brak</Text>
-                            <Text>Uploader: bartus</Text>
-                        </Flex>
-                        <SecureContent>
-                            <ButtonGroup>
-                                <ReportPlayer/>
-                                <AddSourceModal slug={slug} episodeNumber={episodeNumber}/>
-                            </ButtonGroup>
-                        </SecureContent>
-                    </Flex>
-                </Flex>
+                <AnimePlayer
+                anime={anime}
+                currentEpisode={currentEpisode}
+                />
+
 
             </Container>
         </>       

@@ -14,9 +14,9 @@ export default ({
                     </div>
                     <Flex className="info" flexDir={'column'} justifyContent={'space-between'}>
                             <Text>Wydawane</Text>
-                            <Heading>{title}</Heading>
+                            <Text fontSize={26}>{title}</Text>
                             <Button width={'fit-content'} mt={2} mb={2} bg={'#252f49'} fontWeight={'normal'}>Nieobejrzane</Button>
-                            <Text color={'#252f49'} className="info__text" fontSize={12}>
+                            <Text className="info__text" fontSize={12}>
                                 {desc}
                             </Text>
                     </Flex>

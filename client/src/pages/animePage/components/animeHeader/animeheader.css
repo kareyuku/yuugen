@@ -16,12 +16,14 @@
 }
 
 .info {
+    color: #e2ebfb;
     margin-left: .5rem;
 }
 
 .info__text {
     overflow: hidden;
     display: -webkit-box;
+    color: #75849d;
     -webkit-line-clamp: 2;
             line-clamp: 2; 
     -webkit-box-orient: vertical;
@@ -45,8 +47,14 @@
         justify-items: center;
         align-items: center;
         flex-direction: column;
+        text-align: center;
+    }
+    .info {
+        margin: 0;
     }
     .yuugen__header__sidebar {
         width: 100%;
+        margin: 0;
+        gap: 1rem;
     }
 }
