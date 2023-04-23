@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GroupsController = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("mongoose");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
 const CreateGroup_dto_1 = require("../../dtos/CreateGroup.dto");
 const groups_service_1 = require("../../services/groups/groups.service");
@@ -26,17 +27,17 @@ let GroupsController = class GroupsController {
         await this.groupService.createGroup(createGroupDto);
         return (0, responses_1.OKResponse)("Pomyślnie utworzono grupę.");
     }
-    async getGroup(group) {
-        const createdGroup = await this.groupService.findGroupByName(group);
-        if (!createdGroup)
+    async getGroup(groupId) {
+        const foundGroup = await this.groupService.findGroupById(new mongoose_1.Types.ObjectId(groupId));
+        if (!foundGroup)
             throw new common_1.BadRequestException("Nie znaleziono podanej grupy.");
-        return group;
+        return foundGroup;
     }
-    async patchGroup(createGroupDto, group) {
-        return await this.groupService.patchGroup(createGroupDto, group);
+    async patchGroup(createGroupDto, groupId) {
+        return await this.groupService.patchGroup(createGroupDto, new mongoose_1.Types.ObjectId(groupId));
     }
-    async deleteGroup(group) {
-        await this.groupService.deleteGroup(group);
+    async deleteGroup(groupId) {
+        await this.groupService.deleteGroup(new mongoose_1.Types.ObjectId(groupId));
         return (0, responses_1.OKResponse)("Pomyślnie usunięto grupę.");
     }
 };
@@ -50,25 +51,25 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "createGroup", null);
 __decorate([
-    (0, common_1.Get)(":group"),
-    __param(0, (0, common_1.Param)("group")),
+    (0, common_1.Get)(":groupId"),
+    __param(0, (0, common_1.Param)("groupId")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "getGroup", null);
 __decorate([
     (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
-    (0, common_1.Patch)(":group"),
+    (0, common_1.Patch)(":groupId"),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)("group")),
+    __param(1, (0, common_1.Param)("groupId")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreateGroup_dto_1.CreateGroupDto, String]),
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "patchGroup", null);
 __decorate([
     (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
-    (0, common_1.Delete)(":group"),
-    __param(0, (0, common_1.Param)("group")),
+    (0, common_1.Delete)(":groupId"),
+    __param(0, (0, common_1.Param)("groupId")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

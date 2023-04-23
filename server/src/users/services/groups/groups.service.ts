@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { Group } from "src/schemas/group.schema";
 import { CreateGroupDto } from "src/users/dtos/CreateGroup.dto";
 import { UsersService } from "../users/users.service";
@@ -19,6 +19,10 @@ export class GroupsService {
 
   async findGroupByName(name: string): Promise<Group> {
     return await this.groupModel.findOne({ name });
+  }
+
+  async findGroupById(id: Types.ObjectId): Promise<Group> {
+    return await this.groupModel.findById(id);
   }
 
   async createGroup(groupDto: CreateGroupDto): Promise<Group> {
@@ -43,7 +47,7 @@ export class GroupsService {
 
   async patchGroup(
     groupDto: CreateGroupDto,
-    groupName: string
+    groupId: Types.ObjectId
   ): Promise<Group> {
     if (groupDto.owner) {
       const owner = await this.userService.findUserByUsername(
@@ -58,20 +62,16 @@ export class GroupsService {
       groupDto.owner = owner._id;
     }
     try {
-      return await this.groupModel.findOneAndUpdate(
-        { name: groupName },
-        groupDto,
-        {
-          returnOriginal: false,
-        }
-      );
+      return await this.groupModel.findByIdAndUpdate(groupId, groupDto, {
+        returnOriginal: false,
+      });
     } catch {
       throw new InternalServerErrorException("Edycja grupy nie powiodła się.");
     }
   }
 
-  async deleteGroup(groupName: string): Promise<void> {
-    const group = await this.groupModel.findOne({ name: groupName });
+  async deleteGroup(groupId: Types.ObjectId): Promise<void> {
+    const group = await this.groupModel.findById(groupId);
 
     if (!group) throw new BadRequestException("Nie znaleziono podanej grupy.");
 
