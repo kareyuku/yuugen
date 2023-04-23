@@ -4,10 +4,20 @@ import { InjectModel } from "@nestjs/mongoose";
 import { User } from "src/schemas/user.schema";
 import { Model, Types } from "mongoose";
 import { encodePassword } from "src/utils/bcrypt";
+import Ranks from "src/auth/utils/Ranks";
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+
+  async isUserAllowed(
+    userId: Types.ObjectId,
+    matchId: Types.ObjectId
+  ): Promise<boolean> {
+    const user = await this.findUserById(userId);
+
+    return user._id.equals(matchId) || user.rank === Ranks.Admin;
+  }
 
   async addUser(userDto: CreateUserDto): Promise<User> {
     const addedUser = new this.userModel(userDto);

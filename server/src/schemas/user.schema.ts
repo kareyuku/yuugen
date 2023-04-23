@@ -35,7 +35,7 @@ export class User {
   @Prop({ default: "member" })
   rank: string;
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: "Group" })
+  @Prop({ type: [mongoose.Types.ObjectId], ref: "Group", default: [] })
   groups: mongoose.Types.ObjectId[];
 
   @Prop({ default: 0, type: Number })

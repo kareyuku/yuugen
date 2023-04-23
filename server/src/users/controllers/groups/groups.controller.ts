@@ -8,13 +8,17 @@ import {
   Param,
   Patch,
   Post,
+  Put,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
+import { Request } from "express";
 import { Types } from "mongoose";
-import { AdminGuard } from "src/auth/utils/LocalGuard";
+import { AdminGuard, AuthenticatedGuard } from "src/auth/utils/LocalGuard";
 import { CreateGroupDto } from "src/users/dtos/CreateGroup.dto";
+import { PatchGroupDto } from "src/users/dtos/PatchGroup.dto";
 import { GroupsService } from "src/users/services/groups/groups.service";
 import { OKResponse } from "src/utils/responses";
 
@@ -33,33 +37,95 @@ export class GroupsController {
   }
 
   @Get(":groupId")
-  async getGroup(@Param("groupId") groupId: string) {
-    const foundGroup = await this.groupService.findGroupById(
-      new Types.ObjectId(groupId)
-    );
+  async getGroup(@Param("groupId") groupId: string | Types.ObjectId) {
+    try {
+      groupId = new Types.ObjectId(groupId);
+    } catch {
+      throw new BadRequestException("Zły format id grupy.");
+    }
 
+    const foundGroup = await this.groupService.findGroupById(groupId);
     if (!foundGroup)
       throw new BadRequestException("Nie znaleziono podanej grupy.");
 
     return foundGroup;
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthenticatedGuard)
   @Patch(":groupId")
   async patchGroup(
-    @Body() createGroupDto: CreateGroupDto,
-    @Param("groupId") groupId: string
+    @Body() patchGroupDto: PatchGroupDto,
+    @Param("groupId") groupId: string | Types.ObjectId,
+    @Req() req: Request
   ) {
+    try {
+      groupId = new Types.ObjectId(groupId);
+    } catch {
+      throw new BadRequestException("Zły format id grupy.");
+    }
     return await this.groupService.patchGroup(
-      createGroupDto,
-      new Types.ObjectId(groupId)
+      patchGroupDto,
+      groupId,
+      new Types.ObjectId(req.user.toString())
     );
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthenticatedGuard)
   @Delete(":groupId")
-  async deleteGroup(@Param("groupId") groupId: string) {
-    await this.groupService.deleteGroup(new Types.ObjectId(groupId));
+  async deleteGroup(
+    @Param("groupId") groupId: string | Types.ObjectId,
+    @Req() req: Request
+  ) {
+    try {
+      groupId = new Types.ObjectId(groupId);
+    } catch {
+      throw new BadRequestException("Zły format id grupy.");
+    }
+
+    await this.groupService.deleteGroup(
+      groupId,
+      new Types.ObjectId(req.user.toString())
+    );
     return OKResponse("Pomyślnie usunięto grupę.");
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Put(":groupId/:user")
+  async addUserToGroup(
+    @Param("groupId") groupId: string | Types.ObjectId,
+    @Param("user") userToAdd: string,
+    @Req() req: Request
+  ) {
+    try {
+      groupId = new Types.ObjectId(groupId);
+    } catch {
+      throw new BadRequestException("Zły format id grupy.");
+    }
+    await this.groupService.addUserToGroup(
+      groupId,
+      userToAdd,
+      new Types.ObjectId(req.user.toString())
+    );
+    return OKResponse("Pomyślnie dodano do grupy.");
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Delete(":groupId/:user")
+  async removeUserFromGroup(
+    @Param("groupId") groupId: string | Types.ObjectId,
+    @Param("user") userToRemove: string,
+    @Req() req: Request
+  ) {
+    try {
+      groupId = new Types.ObjectId(groupId);
+    } catch {
+      throw new BadRequestException("Zły format id grupy.");
+    }
+    await this.groupService.removeUserFromGroup(
+      groupId,
+      userToRemove,
+      new Types.ObjectId(req.user.toString())
+    );
+    return OKResponse("Pomyślnie usunięto z grupy.");
   }
 }
