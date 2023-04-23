@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
 const CreateGroup_dto_1 = require("../../dtos/CreateGroup.dto");
 const users_service_1 = require("../../services/users/users.service");
+const responses_1 = require("../../../utils/responses");
 let GroupsController = class GroupsController {
     constructor(userService) {
         this.userService = userService;
@@ -24,10 +25,15 @@ let GroupsController = class GroupsController {
     async createGroup(createGroupDto) {
         return await this.userService.createGroup(createGroupDto);
     }
+    async getGroup(group) {
+        return await this.userService.getGroup(group);
+    }
     async patchGroup(createGroupDto, group) {
         return await this.userService.patchGroup(createGroupDto, group);
     }
     async deleteGroup(group) {
+        await this.userService.deleteGroup(group);
+        return (0, responses_1.OKResponse)("Pomyślnie usunięto grupę.");
     }
 };
 __decorate([
@@ -40,6 +46,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "createGroup", null);
 __decorate([
+    (0, common_1.Get)(":group"),
+    __param(0, (0, common_1.Param)("group")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], GroupsController.prototype, "getGroup", null);
+__decorate([
     (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     (0, common_1.Patch)(":group"),
     __param(0, (0, common_1.Body)()),
@@ -51,7 +64,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     (0, common_1.Delete)(":group"),
-    __param(0, (0, common_1.Param)('group')),
+    __param(0, (0, common_1.Param)("group")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

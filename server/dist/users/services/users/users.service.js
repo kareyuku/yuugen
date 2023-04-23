@@ -65,6 +65,12 @@ let UsersService = class UsersService {
     async findGroupByName(name) {
         return await this.groupModel.findOne({ name });
     }
+    async getGroup(groupName) {
+        const group = this.findGroupByName(groupName);
+        if (!group)
+            throw new common_1.BadRequestException("Nie znaleziono podanej grupy.");
+        return group;
+    }
     async patchGroup(groupDto, groupName) {
         if (groupDto.owner) {
             const owner = await this.findUserByUsername(groupDto.owner.toString());
@@ -82,6 +88,15 @@ let UsersService = class UsersService {
         }
     }
     async deleteGroup(groupName) {
+        const group = await this.groupModel.findOne({ name: groupName });
+        if (!group)
+            throw new common_1.BadRequestException("Nie znaleziono podanej grupy.");
+        try {
+            await group.deleteOne();
+        }
+        catch (_a) {
+            throw new common_1.InternalServerErrorException("Usuwanie grupy nie powiodło się.");
+        }
     }
 };
 UsersService = __decorate([

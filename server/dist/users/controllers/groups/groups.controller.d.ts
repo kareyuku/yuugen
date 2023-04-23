@@ -4,6 +4,7 @@ export declare class GroupsController {
     private readonly userService;
     constructor(userService: UsersService);
     createGroup(createGroupDto: CreateGroupDto): Promise<import("../../../schemas/group.schema").Group>;
+    getGroup(group: string): Promise<import("../../../schemas/group.schema").Group>;
     patchGroup(createGroupDto: CreateGroupDto, group: string): Promise<import("../../../schemas/group.schema").Group>;
-    deleteGroup(group: string): Promise<void>;
+    deleteGroup(group: string): Promise<Object>;
 }

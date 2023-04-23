@@ -68,6 +68,14 @@ export class UsersService {
     return await this.groupModel.findOne({ name });
   }
 
+  async getGroup(groupName: string): Promise<Group> {
+    const group = this.findGroupByName(groupName);
+
+    if (!group) throw new BadRequestException("Nie znaleziono podanej grupy.");
+
+    return group;
+  }
+
   async patchGroup(
     groupDto: CreateGroupDto,
     groupName: string
@@ -96,6 +104,16 @@ export class UsersService {
   }
 
   async deleteGroup(groupName: string): Promise<void> {
-   // return await this.groupModel.deleteOne({name: groupName});
+    const group = await this.groupModel.findOne({ name: groupName });
+
+    if (!group) throw new BadRequestException("Nie znaleziono podanej grupy.");
+
+    try {
+      await group.deleteOne();
+    } catch {
+      throw new InternalServerErrorException(
+        "Usuwanie grupy nie powiodło się."
+      );
+    }
   }
 }

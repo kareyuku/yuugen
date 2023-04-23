@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Inject,
   Param,
   Patch,
@@ -13,6 +14,7 @@ import {
 import { AdminGuard } from "src/auth/utils/LocalGuard";
 import { CreateGroupDto } from "src/users/dtos/CreateGroup.dto";
 import { UsersService } from "src/users/services/users/users.service";
+import { OKResponse } from "src/utils/responses";
 
 @Controller("groups")
 export class GroupsController {
@@ -27,6 +29,11 @@ export class GroupsController {
     return await this.userService.createGroup(createGroupDto);
   }
 
+  @Get(":group")
+  async getGroup(@Param("group") group: string) {
+    return await this.userService.getGroup(group);
+  }
+
   @UseGuards(AdminGuard)
   @Patch(":group")
   async patchGroup(
@@ -38,7 +45,8 @@ export class GroupsController {
 
   @UseGuards(AdminGuard)
   @Delete(":group")
-  async deleteGroup(@Param('group') group: string){
-    
+  async deleteGroup(@Param("group") group: string) {
+    await this.userService.deleteGroup(group);
+    return OKResponse("Pomyślnie usunięto grupę.");
   }
 }

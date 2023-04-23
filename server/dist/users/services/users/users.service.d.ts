@@ -12,6 +12,7 @@ export declare class UsersService {
     findUserById(id: Types.ObjectId): Promise<User>;
     createGroup(groupDto: CreateGroupDto): Promise<Group>;
     findGroupByName(name: string): Promise<Group>;
+    getGroup(groupName: string): Promise<Group>;
     patchGroup(groupDto: CreateGroupDto, groupName: string): Promise<Group>;
     deleteGroup(groupName: string): Promise<void>;
 }

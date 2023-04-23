@@ -69,6 +69,7 @@ export class EpisodesService {
     if (!anime)
       throw new BadRequestException("Nie znaleziono anime o podanym slug.");
 
+
     const foundEpisodeIndex = anime.episodes.findIndex(
       (epis) => epis.number === episode
     );

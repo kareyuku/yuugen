@@ -38,12 +38,6 @@ export declare class Anime {
     episodeCount: number;
     rate: number;
     slug: string;
-    stats: {
-        watching: number;
-        completed: number;
-        planned: number;
-        dropped: number;
-    };
     episodes: {
         number: number;
         title: string;

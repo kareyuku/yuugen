@@ -50,6 +50,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "rank", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ type: mongoose.Types.ObjectId, ref: "Group" }),
+    __metadata("design:type", Array)
+], User.prototype, "groups", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ default: 0, type: Number }),
     __metadata("design:type", Number)
 ], User.prototype, "status", void 0);
@@ -57,30 +61,6 @@ __decorate([
     (0, mongoose_1.Prop)({ default: 0, type: Number }),
     __metadata("design:type", Number)
 ], User.prototype, "points", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({
-        type: {
-            watching: [
-                {
-                    type: {
-                        animeId: { type: mongoose.Schema.Types.ObjectId, ref: "Anime" },
-                        progress: { type: String },
-                    },
-                },
-            ],
-            completed: {
-                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
-            },
-            planned: {
-                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
-            },
-            dropped: {
-                type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Anime" }],
-            },
-        },
-    }),
-    __metadata("design:type", Object)
-], User.prototype, "animeList", void 0);
 User = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], User);

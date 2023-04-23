@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import { Anime } from "./anime.schema";
 export type UserDocument = mongoose.HydratedDocument<User>;
 export declare class User {
     _id: mongoose.Types.ObjectId;
@@ -11,19 +10,9 @@ export declare class User {
     email: string;
     avatar: string;
     rank: string;
+    groups: mongoose.Types.ObjectId[];
     status: number;
     points: number;
-    animeList: {
-        watching: [
-            {
-                animeId: Anime;
-                progress: number;
-            }
-        ];
-        completed: [animeId: Anime];
-        planned: [animeId: Anime];
-        dropped: [animeId: Anime];
-    };
 }
 export declare const UserSchema: mongoose.Schema<User, mongoose.Model<User, any, any, any, mongoose.Document<unknown, any, User> & Omit<User & Required<{
     _id: mongoose.Types.ObjectId;

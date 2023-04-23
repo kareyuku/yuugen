@@ -35,12 +35,16 @@ export class User {
   @Prop({ default: "member" })
   rank: string;
 
+  @Prop({ type: mongoose.Types.ObjectId, ref: "Group" })
+  groups: mongoose.Types.ObjectId[];
+
   @Prop({ default: 0, type: Number })
   status: number;
 
   @Prop({ default: 0, type: Number })
   points: number;
 
+  /*
   @Prop({
     type: {
       watching: [
@@ -72,7 +76,7 @@ export class User {
     completed: [animeId: Anime];
     planned: [animeId: Anime];
     dropped: [animeId: Anime];
-  };
+  };*/
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

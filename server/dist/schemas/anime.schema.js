@@ -64,16 +64,14 @@ __decorate([
     __metadata("design:type", String)
 ], Anime.prototype, "slug", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Object }),
-    __metadata("design:type", Object)
-], Anime.prototype, "stats", void 0);
-__decorate([
     (0, class_transformer_1.Transform)(({ value }) => {
         value = value.map((episode) => {
             if (episode.sources)
                 episode.sources = episode.sources.map((source) => {
                     if (source.uploader)
                         source.uploader = source.uploader.toString();
+                    if (source.group)
+                        source.group = source.group.toString();
                     return source;
                 });
             return episode;

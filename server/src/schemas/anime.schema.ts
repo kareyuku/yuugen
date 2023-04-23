@@ -42,20 +42,21 @@ export class Anime {
 
   @Prop({ unique: true, required: true })
   slug: string;
-
+  /*
   @Prop({ type: Object })
   stats: {
     watching: number;
     completed: number;
     planned: number;
     dropped: number;
-  };
+  };*/
 
   @Transform(({ value }) => {
     value = value.map((episode) => {
       if (episode.sources)
         episode.sources = episode.sources.map((source) => {
           if (source.uploader) source.uploader = source.uploader.toString();
+          if (source.group) source.group = source.group.toString();
           return source;
         });
       return episode;
@@ -75,7 +76,8 @@ export class Anime {
             name: { type: String },
             link: { type: String },
             uploader: { type: Types.ObjectId, ref: "User" },
-            group: { type: String }, // to do ref
+            //group: { type: Types.ObjectId, ref: "Group" },
+            group: {type: String},
             _id: false,
           },
         ],
@@ -93,7 +95,8 @@ export class Anime {
       name: string;
       link: string;
       uploader: Types.ObjectId;
-      group: string; // to do ref
+      group: string;
+      //group: Types.ObjectId;
     }[];
   }[];
 
