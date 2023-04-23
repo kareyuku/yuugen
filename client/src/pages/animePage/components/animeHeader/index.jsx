@@ -5,7 +5,7 @@ import './animeheader.css';
 export default ({
     title, desc, image, episodeCount, rate
 }) => {
-    return <Flex bg={'#1b1f35'}>
+    return <Flex >
         <Container maxW={1500}>
             <Flex className="yuugen__header__wrapper">
                 <Flex className="yuugen__header__content">

@@ -44,27 +44,29 @@ export default () => {
             rate={anime?.rate}
             title={anime?.title}
             />
-            <Container mt={5} maxWidth={'1500px'}>
-                <Flex className='yuugen__header__wrapper'>
-                    <Flex className="yuugen__header__content">
-                        <Tabs width={'100%'}>
-                            <TabList>
-                                <Tab>Odcinki</Tab>
-                                <Tab>Recenzje</Tab>
-                            </TabList>
+            <Flex flexGrow={1} height={'max-content'} flex={1} bg={'#171a2b'}>
+                <Container mt={5} maxWidth={'1500px'}>
+                    <Flex className='yuugen__header__wrapper'>
+                        <Flex className="yuugen__header__content">
+                            <Tabs width={'100%'}>
+                                <TabList>
+                                    <Tab>Odcinki</Tab>
+                                    <Tab>Recenzje</Tab>
+                                </TabList>
 
-                            <TabPanels>
-                                <TabPanel> <EpisodesPage episodes={anime?.episodes}/> </TabPanel>
-                                <TabPanel> <ReviewPage/> </TabPanel>
-                            </TabPanels>
-                        </Tabs>
+                                <TabPanels>
+                                    <TabPanel> <EpisodesPage episodes={anime?.episodes}/> </TabPanel>
+                                    <TabPanel> <ReviewPage/> </TabPanel>
+                                </TabPanels>
+                            </Tabs>
+                        </Flex>
+                        <Flex className="yuugen__header__sidebar" fontSize={14}>
+                            {/* <Heading>Statystyki</Heading>
+                            <Heading>Połączone</Heading> */}
+                        </Flex>
                     </Flex>
-                    <Flex className="yuugen__header__sidebar" fontSize={14}>
-                        {/* <Heading>Statystyki</Heading>
-                        <Heading>Połączone</Heading> */}
-                    </Flex>
-                </Flex>
-            </Container>
+                </Container>
+            </Flex>
         </>
     )
 }

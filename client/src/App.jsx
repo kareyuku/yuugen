@@ -5,7 +5,7 @@ import store from "./store";
 import "./App.css";
 
 import Landing from "./pages/landing";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AnimePage from "./pages/animePage";
 import EpisodePage from "./pages/episodePage";
 import AddAnimePage from "./pages/addAnimePage";
@@ -14,6 +14,7 @@ import AdminPage from "./pages/adminPage";
 import IsLogged from "./components/isLogged";
 
 import './styles/modal.css';
+import './styles/slider.css';
 
 const router = createBrowserRouter([
   {
@@ -42,10 +43,20 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = extendTheme({
+  styles: {
+    global: () => ({
+      body: {
+        bg: "#1b1f35"
+      }
+    })
+  }
+})
+
 export default () => {
   return (
     <Provider store={store}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <IsLogged>
           <RouterProvider router={router} />
         </IsLogged>

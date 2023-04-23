@@ -2,13 +2,6 @@ import { Avatar, Container, Flex, Img, Input, InputGroup, useToast } from '@chak
 import './nav.css';
 
 import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     useDisclosure,
     Button,
     Text
@@ -16,8 +9,6 @@ import {
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { loginUser, registerUser, userData } from '../../api/auth';
-import { setCredentials } from '../../auth/authSlice';
 import LoginModal from '../../modals/loginModal';
 import RegisterModal from '../../modals/registerModal';
 
@@ -46,7 +37,7 @@ export default () => {
                     </Flex>
                     <Flex alignItems={'center'} gap={3}>
                         <input style={{width: '100%'}} className='melancholy__search' type="search" placeholder="Wyszukaj anime..." />
-                        {logged ? <Avatar/> : <button onClick={onLoginOpen}>Zaloguj się</button> }
+                        {logged ? <Avatar/> : <Button onClick={onLoginOpen}>Zaloguj się</Button> }
                     </Flex>
                 </Flex>
             </Container>

@@ -7,7 +7,6 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif!important;
-  background-color: #171a2b!important;
   color: white!important;
 }
 
@@ -17,4 +16,11 @@ body {
   -webkit-line-clamp: 1;
           line-clamp: 1; 
   -webkit-box-orient: vertical;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 100vh;
 }

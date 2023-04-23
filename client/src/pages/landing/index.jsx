@@ -5,9 +5,9 @@ import { Container, Flex, Text } from '@chakra-ui/react';
 import "swiper/css";
 import "swiper/css/pagination";
 import AnimeBanner from "../../components/animeBanner";
-import AnimeCard from "../../components/animeCard";
 import { useEffect, useState } from "react";
 import { findAnime } from "../../api/anime";
+import Slider from "../../components/slider";
 
 export default () => {
 
@@ -43,44 +43,17 @@ export default () => {
                 </SwiperSlide>
             </Swiper>
 
-            <Flex mt={10} flexDir={'column'} >
-                <Text fontSize={30} >Najwyżej oceniane</Text>
-                <Text mb={3}>Przeglądaj anime najlepiej ocenianie przez naszych użytkowników</Text>
-            </Flex>
+            <Slider
+            label={"Najwyżej oceniane"}
+            desc={"Przeglądaj anime najlepiej oceniane przez naszych użytkowników"}
+            items={mostRated}
+            />
 
-            <Swiper
-            slidesPerView={"auto"}
-            pagination={{clickable: true}}
-            autoplay={{delay: 3000, disableOnInteraction: false}}
-            modules={[Autoplay]}
-            >
-            {mostRated.map(mAnime => 
-                <SwiperSlide className="yuugen__slider">
-                    <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
-                </SwiperSlide>
-            )}
-                        {mostRated.map(mAnime => 
-                <SwiperSlide className="yuugen__slider">
-                    <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
-                </SwiperSlide>
-            )}
-            </Swiper>
-
-            <Text fontSize={30} mt={10}>Ostatnio Aktualizowane</Text>
-            <Text mb={3}>Bądź na bieżąco i przejrzyj nowe zmiany</Text>
-
-            <Swiper
-            slidesPerView={"auto"}
-            pagination={{clickable: true}}
-            autoplay={{delay: 3000, disableOnInteraction: false}}
-            modules={[Autoplay]}
-            >
-            {lastUpdated.map(mAnime => 
-                <SwiperSlide className="yuugen__slider">
-                    <AnimeCard title={mAnime.title} image={mAnime.img} slug={mAnime.slug}/>
-                </SwiperSlide>
-            )}
-            </Swiper>
+            <Slider
+            label={"Ostatnio Aktualizowane"}
+            desc={"Bądź na bieżąco i przejrzyj nowe zmiany"}
+            items={lastUpdated}
+            />
             
         </Container >
         </>
