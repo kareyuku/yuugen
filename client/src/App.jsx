@@ -11,6 +11,9 @@ import EpisodePage from "./pages/episodePage";
 import AddAnimePage from "./pages/addAnimePage";
 import ProfilePage from "./pages/profilePage";
 import AdminPage from "./pages/adminPage";
+import IsLogged from "./components/isLogged";
+
+import './styles/modal.css';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +46,9 @@ export default () => {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        <RouterProvider router={router} />
+        <IsLogged>
+          <RouterProvider router={router} />
+        </IsLogged>
       </ChakraProvider>
     </Provider>
   );

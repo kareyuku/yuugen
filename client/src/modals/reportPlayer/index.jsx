@@ -13,15 +13,15 @@ export default ({
     const ReportModal = () => (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay p={5}/>
-            <ModalContent>
+            <ModalContent className="yuugen-modal" >
                 <ModalBody>
                     <Text mt={3} mb={3} fontSize={21}>Zgłaszanie Odtwarzacza</Text>
                     <label>Tekst dla moderatora</label>
                     <Textarea/>
                 </ModalBody>
                 <ModalFooter gap={3}>
-                    <Button onClick={sendReport}>Wyślij</Button>
-                    <Button onClick={onClose}>Anuluj</Button>
+                    <Button bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} onClick={sendReport}>Wyślij</Button>
+                    <Button bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} onClick={onClose}>Anuluj</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

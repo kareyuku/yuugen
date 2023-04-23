@@ -47,7 +47,7 @@ export default () => {
             <Container mt={5} maxWidth={'1500px'}>
                 <Flex className='yuugen__header__wrapper'>
                     <Flex className="yuugen__header__content">
-                        <Tabs mt={5} width={'100%'}>
+                        <Tabs width={'100%'}>
                             <TabList>
                                 <Tab>Odcinki</Tab>
                                 <Tab>Recenzje</Tab>

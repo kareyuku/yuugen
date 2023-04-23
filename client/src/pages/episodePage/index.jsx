@@ -1,16 +1,8 @@
-import { Box, ButtonGroup, Container } from "@chakra-ui/react"
+import { Box, ButtonGroup, Container, Heading } from "@chakra-ui/react"
 import Navbar from "../../components/navbar"
-import { MdVideoLibrary } from 'react-icons/md'
-import {FaArrowAltCircleLeft, FaArrowAltCircleRight} from 'react-icons/fa'
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    Text, Flex,
-    Button,
-    Menu,
-    MenuButton,
-    MenuList,
+    Breadcrumb, BreadcrumbItem, BreadcrumbLink,
+    Text, Flex
   } from '@chakra-ui/react'
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -18,12 +10,12 @@ import { getAnime } from "../../api/anime"
 import AnimePlayer from "../../components/animePlayer"
 import ReportPlayer from "../../modals/reportPlayer"
 import AddSourceModal from "../../modals/addSourceModal"
+import SecureContent from "../../components/secureContent"
 
 export default () => {
     const {slug, episodeNumber} = useParams();
     const [anime, setAnime] = useState({});
     const [currentEpisode, setCurrentEpisode] = useState({})
-    const [currentPlayer, setCurrentPlayer] = useState({});
 
     const changeAnime = async () => {
         const reqAnime = await getAnime(slug);
@@ -32,7 +24,7 @@ export default () => {
         if(episode) setCurrentEpisode(episode)
     }
 
-    const changeEpisode = async (next) => {
+    const changeEpisode = async () => {
         setCurrentEpisode({})
         setAnime({}); 
         changeAnime();          
@@ -58,23 +50,23 @@ export default () => {
                     </BreadcrumbItem>
                 </Breadcrumb>
 
-                <Flex className="yuugen__header__wrapper" mt={1} gap={3}>
+                <Flex flexDir={'column'} mt={1} gap={3}>
+                    <Text ml={2} fontSize={20}>{currentEpisode?.title && currentEpisode?.title }</Text>
                     <AnimePlayer
                     anime={anime}
                     currentEpisode={currentEpisode}
                     />
-                    <Flex className="yuugen__header__sidebar" gap={3} m={0} height={'fit-content'}>
-                        <Flex p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} width={'100%'} >
-                            <Text>Nazwa Odcinka</Text>
-                        </Flex>
-                        <Flex p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} width={'100%'} >
+                    <Flex gap={3} m={0} height={'fit-content'}>
+                        <Flex p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} >
                             <Text>Grupa: Brak</Text>
                             <Text>Uploader: bartus</Text>
                         </Flex>
-                        <ButtonGroup>
-                            <ReportPlayer/>
-                            <AddSourceModal slug={slug} episodeNumber={episodeNumber}/>
-                        </ButtonGroup>
+                        <SecureContent>
+                            <ButtonGroup>
+                                <ReportPlayer/>
+                                <AddSourceModal slug={slug} episodeNumber={episodeNumber}/>
+                            </ButtonGroup>
+                        </SecureContent>
                     </Flex>
                 </Flex>
 

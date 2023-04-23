@@ -7,7 +7,6 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    Heading,
   } from '@chakra-ui/react'
 
 import { MdVideoLibrary } from 'react-icons/md'
@@ -22,10 +21,13 @@ export default ({
     const {episodeNumber, slug} = useParams();
 
     const PlayerOption = ({
-        name, src, author
+        name, link, author
     }) => {
         return (
-            <Flex onClick={() => setSource({name, src, author})} bg={'#131624'} alignItems={'center'} borderRadius={'10px'} p={3} gap={3}>
+            <Flex onClick={() => {
+                setSource({name, link, author})
+                console.log(link + "uwu")
+            }} bg={'#131624'} alignItems={'center'} borderRadius={'10px'} p={3} gap={3}>
                 <Text>{author} - {name}</Text>
             </Flex>
         )
@@ -35,13 +37,13 @@ export default ({
         setSource({});
         const sources = currentEpisode?.sources;
         if(sources?.length > 0) setSource(sources[0])
-    })
+    }, [currentEpisode])
 
     return (
         <Flex width={'100%'} flexDir={'column'}>
             <Flex className="yuugen-player">
-                {currentSource?.src 
-                    ? <iframe className="responsive-iframe" width={'100%'} src={currentSource?.src} title="Embed video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
+                {currentSource?.link 
+                    ? <iframe className="responsive-iframe" width={'100%'} src={currentSource?.link} title="Embed video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
                     : <Text>Przykro nam, ale nie jesteśmy w stanie odnaleźć tego odcinka.</Text>
                 }
                 
@@ -63,7 +65,7 @@ export default ({
                     bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} 
                     as={Button} rightIcon={<MdVideoLibrary />}>Player</MenuButton>
                     <MenuList border={'none'} bg={'transparent'} gap={3}>
-                        {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} src={player.src} author={player.author} />)}
+                        {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} link={player.link} author={player.author} />)}
                     </MenuList>
                 </Menu>
 

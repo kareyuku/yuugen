@@ -1,0 +1,27 @@
+.yuugen-modal {
+    background: #171a2b!important;
+}
+
+.yuugen-modal textarea {
+    background: #252f49!important;
+    border: 0;
+    outline: 0;
+    resize: none;
+}
+
+
+.yuugen-modal input {
+    background: #252f49!important;
+    border: 0;
+    outline: 0;
+}
+
+.yuugen-modal select {
+    background: #252f49!important;
+    border: 0;
+    outline: 0;
+}
+
+.yuugen-modal button {
+    background: #131624!important;
+}
