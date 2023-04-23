@@ -18,26 +18,30 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const review_schema_1 = require("../../../schemas/review.schema");
 const anime_service_1 = require("../anime/anime.service");
+const anime_schema_1 = require("../../../schemas/anime.schema");
 let ReviewsService = class ReviewsService {
-    constructor(reviewModel, animeService) {
+    constructor(reviewModel, animeModel, animeService) {
         this.reviewModel = reviewModel;
+        this.animeModel = animeModel;
         this.animeService = animeService;
     }
     async getReviewById(reviewId) {
         return await this.reviewModel.findById(reviewId);
     }
     async createReview(user, slug, reviewDto) {
-        const anime = await this.animeService.getAnimeBySlug(slug);
+        const anime = await this.animeModel.findOne({ slug });
         if (!anime)
             throw new common_1.NotFoundException("Nie znaleziono anime o podanym slug.");
         const review = await new this.reviewModel(reviewDto);
         review.addedBy = user;
         review.addedTo = anime._id;
+        anime.reviews.push(review._id);
         try {
-            review.save();
+            await review.save();
+            await anime.save();
             return review;
         }
-        catch (err) {
+        catch (_a) {
             throw new common_1.BadRequestException("Nieprawidłowe dane wejściowe.");
         }
     }
@@ -63,8 +67,10 @@ let ReviewsService = class ReviewsService {
 ReviewsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(review_schema_1.Review.name)),
-    __param(1, (0, common_1.Inject)("ANIME_SERVICE")),
+    __param(1, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
+    __param(2, (0, common_1.Inject)("ANIME_SERVICE")),
     __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
         anime_service_1.AnimeService])
 ], ReviewsService);
 exports.ReviewsService = ReviewsService;

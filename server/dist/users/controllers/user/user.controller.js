@@ -24,7 +24,7 @@ let UserController = class UserController {
         this.userService = userService;
     }
     async getUser(req) {
-        return await this.userService.findUserById(new mongoose_1.Types.ObjectId(req.user.toString()));
+        return await this.userService.getAllAboutUser(new mongoose_1.Types.ObjectId(req.user.toString()));
     }
 };
 __decorate([

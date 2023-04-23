@@ -1,10 +1,45 @@
 {
 	"info": {
-		"_postman_id": "431ca0b7-5b09-49d7-8d09-c878fc010a74",
+		"_postman_id": "3ba2c7c1-100a-434e-adb1-25470e902e11",
 		"name": "yuugen",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"DooNIK2\",\r\n    \"password\": \"HuJec123#@!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Users",
 			"item": [
@@ -15,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"tes21t\",\r\n    \"password\":\"fdg$#G%#WF$32\",\r\n    \"email\": \"test@test.test\"\r\n}",
+							"raw": "{\r\n    \"email\": \"fajnyemail@gmail.com\",\r\n    \"username\": \"DooNIK\",\r\n    \"password\": \"HuJec123#@!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,7 +79,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/users/tes21t",
+							"raw": "http://localhost:3001/api/users/DooNIK",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -53,7 +88,7 @@
 							"path": [
 								"api",
 								"users",
-								"tes21t"
+								"DooNIK"
 							]
 						}
 					},
@@ -62,16 +97,41 @@
 			]
 		},
 		{
-			"name": "Auth",
+			"name": "User",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "Create",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"tes21t\",\r\n    \"password\":\"fdg$#G%#WF$32\",\r\n    \"email\": \"test@test.test\"\r\n}",
+							"raw": "{\r\n    \"owner\": \"DooNIK\",\r\n    \"name\": \"fajna_grupa1337\",\r\n    \"img\": \"https://www.wrzuta.pl/fajnezdjecie.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -79,7 +139,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3001/api/auth/login",
+							"raw": "http://localhost:3001/api/groups",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -87,20 +147,19 @@
 							"port": "3001",
 							"path": [
 								"api",
-								"auth",
-								"login"
+								"groups"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Status",
+					"name": "Group",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/auth/status",
+							"raw": "http://localhost:3001/api/groups/644576d2a0716a7cfcbdae4c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -108,8 +167,82 @@
 							"port": "3001",
 							"path": [
 								"api",
-								"auth",
-								"status"
+								"groups",
+								"644576d2a0716a7cfcbdae4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Group",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"fajna_grupa2137\",\r\n    \"owner\": \"DooNIK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/groups/6445708fb51927b5640d7f9f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"groups",
+								"6445708fb51927b5640d7f9f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/groups/644576d2a0716a7cfcbdae4c/DooNIK2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"groups",
+								"644576d2a0716a7cfcbdae4c",
+								"DooNIK2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/groups/644576d2a0716a7cfcbdae4c/DooNIK2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"groups",
+								"644576d2a0716a7cfcbdae4c",
+								"DooNIK2"
 							]
 						}
 					},
@@ -127,7 +260,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Naruto\",\r\n    \"desc\": \"Hokage naruto\",\r\n    \"img\": \"https://www.someimage.com/how.png\",\r\n    \"banner\": \"https://www.somebanner.com/how.png\",\r\n    \"episodeCount\": 220,\r\n    \"rate\": 7.98,\r\n    \"slug\": \"Naruto\"\r\n}",
+							"raw": "{ \"title\": \"Naruto\", \"image\": \"https://wbijam.pl/grafika/anime/nar_plakat.jpg\", \"slug\": \"naruto\", \"episodeCount\": 12} ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -156,7 +289,38 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:3001/api/anime/naruto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"anime",
+								"naruto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Animes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/anime/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"anime",
+								""
+							]
 						}
 					},
 					"response": []
@@ -168,7 +332,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"_id\": \"643aa0c8189f9bb5be8fd564\",\r\n    \"title\": \"Naruto\",\r\n    \"desc\": \"Hokage naruto3\",\r\n    \"img\": \"https://www.someimage.com/how.png\",\r\n    \"banner\": \"https://www.somebanner.com/how.png\",\r\n    \"episodeCount\": 220,\r\n    \"rate\": 0,\r\n    \"slug\": \"naruto\",\r\n    \"createdAt\": \"2023-04-15T13:04:08.969Z\",\r\n    \"updatedAt\": \"2023-04-15T13:04:08.969Z\",\r\n    \"__v\": 0\r\n}",
+							"raw": "{\"rate\": 5}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,6 +350,180 @@
 								"api",
 								"anime",
 								"naruto"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Episodes",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/episodes/naruto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"episodes",
+								"naruto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Episode",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/episodes/naruto/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"episodes",
+								"naruto",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Source",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"NARUTO WKRACZA DO AKCJI !!!\",\r\n    \"link\": \"https://www.cda.pl\",\r\n    \"group\": \"644576d2a0716a7cfcbdae4c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/episodes/naruto/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"episodes",
+								"naruto",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rate\": 105,\r\n    \"content\": \"wow\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/reviews/naruto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reviews",
+								"naruto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Review",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"content\": \"wow2\", \"rate\": 5}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/reviews/64458b484e0eae8a6e09e5bb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reviews",
+								"64458b484e0eae8a6e09e5bb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anime",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/reviews/64458b484e0eae8a6e09e5bb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reviews",
+								"64458b484e0eae8a6e09e5bb"
 							]
 						}
 					},
@@ -221,31 +559,9 @@
 					"name": "All",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Episodes",
-			"item": [
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"number\": 1,\r\n    \"img\": \"huj\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:3001/api/episodes/naruto",
+							"raw": "http://localhost:3001/api/tags",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -253,30 +569,7 @@
 							"port": "3001",
 							"path": [
 								"api",
-								"episodes",
-								"naruto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3001/api/episodes/naruto/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"episodes",
-								"naruto",
-								"1"
+								"tags"
 							]
 						}
 					},

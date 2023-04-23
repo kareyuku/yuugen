@@ -53,7 +53,7 @@ AnimeModule = __decorate([
                 useClass: tags_service_1.TagsService,
             },
             {
-                provide: "EPISODES_SERVICE",
+                provide: "EPISODE_SERVICE",
                 useClass: episodes_service_1.EpisodesService,
             },
         ],

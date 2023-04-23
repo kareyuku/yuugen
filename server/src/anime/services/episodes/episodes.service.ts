@@ -10,11 +10,13 @@ import { CreateEpisodeDto } from "src/anime/dtos/CreateEpisode.dto";
 import { AnimeService } from "../anime/anime.service";
 import { Anime } from "src/schemas/anime.schema";
 import { CreateSourceDto } from "src/anime/dtos/CreateSource.dto";
+import { GroupsService } from "src/users/services/groups/groups.service";
 
 @Injectable()
 export class EpisodesService {
   constructor(
     @Inject("ANIME_SERVICE") private readonly animeService: AnimeService,
+    @Inject("GROUP_SERVICE") private readonly groupService: GroupsService,
     @InjectModel(Anime.name) private animeModel: Model<Anime>
   ) {}
 
@@ -69,6 +71,19 @@ export class EpisodesService {
     if (!anime)
       throw new BadRequestException("Nie znaleziono anime o podanym slug.");
 
+    if (sourceDto.group) {
+      try {
+        sourceDto.group = new Types.ObjectId(sourceDto.group);
+      } catch {
+        throw new BadRequestException("Zły format id grupy.");
+      }
+      const group = await this.groupService.findGroupById(sourceDto.group);
+
+      if (!group) throw new BadRequestException("Nie ma grupy o podanym id.");
+
+      if (!(group.members.includes(user) || group.owner === user))
+        throw new BadRequestException("Nie należysz to tej grupy.");
+    }
 
     const foundEpisodeIndex = anime.episodes.findIndex(
       (epis) => epis.number === episode

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSourceDto = void 0;
 const class_validator_1 = require("class-validator");
+const mongoose_1 = require("mongoose");
 class CreateSourceDto {
 }
 __decorate([
@@ -23,7 +24,7 @@ __decorate([
 ], CreateSourceDto.prototype, "link", void 0);
 __decorate([
     (0, class_validator_1.Allow)(),
-    __metadata("design:type", String)
+    __metadata("design:type", mongoose_1.Types.ObjectId)
 ], CreateSourceDto.prototype, "group", void 0);
 exports.CreateSourceDto = CreateSourceDto;
 //# sourceMappingURL=CreateSource.dto.js.map

@@ -51,19 +51,6 @@ export class Anime {
     dropped: number;
   };*/
 
-  @Transform(({ value }) => {
-    value = value.map((episode) => {
-      if (episode.sources)
-        episode.sources = episode.sources.map((source) => {
-          if (source.uploader) source.uploader = source.uploader.toString();
-          if (source.group) source.group = source.group.toString();
-          return source;
-        });
-      return episode;
-    });
-
-    return value;
-  })
   @Prop({
     type: [
       {
@@ -76,8 +63,8 @@ export class Anime {
             name: { type: String },
             link: { type: String },
             uploader: { type: Types.ObjectId, ref: "User" },
-            //group: { type: Types.ObjectId, ref: "Group" },
-            group: {type: String},
+            group: { type: Types.ObjectId, ref: "Group" },
+            //group: {type: String},
             _id: false,
           },
         ],
@@ -95,8 +82,8 @@ export class Anime {
       name: string;
       link: string;
       uploader: Types.ObjectId;
-      group: string;
-      //group: Types.ObjectId;
+      //group: string;
+      group: Types.ObjectId;
     }[];
   }[];
 

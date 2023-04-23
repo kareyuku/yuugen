@@ -36,6 +36,12 @@ let AnimeService = class AnimeService {
     async getAnimeBySlug(slug) {
         return await this.animeModel.findOne({ slug });
     }
+    async getAnimeData(slug) {
+        const anime = await this.animeModel.findOne({ slug });
+        if (!anime)
+            throw new common_1.BadRequestException("Nie ma anime o podanym slug.");
+        return await (await anime.populate("episodes.sources.uploader", "username -_id")).populate("episodes.sources.group", "img name");
+    }
     async getAnime(page, limit, sortBy, sortOrder) {
         return await this.animeModel
             .find()

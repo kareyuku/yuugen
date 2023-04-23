@@ -70,7 +70,7 @@ __decorate([
 ], EpisodesController.prototype, "createSource", null);
 EpisodesController = __decorate([
     (0, common_1.Controller)("episodes"),
-    __param(0, (0, common_1.Inject)("EPISODES_SERVICE")),
+    __param(0, (0, common_1.Inject)("EPISODE_SERVICE")),
     __metadata("design:paramtypes", [episodes_service_1.EpisodesService])
 ], EpisodesController);
 exports.EpisodesController = EpisodesController;

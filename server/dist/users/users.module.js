@@ -37,7 +37,7 @@ UsersModule = __decorate([
                 useClass: groups_service_1.GroupsService,
             },
         ],
-        exports: ["USER_SERVICE"],
+        exports: ["USER_SERVICE", "GROUP_SERVICE"]
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;

@@ -10,5 +10,5 @@ export class CreateSourceDto {
 
   //@IsNotEmpty()
   @Allow()
-  group: string;
+  group: Types.ObjectId;
 }

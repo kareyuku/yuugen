@@ -36,6 +36,10 @@ export class UsersService {
     }
   }
 
+  async getAllAboutUser(id: Types.ObjectId): Promise<User> {
+    return await this.userModel.findById(id).populate("groups");
+  }
+
   async findUserByUsername(username: string): Promise<User> {
     return await this.userModel.findOne({ username });
   }

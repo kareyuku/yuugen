@@ -64,20 +64,6 @@ __decorate([
     __metadata("design:type", String)
 ], Anime.prototype, "slug", void 0);
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => {
-        value = value.map((episode) => {
-            if (episode.sources)
-                episode.sources = episode.sources.map((source) => {
-                    if (source.uploader)
-                        source.uploader = source.uploader.toString();
-                    if (source.group)
-                        source.group = source.group.toString();
-                    return source;
-                });
-            return episode;
-        });
-        return value;
-    }),
     (0, mongoose_1.Prop)({
         type: [
             {
@@ -90,7 +76,7 @@ __decorate([
                         name: { type: String },
                         link: { type: String },
                         uploader: { type: mongoose_2.Types.ObjectId, ref: "User" },
-                        group: { type: String },
+                        group: { type: mongoose_2.Types.ObjectId, ref: "Group" },
                         _id: false,
                     },
                 ],

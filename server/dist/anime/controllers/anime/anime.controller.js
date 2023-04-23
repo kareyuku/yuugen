@@ -29,10 +29,7 @@ let AnimeController = class AnimeController {
         return (0, responses_1.OKResponse)("Pomyślnie utworzono anime.");
     }
     async getAnimeBySlug(slug) {
-        const anime = await this.animeService.getAnimeBySlug(slug);
-        if (!anime)
-            throw new common_1.NotFoundException("Nie znaleziono anime.");
-        return anime;
+        return await this.animeService.getAnimeData(slug);
     }
     async getAnime(page, limit, sortBy, sortOrder) {
         return this.animeService.getAnime(parseInt(page), parseInt(limit), sortBy, sortOrder);

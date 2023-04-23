@@ -28,6 +28,16 @@ export class AnimeService {
     return await this.animeModel.findOne({ slug });
   }
 
+  async getAnimeData(slug: string): Promise<Anime> {
+    const anime = await this.animeModel.findOne({ slug });
+
+    if (!anime) throw new BadRequestException("Nie ma anime o podanym slug.");
+
+    return await (
+      await anime.populate("episodes.sources.uploader", "username -_id")
+    ).populate("episodes.sources.group", "img name");
+  }
+
   async getAnime(
     page: number,
     limit: number,

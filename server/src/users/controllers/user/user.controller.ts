@@ -23,7 +23,7 @@ export class UserController {
   @UseGuards(AuthenticatedGuard)
   @Get()
   async getUser(@Req() req: Request) {
-    return await this.userService.findUserById(
+    return await this.userService.getAllAboutUser(
       new Types.ObjectId(req.user.toString())
     );
   }

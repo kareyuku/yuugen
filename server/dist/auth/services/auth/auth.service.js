@@ -29,7 +29,7 @@ let AuthService = class AuthService {
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('USER_SERVICE')),
+    __param(0, (0, common_1.Inject)("USER_SERVICE")),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], AuthService);
 exports.AuthService = AuthService;

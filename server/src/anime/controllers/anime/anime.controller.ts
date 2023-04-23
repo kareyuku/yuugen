@@ -13,7 +13,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { SortOrder, Types } from "mongoose";
+import { SortOrder } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
 import { AnimeService } from "src/anime/services/anime/anime.service";
 import { AdminGuard } from "src/auth/utils/LocalGuard";
@@ -38,9 +38,7 @@ export class AnimeController {
   @Get(":slug")
   @UseInterceptors(MongooseClassSerializerInterceptor(Anime))
   async getAnimeBySlug(@Param("slug") slug: string) {
-    const anime = await this.animeService.getAnimeBySlug(slug);
-    if (!anime) throw new NotFoundException("Nie znaleziono anime.");
-    return anime;
+    return await this.animeService.getAnimeData(slug);
   }
 
   @Get()

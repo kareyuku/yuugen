@@ -47,7 +47,7 @@ export declare class Anime {
             name: string;
             link: string;
             uploader: Types.ObjectId;
-            group: string;
+            group: Types.ObjectId;
         }[];
     }[];
     reviews: Types.ObjectId[];

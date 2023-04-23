@@ -18,9 +18,14 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../../../schemas/user.schema");
 const mongoose_2 = require("mongoose");
 const bcrypt_1 = require("../../../utils/bcrypt");
+const Ranks_1 = require("../../../auth/utils/Ranks");
 let UsersService = class UsersService {
     constructor(userModel) {
         this.userModel = userModel;
+    }
+    async isUserAllowed(userId, matchId) {
+        const user = await this.findUserById(userId);
+        return user._id.equals(matchId) || user.rank === Ranks_1.default.Admin;
     }
     async addUser(userDto) {
         const addedUser = new this.userModel(userDto);
@@ -37,6 +42,9 @@ let UsersService = class UsersService {
                     description: "email",
                 });
         }
+    }
+    async getAllAboutUser(id) {
+        return await this.userModel.findById(id).populate("groups");
     }
     async findUserByUsername(username) {
         return await this.userModel.findOne({ username });

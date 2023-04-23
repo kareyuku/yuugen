@@ -21,7 +21,7 @@ import { Types } from "mongoose";
 @Controller("episodes")
 export class EpisodesController {
   constructor(
-    @Inject("EPISODES_SERVICE")
+    @Inject("EPISODE_SERVICE")
     private readonly episodesService: EpisodesService
   ) {}
 

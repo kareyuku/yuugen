@@ -26,6 +26,6 @@ import { GroupsService } from "./services/groups/groups.service";
       useClass: GroupsService,
     },
   ],
-  exports: ["USER_SERVICE"],
+  exports: ["USER_SERVICE", "GROUP_SERVICE"]
 })
 export class UsersModule {}

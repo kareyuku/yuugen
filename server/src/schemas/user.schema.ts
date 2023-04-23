@@ -35,6 +35,15 @@ export class User {
   @Prop({ default: "member" })
   rank: string;
 
+  @Transform(({ value }) =>
+    value.map((group) => ({
+      ...group,
+      owner: group.owner.toString(),
+      _id: group._id.toString(),
+      members: undefined,
+      __v: undefined,
+    }))
+  )
   @Prop({ type: [mongoose.Types.ObjectId], ref: "Group", default: [] })
   groups: mongoose.Types.ObjectId[];
 

@@ -26,10 +26,12 @@ import { Model, Types } from "mongoose";
 import { CreateReviewDto } from "src/anime/dtos/CreateReview.dto";
 import { Review } from "src/schemas/review.schema";
 import { AnimeService } from "../anime/anime.service";
+import { Anime } from "src/schemas/anime.schema";
 export declare class ReviewsService {
     private reviewModel;
+    private animeModel;
     private readonly animeService;
-    constructor(reviewModel: Model<Review>, animeService: AnimeService);
+    constructor(reviewModel: Model<Review>, animeModel: Model<Anime>, animeService: AnimeService);
     getReviewById(reviewId: Types.ObjectId): Promise<import("mongoose").Document<unknown, {}, Review> & Omit<Review & Required<{
         _id: Types.ObjectId;
     }>, never>>;
