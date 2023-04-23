@@ -24,8 +24,7 @@ let AnimeService = class AnimeService {
     async createAnime(animeDto) {
         const createdAnime = new this.animeModel(animeDto);
         try {
-            await createdAnime.save();
-            return createdAnime;
+            return await createdAnime.save();
         }
         catch (err) {
             if (err.keyValue.title)

@@ -6,6 +6,7 @@ import { User, UserSchema } from "src/schemas/user.schema";
 import { UserController } from "./controllers/user/user.controller";
 import { GroupsController } from "./controllers/groups/groups.controller";
 import { Group, GroupSchema } from "src/schemas/group.schema";
+import { GroupsService } from "./services/groups/groups.service";
 
 @Module({
   imports: [
@@ -19,6 +20,10 @@ import { Group, GroupSchema } from "src/schemas/group.schema";
     {
       provide: "USER_SERVICE",
       useClass: UsersService,
+    },
+    {
+      provide: "GROUP_SERVICE",
+      useClass: GroupsService,
     },
   ],
   exports: ["USER_SERVICE"],

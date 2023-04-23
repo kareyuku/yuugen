@@ -15,8 +15,7 @@ export class AnimeService {
   async createAnime(animeDto: CreateAnimeDto): Promise<Anime> {
     const createdAnime = new this.animeModel(animeDto);
     try {
-      await createdAnime.save();
-      return createdAnime;
+      return await createdAnime.save();
     } catch (err) {
       if (err.keyValue.title)
         throw new ConflictException("Anime o takiej nazwie już istnieje.");

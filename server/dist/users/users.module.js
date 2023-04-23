@@ -15,6 +15,7 @@ const user_schema_1 = require("../schemas/user.schema");
 const user_controller_1 = require("./controllers/user/user.controller");
 const groups_controller_1 = require("./controllers/groups/groups.controller");
 const group_schema_1 = require("../schemas/group.schema");
+const groups_service_1 = require("./services/groups/groups.service");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
@@ -30,6 +31,10 @@ UsersModule = __decorate([
             {
                 provide: "USER_SERVICE",
                 useClass: users_service_1.UsersService,
+            },
+            {
+                provide: "GROUP_SERVICE",
+                useClass: groups_service_1.GroupsService,
             },
         ],
         exports: ["USER_SERVICE"],

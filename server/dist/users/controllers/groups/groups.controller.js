@@ -16,23 +16,27 @@ exports.GroupsController = void 0;
 const common_1 = require("@nestjs/common");
 const LocalGuard_1 = require("../../../auth/utils/LocalGuard");
 const CreateGroup_dto_1 = require("../../dtos/CreateGroup.dto");
-const users_service_1 = require("../../services/users/users.service");
+const groups_service_1 = require("../../services/groups/groups.service");
 const responses_1 = require("../../../utils/responses");
 let GroupsController = class GroupsController {
-    constructor(userService) {
-        this.userService = userService;
+    constructor(groupService) {
+        this.groupService = groupService;
     }
     async createGroup(createGroupDto) {
-        return await this.userService.createGroup(createGroupDto);
+        await this.groupService.createGroup(createGroupDto);
+        return (0, responses_1.OKResponse)("Pomyślnie utworzono grupę.");
     }
     async getGroup(group) {
-        return await this.userService.getGroup(group);
+        const createdGroup = await this.groupService.findGroupByName(group);
+        if (!createdGroup)
+            throw new common_1.BadRequestException("Nie znaleziono podanej grupy.");
+        return group;
     }
     async patchGroup(createGroupDto, group) {
-        return await this.userService.patchGroup(createGroupDto, group);
+        return await this.groupService.patchGroup(createGroupDto, group);
     }
     async deleteGroup(group) {
-        await this.userService.deleteGroup(group);
+        await this.groupService.deleteGroup(group);
         return (0, responses_1.OKResponse)("Pomyślnie usunięto grupę.");
     }
 };
@@ -71,8 +75,8 @@ __decorate([
 ], GroupsController.prototype, "deleteGroup", null);
 GroupsController = __decorate([
     (0, common_1.Controller)("groups"),
-    __param(0, (0, common_1.Inject)("USER_SERVICE")),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __param(0, (0, common_1.Inject)("GROUP_SERVICE")),
+    __metadata("design:paramtypes", [groups_service_1.GroupsService])
 ], GroupsController);
 exports.GroupsController = GroupsController;
 //# sourceMappingURL=groups.controller.js.map

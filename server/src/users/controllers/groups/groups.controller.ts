@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -13,25 +14,31 @@ import {
 } from "@nestjs/common";
 import { AdminGuard } from "src/auth/utils/LocalGuard";
 import { CreateGroupDto } from "src/users/dtos/CreateGroup.dto";
-import { UsersService } from "src/users/services/users/users.service";
+import { GroupsService } from "src/users/services/groups/groups.service";
 import { OKResponse } from "src/utils/responses";
 
 @Controller("groups")
 export class GroupsController {
   constructor(
-    @Inject("USER_SERVICE") private readonly userService: UsersService
+    @Inject("GROUP_SERVICE") private readonly groupService: GroupsService
   ) {}
 
   @UseGuards(AdminGuard)
   @UsePipes(ValidationPipe)
   @Post()
   async createGroup(@Body() createGroupDto: CreateGroupDto) {
-    return await this.userService.createGroup(createGroupDto);
+    await this.groupService.createGroup(createGroupDto);
+    return OKResponse("Pomyślnie utworzono grupę.");
   }
 
   @Get(":group")
   async getGroup(@Param("group") group: string) {
-    return await this.userService.getGroup(group);
+    const createdGroup = await this.groupService.findGroupByName(group);
+
+    if (!createdGroup)
+      throw new BadRequestException("Nie znaleziono podanej grupy.");
+
+    return group;
   }
 
   @UseGuards(AdminGuard)
@@ -40,13 +47,13 @@ export class GroupsController {
     @Body() createGroupDto: CreateGroupDto,
     @Param("group") group: string
   ) {
-    return await this.userService.patchGroup(createGroupDto, group);
+    return await this.groupService.patchGroup(createGroupDto, group);
   }
 
   @UseGuards(AdminGuard)
   @Delete(":group")
   async deleteGroup(@Param("group") group: string) {
-    await this.userService.deleteGroup(group);
+    await this.groupService.deleteGroup(group);
     return OKResponse("Pomyślnie usunięto grupę.");
   }
 }
