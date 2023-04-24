@@ -40,8 +40,12 @@ export class UsersService {
     return await this.userModel.findById(id).populate("groups");
   }
 
-  async findUserByUsername(username: string): Promise<User> {
-    return await this.userModel.findOne({ username });
+  async findUserByUsername(
+    username: string,
+    groupsPopulate: boolean = false
+  ): Promise<User> {
+    const user = await this.userModel.findOne({ username });
+    return groupsPopulate ? await user.populate("groups") : user;
   }
 
   async findUserById(id: Types.ObjectId): Promise<User> {

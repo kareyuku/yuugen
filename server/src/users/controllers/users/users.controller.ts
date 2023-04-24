@@ -32,7 +32,7 @@ export class UsersController {
   @UseInterceptors(MongooseClassSerializerInterceptor(User))
   @Get(":username")
   async getUserByUsername(@Param("username") username: string) {
-    const user = await this.userService.findUserByUsername(username);
+    const user = await this.userService.findUserByUsername(username, true);
     if (!user) throw new NotFoundException("Nie znaleziono użytkownika.");
     return user;
   }

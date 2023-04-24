@@ -46,8 +46,9 @@ let UsersService = class UsersService {
     async getAllAboutUser(id) {
         return await this.userModel.findById(id).populate("groups");
     }
-    async findUserByUsername(username) {
-        return await this.userModel.findOne({ username });
+    async findUserByUsername(username, groupsPopulate = false) {
+        const user = await this.userModel.findOne({ username });
+        return groupsPopulate ? await user.populate("groups") : user;
     }
     async findUserById(id) {
         return await this.userModel.findById(id);

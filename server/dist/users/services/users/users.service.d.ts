@@ -7,7 +7,7 @@ export declare class UsersService {
     isUserAllowed(userId: Types.ObjectId, matchId: Types.ObjectId): Promise<boolean>;
     addUser(userDto: CreateUserDto): Promise<User>;
     getAllAboutUser(id: Types.ObjectId): Promise<User>;
-    findUserByUsername(username: string): Promise<User>;
+    findUserByUsername(username: string, groupsPopulate?: boolean): Promise<User>;
     findUserById(id: Types.ObjectId): Promise<User>;
     createUser(userDto: CreateUserDto): Promise<void>;
 }

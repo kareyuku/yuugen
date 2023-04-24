@@ -28,7 +28,7 @@ let UsersController = class UsersController {
         return (0, responses_1.OKResponse)("Pomyślnie zarejestrowano.");
     }
     async getUserByUsername(username) {
-        const user = await this.userService.findUserByUsername(username);
+        const user = await this.userService.findUserByUsername(username, true);
         if (!user)
             throw new common_1.NotFoundException("Nie znaleziono użytkownika.");
         return user;
