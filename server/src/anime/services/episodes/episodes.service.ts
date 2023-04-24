@@ -85,7 +85,7 @@ export class EpisodesService {
     if (!anime)
       throw new BadRequestException("Nie znaleziono anime o podanym slug.");
 
-    if (sourceDto.group) {
+    if (sourceDto.group !== undefined) {
       try {
         sourceDto.group = new Types.ObjectId(sourceDto.group);
       } catch {

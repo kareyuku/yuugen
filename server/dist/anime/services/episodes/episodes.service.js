@@ -62,7 +62,7 @@ let EpisodesService = class EpisodesService {
         const anime = await this.animeModel.findOne({ slug });
         if (!anime)
             throw new common_1.BadRequestException("Nie znaleziono anime o podanym slug.");
-        if (sourceDto.group) {
+        if (sourceDto.group !== undefined) {
             try {
                 sourceDto.group = new mongoose_2.Types.ObjectId(sourceDto.group);
             }
