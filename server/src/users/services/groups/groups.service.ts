@@ -29,24 +29,42 @@ export class GroupsService {
     return await this.groupModel.findById(id);
   }
 
-  async createGroup(groupDto: CreateGroupDto): Promise<Group> {
-    const owner = await this.userService.findUserByUsername(
-      groupDto.owner.toString()
-    );
+  async addGroup(
+    groupDto: CreateGroupDto,
+    ownerId: Types.ObjectId
+  ): Promise<void> {
+    await this.validateGroup(groupDto, ownerId);
 
-    if (!owner)
-      throw new BadRequestException(
-        "Użytkownik o podanej nazwie nie istnieje."
-      );
+    const group = new this.groupModel(groupDto);
+    const owner = await this.userModel.findById(ownerId);
+
     try {
-      const group = new this.groupModel(groupDto);
-      group.owner = owner._id;
-      return await group.save();
+      group.owner = ownerId;
+      owner.groups.push(group._id);
+      await group.save();
+      await owner.save();
     } catch {
       throw new InternalServerErrorException(
         "Tworzenie grupy nie powiodło się."
       );
     }
+  }
+
+  async validateGroup(
+    groupDto: CreateGroupDto,
+    ownerId: Types.ObjectId
+  ): Promise<void> {
+    if (!this.userModel.exists({ _id: ownerId }))
+      throw new BadRequestException(
+        "Użytkownik o podanej nazwie nie istnieje."
+      );
+  }
+
+  async createGroup(
+    groupDto: CreateGroupDto,
+    ownerId: Types.ObjectId
+  ): Promise<void> {
+    this.addGroup(groupDto, ownerId);
   }
 
   async patchGroup(

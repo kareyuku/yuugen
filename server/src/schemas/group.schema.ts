@@ -6,7 +6,7 @@ export type GroupDocument = HydratedDocument<Group>;
 
 @Schema({ timestamps: true })
 export class Group {
-  @Transform(({ value }) => value.toString())
+  @Transform(({obj}) => obj._id.toString())
   _id: Types.ObjectId;
 
   @Exclude()

@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 let User = class User {
 };
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => value.toString()),
+    (0, class_transformer_1.Transform)(({ obj }) => obj._id.toString()),
     __metadata("design:type", mongoose.Types.ObjectId)
 ], User.prototype, "_id", void 0);
 __decorate([

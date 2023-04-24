@@ -7,7 +7,7 @@ export type UserDocument = mongoose.HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Transform(({ value }) => value.toString())
+  @Transform(({obj}) => obj._id.toString())
   _id: mongoose.Types.ObjectId;
 
   @Exclude()

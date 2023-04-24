@@ -16,7 +16,7 @@ const mongoose_2 = require("mongoose");
 let Group = class Group {
 };
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => value.toString()),
+    (0, class_transformer_1.Transform)(({ obj }) => obj._id.toString()),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Group.prototype, "_id", void 0);
 __decorate([

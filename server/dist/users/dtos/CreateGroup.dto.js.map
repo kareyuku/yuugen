@@ -1,1 +1,1 @@
-{"version":3,"file":"CreateGroup.dto.js","sourceRoot":"","sources":["../../../src/users/dtos/CreateGroup.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAGpD,MAAa,cAAc;CAS1B;AARC;IAAC,IAAA,4BAAU,GAAE;;6CACkB;AAE/B;IAAC,IAAA,4BAAU,GAAE;;4CACA;AAEb;IAAC,IAAA,uBAAK,GAAE;;2CACI;AARd,wCASC"}
+{"version":3,"file":"CreateGroup.dto.js","sourceRoot":"","sources":["../../../src/users/dtos/CreateGroup.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAGpD,MAAa,cAAc;CAO1B;AALC;IAAC,IAAA,4BAAU,GAAE;;4CACA;AAEb;IAAC,IAAA,uBAAK,GAAE;;2CACI;AANd,wCAOC"}

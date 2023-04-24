@@ -25,19 +25,26 @@ let EpisodesService = class EpisodesService {
         this.groupService = groupService;
         this.animeModel = animeModel;
     }
-    async createEpisode(episodeDto, slug) {
+    async addEpisode(episodeDto, slug) {
+        await this.validateEpisode(episodeDto, slug);
+        const anime = await this.animeModel.findOne({ slug });
+        try {
+            anime.episodes.push(Object.assign(Object.assign({}, episodeDto), { sources: undefined }));
+            await anime.save();
+        }
+        catch (_a) {
+            throw new common_1.InternalServerErrorException("Zapisanie epizodu nie powiodło się.");
+        }
+    }
+    async validateEpisode(episodeDto, slug) {
         const anime = await this.animeModel.findOne({ slug });
         if (!anime)
             throw new common_1.BadRequestException("Nie znaleziono anime o podanym slug.");
         if (anime.episodes.find((episode) => episode.number === episodeDto.number))
             throw new common_1.BadRequestException("Epizod o podanym numerze już istnieje.");
-        anime.episodes.push(Object.assign(Object.assign({}, episodeDto), { sources: undefined }));
-        try {
-            await anime.save();
-        }
-        catch (e) {
-            throw new common_1.InternalServerErrorException("Zapisanie epizodu nie powiodło się.");
-        }
+    }
+    async createEpisode(episodeDto, slug) {
+        this.addEpisode(episodeDto, slug);
     }
     async deleteEpisode(slug, episode) {
         const anime = await this.animeModel.findOne({ slug });

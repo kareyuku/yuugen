@@ -16,7 +16,7 @@ const mongoose_2 = require("mongoose");
 let Review = class Review {
 };
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => value.toString()),
+    (0, class_transformer_1.Transform)(({ obj }) => obj._id.toString()),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Review.prototype, "_id", void 0);
 __decorate([

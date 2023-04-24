@@ -20,7 +20,23 @@ export class EpisodesService {
     @InjectModel(Anime.name) private animeModel: Model<Anime>
   ) {}
 
-  async createEpisode(
+  async addEpisode(episodeDto: CreateEpisodeDto, slug: string): Promise<void> {
+    await this.validateEpisode(episodeDto, slug);
+
+    const anime = await this.animeModel.findOne({ slug });
+
+    try {
+      // to do optimalization
+      anime.episodes.push({ ...episodeDto, sources: undefined });
+      await anime.save();
+    } catch {
+      throw new InternalServerErrorException(
+        "Zapisanie epizodu nie powiodło się."
+      );
+    }
+  }
+
+  async validateEpisode(
     episodeDto: CreateEpisodeDto,
     slug: string
   ): Promise<void> {
@@ -31,15 +47,13 @@ export class EpisodesService {
 
     if (anime.episodes.find((episode) => episode.number === episodeDto.number))
       throw new BadRequestException("Epizod o podanym numerze już istnieje.");
+  }
 
-    anime.episodes.push({ ...episodeDto, sources: undefined });
-    try {
-      await anime.save();
-    } catch(e) {
-      throw new InternalServerErrorException(
-        "Zapisanie epizodu nie powiodło się."
-      );
-    }
+  async createEpisode(
+    episodeDto: CreateEpisodeDto,
+    slug: string
+  ): Promise<void> {
+    this.addEpisode(episodeDto, slug);
   }
 
   // to do znalezienie epizodu o podanym numerze hi hi

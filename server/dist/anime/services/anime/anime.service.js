@@ -21,17 +21,27 @@ let AnimeService = class AnimeService {
     constructor(animeModel) {
         this.animeModel = animeModel;
     }
-    async createAnime(animeDto) {
-        const createdAnime = new this.animeModel(animeDto);
+    async addAnime(animeDto) {
+        await this.validateAnime(animeDto);
         try {
-            return await createdAnime.save();
+            await new this.animeModel(animeDto).save();
         }
-        catch (err) {
-            if (err.keyValue.title)
-                throw new common_1.ConflictException("Anime o takiej nazwie już istnieje.");
-            if (err.keyValue.slug)
-                throw new common_1.ConflictException("Anime o takim slug już istnieje.");
+        catch (_a) {
+            throw new common_1.InternalServerErrorException("Nie udało się utworzyć anime.");
         }
+    }
+    async createAnime(animeDto) {
+        await this.addAnime(animeDto);
+    }
+    async validateAnime(animeDto) {
+        const anime = await this.animeModel.findOne({
+            $or: [{ title: animeDto.title, slug: animeDto.slug }],
+        });
+        if (!anime)
+            return;
+        if (anime.title === animeDto.title)
+            throw new common_1.ConflictException("Anime o takiej nazwie już istnieje.");
+        throw new common_1.ConflictException("Anime o takim slug już istnieje.");
     }
     async getAnimeBySlug(slug) {
         return await this.animeModel.findOne({ slug });

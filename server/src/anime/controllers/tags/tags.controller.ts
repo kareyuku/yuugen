@@ -6,8 +6,6 @@ import {
   Post,
   UseGuards,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from "@nestjs/common";
 import { TagsService } from "src/anime/services/tags/tags.service";
 import { AdminGuard } from "src/auth/utils/LocalGuard";

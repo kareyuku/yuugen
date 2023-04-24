@@ -6,7 +6,7 @@ export type AnimeDocument = HydratedDocument<Anime>;
 
 @Schema({ timestamps: true })
 export class Anime {
-  @Transform(({ value }) => value.toString())
+  @Transform(({obj}) => obj._id.toString())
   _id: Types.ObjectId;
 
   createdAt: Date;

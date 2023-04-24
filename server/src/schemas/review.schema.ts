@@ -6,7 +6,7 @@ export type ReviewDocument = HydratedDocument<Review>;
 
 @Schema({ timestamps: true })
 export class Review {
-  @Transform(({ value }) => value.toString())
+  @Transform(({obj}) => obj._id.toString())
   _id: Types.ObjectId;
 
   createdAt: Date;

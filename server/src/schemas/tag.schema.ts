@@ -6,7 +6,7 @@ export type TagDocument = HydratedDocument<Tag>;
 
 @Schema({ timestamps: true })
 export class Tag {
-  @Transform(({ value }) => value.toString())
+  @Transform(({obj}) => obj._id.toString())
   _id: Types.ObjectId;
 
   @Exclude()

@@ -12,7 +12,6 @@ import { TagsController } from "./controllers/tags/tags.controller";
 import { Tag, TagSchema } from "src/schemas/tag.schema";
 import { EpisodesService } from "./services/episodes/episodes.service";
 import { EpisodesController } from "./controllers/episodes/episodes.controller";
-import { GroupsService } from "src/users/services/groups/groups.service";
 
 @Module({
   imports: [

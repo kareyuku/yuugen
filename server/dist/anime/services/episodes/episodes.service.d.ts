@@ -9,6 +9,8 @@ export declare class EpisodesService {
     private readonly groupService;
     private animeModel;
     constructor(animeService: AnimeService, groupService: GroupsService, animeModel: Model<Anime>);
+    addEpisode(episodeDto: CreateEpisodeDto, slug: string): Promise<void>;
+    validateEpisode(episodeDto: CreateEpisodeDto, slug: string): Promise<void>;
     createEpisode(episodeDto: CreateEpisodeDto, slug: string): Promise<void>;
     deleteEpisode(slug: string, episode: number): Promise<void>;
     createSource(slug: string, episode: number, sourceDto: CreateSourceDto, user: Types.ObjectId): Promise<void>;

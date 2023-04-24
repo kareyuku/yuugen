@@ -15,10 +15,6 @@ class CreateGroupDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Object)
-], CreateGroupDto.prototype, "owner", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "name", void 0);
 __decorate([

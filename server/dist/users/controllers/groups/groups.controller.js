@@ -24,8 +24,8 @@ let GroupsController = class GroupsController {
     constructor(groupService) {
         this.groupService = groupService;
     }
-    async createGroup(createGroupDto) {
-        await this.groupService.createGroup(createGroupDto);
+    async createGroup(req, createGroupDto) {
+        await this.groupService.createGroup(createGroupDto, new mongoose_1.Types.ObjectId(req.user.toString()));
         return (0, responses_1.OKResponse)("Pomyślnie utworzono grupę.");
     }
     async getGroup(groupId) {
@@ -81,12 +81,13 @@ let GroupsController = class GroupsController {
     }
 };
 __decorate([
-    (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateGroup_dto_1.CreateGroupDto]),
+    __metadata("design:paramtypes", [Object, CreateGroup_dto_1.CreateGroupDto]),
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "createGroup", null);
 __decorate([

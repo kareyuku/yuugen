@@ -28,11 +28,17 @@ export class GroupsController {
     @Inject("GROUP_SERVICE") private readonly groupService: GroupsService
   ) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthenticatedGuard)
   @UsePipes(ValidationPipe)
   @Post()
-  async createGroup(@Body() createGroupDto: CreateGroupDto) {
-    await this.groupService.createGroup(createGroupDto);
+  async createGroup(
+    @Req() req: Request,
+    @Body() createGroupDto: CreateGroupDto
+  ) {
+    await this.groupService.createGroup(
+      createGroupDto,
+      new Types.ObjectId(req.user.toString())
+    );
     return OKResponse("Pomyślnie utworzono grupę.");
   }
 

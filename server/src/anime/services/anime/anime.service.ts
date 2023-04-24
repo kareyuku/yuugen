@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  InternalServerErrorException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, SortOrder } from "mongoose";
@@ -12,16 +13,31 @@ import { Anime } from "src/schemas/anime.schema";
 export class AnimeService {
   constructor(@InjectModel(Anime.name) private animeModel: Model<Anime>) {}
 
-  async createAnime(animeDto: CreateAnimeDto): Promise<Anime> {
-    const createdAnime = new this.animeModel(animeDto);
+  async addAnime(animeDto: CreateAnimeDto): Promise<void> {
+    await this.validateAnime(animeDto);
+
     try {
-      return await createdAnime.save();
-    } catch (err) {
-      if (err.keyValue.title)
-        throw new ConflictException("Anime o takiej nazwie już istnieje.");
-      if (err.keyValue.slug)
-        throw new ConflictException("Anime o takim slug już istnieje.");
+      await new this.animeModel(animeDto).save();
+    } catch {
+      throw new InternalServerErrorException("Nie udało się utworzyć anime.");
     }
+  }
+
+  async createAnime(animeDto: CreateAnimeDto): Promise<void> {
+    await this.addAnime(animeDto);
+  }
+
+  async validateAnime(animeDto: CreateAnimeDto): Promise<void> {
+    const anime = await this.animeModel.findOne({
+      $or: [{ title: animeDto.title, slug: animeDto.slug }],
+    });
+
+    if (!anime) return;
+
+    if (anime.title === animeDto.title)
+      throw new ConflictException("Anime o takiej nazwie już istnieje.");
+
+    throw new ConflictException("Anime o takim slug już istnieje.");
   }
 
   async getAnimeBySlug(slug: string): Promise<Anime> {
