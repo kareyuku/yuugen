@@ -26,7 +26,10 @@ export class GroupsService {
   }
 
   async getGroupData(id: Types.ObjectId): Promise<Group> {
-    return await this.groupModel.findById(id).populate("members");
+    return await this.groupModel
+      .findById(id)
+      .populate("members", "username avatar")
+      .populate("owner", "username avatar -_id");
   }
 
   async findGroupById(id: Types.ObjectId): Promise<Group> {
