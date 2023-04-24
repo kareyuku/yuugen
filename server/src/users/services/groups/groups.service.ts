@@ -25,6 +25,13 @@ export class GroupsService {
     return await this.groupModel.findOne({ name });
   }
 
+  async getGroupData(id: Types.ObjectId): Promise<Group> {
+    return await this.groupModel
+      .findById(id)
+      .populate("members", "username avatar")
+      .populate("owner", "username avatar -_id");
+  }
+
   async findGroupById(id: Types.ObjectId): Promise<Group> {
     return await this.groupModel.findById(id);
   }
@@ -60,11 +67,8 @@ export class GroupsService {
       );
   }
 
-  async createGroup(
-    groupDto: CreateGroupDto,
-    ownerId: Types.ObjectId
-  ): Promise<void> {
-    this.addGroup(groupDto, ownerId);
+  async createGroup(groupDto: CreateGroupDto): Promise<void> {
+    this.addGroup(groupDto, new Types.ObjectId(groupDto.owner));
   }
 
   async patchGroup(

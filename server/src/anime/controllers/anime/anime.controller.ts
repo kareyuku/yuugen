@@ -3,23 +3,24 @@ import {
   Controller,
   Get,
   Inject,
-  NotFoundException,
   Param,
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { SortOrder } from "mongoose";
+import { SortOrder, Types } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
 import { AnimeService } from "src/anime/services/anime/anime.service";
-import { AdminGuard } from "src/auth/utils/LocalGuard";
+import { AdminGuard, AuthenticatedGuard } from "src/auth/utils/LocalGuard";
 import { Anime } from "src/schemas/anime.schema";
 import MongooseClassSerializerInterceptor from "src/utils/mongooseClassSerializer.interceptor";
 import { OKResponse } from "src/utils/responses";
+import { Request } from "express";
 
 @Controller("anime")
 export class AnimeController {
@@ -29,10 +30,17 @@ export class AnimeController {
 
   @Post("create")
   @UsePipes(ValidationPipe)
-  @UseGuards(AdminGuard)
-  async createAnime(@Body() createAnimeDto: CreateAnimeDto) {
-    await this.animeService.createAnime(createAnimeDto);
-    return OKResponse("Pomyślnie utworzono anime.");
+  @UseGuards(AuthenticatedGuard)
+  async createAnime(
+    @Body() createAnimeDto: CreateAnimeDto,
+    @Req() req: Request
+  ) {
+    return OKResponse(
+      await this.animeService.createAnime(
+        createAnimeDto,
+        new Types.ObjectId(req.user.toString())
+      )
+    );
   }
 
   @Get(":slug")

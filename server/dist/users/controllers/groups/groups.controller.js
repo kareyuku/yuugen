@@ -24,8 +24,8 @@ let GroupsController = class GroupsController {
     constructor(groupService) {
         this.groupService = groupService;
     }
-    async createGroup(req, createGroupDto) {
-        await this.groupService.createGroup(createGroupDto, new mongoose_1.Types.ObjectId(req.user.toString()));
+    async createGroup(createGroupDto) {
+        await this.groupService.createGroup(createGroupDto);
         return (0, responses_1.OKResponse)("Pomyślnie utworzono grupę.");
     }
     async getGroup(groupId) {
@@ -35,7 +35,7 @@ let GroupsController = class GroupsController {
         catch (_a) {
             throw new common_1.BadRequestException("Zły format id grupy.");
         }
-        const foundGroup = await this.groupService.findGroupById(groupId);
+        const foundGroup = await this.groupService.getGroupData(groupId);
         if (!foundGroup)
             throw new common_1.BadRequestException("Nie znaleziono podanej grupy.");
         return foundGroup;
@@ -81,13 +81,12 @@ let GroupsController = class GroupsController {
     }
 };
 __decorate([
-    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
+    (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, CreateGroup_dto_1.CreateGroupDto]),
+    __metadata("design:paramtypes", [CreateGroup_dto_1.CreateGroupDto]),
     __metadata("design:returntype", Promise)
 ], GroupsController.prototype, "createGroup", null);
 __decorate([
