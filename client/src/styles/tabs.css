@@ -1,0 +1,41 @@
+.yuugen-tabs-tab {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 0 12px 12px;
+    color: #75849d;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.yuugen-tabs-tab-active {
+    color: white;
+}
+
+.yuugen-tabs-tab-active::after {
+    background: #fff;
+    border-radius: 8px;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 4px;
+    left: -webkit-calc(50% - 16px);
+    left: -moz-calc(50% - 16px);
+    left: calc(50% - 16px);
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    transition: all .3s ease;
+    width: 32px;
+}
+
+@media (max-width: 665px){
+    .yuugen-tabs-tab span {
+        display: none;
+    }
+    .yuugen-tabs-list {
+        width: 100%;
+        justify-content: space-around;
+    }
+}

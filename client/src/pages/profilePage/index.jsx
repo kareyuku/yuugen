@@ -2,7 +2,9 @@ import { Avatar, Container, Text, Flex } from "@chakra-ui/react"
 import Navbar from "../../components/navbar"
 import { useEffect, useState } from "react"
 import { getProfile } from "../../api/user"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import Slider from "../../components/slider"
+import { SwiperSlide, Swiper } from "swiper/react"
 
 export default () => {
 
@@ -11,10 +13,11 @@ export default () => {
 
     useEffect(() => {
         const loadProfile = async () => {
+            console.log(12312312, user)
             setUser(await getProfile({username}))
         }
         loadProfile();
-    })
+    }, [])
 
     return (
         <>
@@ -27,8 +30,19 @@ export default () => {
         </Container>        
         <Flex flexGrow={1} height={'max-content'} flex={1} bg={'#171a2b'}>
             <Container maxW={'1500px'} mt={10}>
-                Grupy Użytkownika
-                {user?.groups.map(group => <Avatar src={group.img} />)}
+                {user?.groups && 
+                <Swiper
+                slidesPerView={"auto"}
+                pagination={{clickable: true}}
+                autoplay={{delay: 3000, disableOnInteraction: false}}
+                >
+                    {user?.groups.map(group =>
+                        <SwiperSlide className="yuugen-slide" style={{width: 'auto'}}>
+                            <Link to={`/group/${group._id}`}><Avatar w={'128px'} h={'128px'} src={group.img} /></Link>
+                        </SwiperSlide>
+                        )}
+                </Swiper>
+                }
             </Container>
         </Flex>
         </>

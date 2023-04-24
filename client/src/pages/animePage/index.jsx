@@ -1,6 +1,6 @@
 import {
     Container,
-    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex, Button
+Text, Flex, Button
 } from '@chakra-ui/react';
 import Navbar from '../../components/navbar';
 import ReviewPage from './components/reviewPage';
@@ -10,18 +10,21 @@ import { useEffect, useState } from 'react';
 import { getAnime } from '../../api/anime';
 import AnimeHeader from './components/animeHeader';
 import AddEpisode from '../../modals/addEpisode';
+import { TabItem, Tabs } from '../../components/tabs';
+
+import {MdVideoLibrary, MdModeComment} from 'react-icons/md';
 
 export default () => {
 
     const {slug} = useParams();
 
     const [anime, setAnime] = useState({});
+    const [section, setSection] = useState("Odcinki");
 
     useEffect(() => {
         const changeAnime = async () => {
             const reqAnime = await getAnime(slug);
             setAnime(reqAnime)
-            console.log(anime)
         }
         changeAnime();
     }, [])
@@ -45,21 +48,24 @@ export default () => {
             rate={anime?.rate}
             title={anime?.title}
             />
+            <Container maxW={1500}>
+                <Tabs active={section} onChange={setSection}>
+                    <TabItem
+                    name={'Odcinki'}
+                    icon={MdVideoLibrary}
+                    />
+                    <TabItem
+                    name={'Recenzje'}
+                    icon={MdModeComment}
+                    />
+                </Tabs>
+            </Container>
             <Flex flexGrow={1} height={'max-content'} flex={1} bg={'#171a2b'}>
                 <Container mt={5} maxWidth={'1500px'}>
                     <Flex className='yuugen__header__wrapper'>
-                        <Flex className="yuugen__header__content">
-                            <Tabs width={'100%'}>
-                                <TabList>
-                                    <Tab>Odcinki</Tab>
-                                    <Tab>Recenzje</Tab>
-                                </TabList>
-
-                                <TabPanels>
-                                    <TabPanel> <EpisodesPage episodes={anime?.episodes}/> </TabPanel>
-                                    <TabPanel> <ReviewPage/> </TabPanel>
-                                </TabPanels>
-                            </Tabs>
+                        <Flex className="yuugen__header__content" flexDir={'column'}>
+                            {section == "Odcinki" && <EpisodesPage episodes={anime?.episodes} />}
+                            {section == "Recenzje" && <ReviewPage/> }
                         </Flex>
                         <Flex className="yuugen__header__sidebar" fontSize={14}>
                             {/* <Heading>Statystyki</Heading>

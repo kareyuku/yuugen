@@ -15,6 +15,8 @@ import IsLogged from "./components/isLogged";
 
 import './styles/modal.css';
 import './styles/slider.css';
+import './styles/tabs.css';
+import GroupPage from "./pages/groupPage";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminPage />,
   },
+  {
+    path: '/group/:groupId',
+    element: <GroupPage/>
+  }
 ]);
 
 const theme = extendTheme({
