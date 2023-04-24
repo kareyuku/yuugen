@@ -5,6 +5,7 @@ const initialState = {
   avatar: "",
   rank: "",
   isLoggedIn: false,
+  groups: []
 };
 
 export const authSlice = createSlice({
@@ -17,6 +18,7 @@ export const authSlice = createSlice({
       state.avatar = action.payload.avatar;
       state.rank = action.payload.rank;
       state.isLoggedIn = true;
+      state.groups = action.payload.groups;
     },
     logOut: (state) => {
       localStorage.removeItem('isLoggedIn')
