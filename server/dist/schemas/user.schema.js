@@ -50,7 +50,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "rank", void 0);
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => value.map((group) => (Object.assign(Object.assign({}, group), { owner: group.owner.toString(), _id: group._id.toString(), members: undefined, __v: undefined })))),
+    (0, class_transformer_1.Transform)(({ obj }) => {
+        var _a;
+        return (_a = obj.groups) === null || _a === void 0 ? void 0 : _a.map((group) => (Object.assign(Object.assign({}, group), { owner: group.owner.toString(), _id: group._id.toString(), members: undefined, __v: undefined })));
+    }),
     (0, mongoose_1.Prop)({ type: [mongoose.Types.ObjectId], ref: "Group", default: [] }),
     __metadata("design:type", Array)
 ], User.prototype, "groups", void 0);

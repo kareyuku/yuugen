@@ -7,7 +7,7 @@ export type UserDocument = mongoose.HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Transform(({obj}) => obj._id.toString())
+  @Transform(({ obj }) => obj._id.toString())
   _id: mongoose.Types.ObjectId;
 
   @Exclude()
@@ -35,8 +35,8 @@ export class User {
   @Prop({ default: "member" })
   rank: string;
 
-  @Transform(({ value }) =>
-    value.map((group) => ({
+  @Transform(({ obj }) =>
+    obj.groups?.map((group) => ({
       ...group,
       owner: group.owner.toString(),
       _id: group._id.toString(),
