@@ -29,8 +29,10 @@ export default ({
                 <ModalBody>
                     <Text mt={3} mb={3} fontSize={21}>Dodawanie Odcinka</Text>
                     <Text>Numer Odcinka</Text>
-                    <NumberInput min={1} max={5000}>
-                        <NumberInputField value={episodeNumber} onChange={(e) => setEpisodeNumber(e.target.value)} />
+                    <NumberInput min={1} max={5000}
+                    value={episodeNumber} onChange={(e) => setEpisodeNumber(e)}
+                    >
+                        <NumberInputField />
                     </NumberInput>
                     <Text>Nazwa Odcinka</Text>
                     <Input value={title} onChange={(e) => setTitle(e.target.value)} focusBorderColor="transparent" placeholder="Wpisz nazwe odcinka"/>
