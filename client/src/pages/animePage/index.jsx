@@ -1,6 +1,6 @@
 import {
     Container,
-    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex
+    Tabs, TabList, TabPanels, Tab, TabPanel, Text, Flex, Button
 } from '@chakra-ui/react';
 import Navbar from '../../components/navbar';
 import ReviewPage from './components/reviewPage';
@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getAnime } from '../../api/anime';
 import AnimeHeader from './components/animeHeader';
+import AddEpisode from '../../modals/addEpisode';
 
 export default () => {
 
@@ -63,6 +64,7 @@ export default () => {
                         <Flex className="yuugen__header__sidebar" fontSize={14}>
                             {/* <Heading>Statystyki</Heading>
                             <Heading>Połączone</Heading> */}
+                            <AddEpisode slug={slug} />
                         </Flex>
                     </Flex>
                 </Container>

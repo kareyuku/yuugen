@@ -4,3 +4,13 @@
     padding: 0.7rem 1.2rem;
     font-weight: 500;
 }
+
+.yuugen-admin-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.yuugen-admin-sidebar {
+    position: fixed;
+}

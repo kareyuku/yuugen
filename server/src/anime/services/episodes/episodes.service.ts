@@ -35,7 +35,7 @@ export class EpisodesService {
     anime.episodes.push({ ...episodeDto, sources: undefined });
     try {
       await anime.save();
-    } catch {
+    } catch(e) {
       throw new InternalServerErrorException(
         "Zapisanie epizodu nie powiodło się."
       );

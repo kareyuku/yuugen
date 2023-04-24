@@ -12,8 +12,9 @@
 
 .yuugen-modal input {
     background: #252f49!important;
-    border: 0;
+    border-color: transparent!important;
     outline: 0;
+    box-shadow: none!important;
 }
 
 .yuugen-modal select {

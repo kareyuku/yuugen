@@ -35,7 +35,7 @@ let EpisodesService = class EpisodesService {
         try {
             await anime.save();
         }
-        catch (_a) {
+        catch (e) {
             throw new common_1.InternalServerErrorException("Zapisanie epizodu nie powiodło się.");
         }
     }

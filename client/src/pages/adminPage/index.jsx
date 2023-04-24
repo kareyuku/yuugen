@@ -12,11 +12,12 @@ export default () => {
 
     const Sidebar = ({children}) => {
         return (
-            <Flex>
-                <Flex bg={'#131624'} flexDir={'column'} w={'250px'} maxW={'250px'} maxH={'calc(100vh - 68px)'} h={'100vh'}>
-                    <SidebarItem label={'Dodaj Anime'} />
-                    <SidebarItem label={'Dodaj Anime'} />
-                    <SidebarItem label={'Dodaj Anime'} />
+            <Flex className="yuugen-admin-sidebar">
+                <Flex bg={'#131624'} flexDir={'column'} w={'250px'} maxW={'250px'} h={'100vh'}>
+                    <SidebarItem label={'Anime'} />
+                    <SidebarItem label={'Grupy'} />
+                    <SidebarItem label={'Użytkownicy'} />
+                    <SidebarItem label={'Wnioski'} />
                 </Flex>
                 {children}
             </Flex>
@@ -26,7 +27,10 @@ export default () => {
     return (
         <>
         <Sidebar>
-            hej
+            <div className="yuugen-admin-content">
+                hej
+                blablalba
+            </div>
         </Sidebar>
         </>
     )

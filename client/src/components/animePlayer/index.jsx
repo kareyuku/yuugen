@@ -24,14 +24,13 @@ export default ({
     const {episodeNumber, slug} = useParams();
 
     const PlayerOption = ({
-        name, link, author
+        name, link, uploader
     }) => {
         return (
             <Flex onClick={() => {
-                setSource({name, link, author})
-                console.log(link + "uwu")
+                setSource({name, link, uploader})
             }} bg={'#131624'} alignItems={'center'} borderRadius={'10px'} p={3} gap={3}>
-                <Text>{author} - {name}</Text>
+                <Text>{uploader.username} - {name}</Text>
             </Flex>
         )
     }
@@ -70,7 +69,7 @@ export default ({
                         bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} 
                         as={Button} rightIcon={<MdVideoLibrary />}>Player</MenuButton>
                         <MenuList border={'none'} bg={'transparent'} gap={3}>
-                            {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} link={player.link} author={player.author} />)}
+                            {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} link={player.link} uploader={player.uploader} />)}
                         </MenuList>
                     </Menu>
 
@@ -81,7 +80,7 @@ export default ({
                     <Flex flexDir={'column'} p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} >
                         <Text>Informacje o wstawieniu</Text>
                         <Text>Grupa: Brak</Text>
-                        <Text>Dodane przez: {currentSource.uploader}</Text>
+                        <Text>Dodane przez: {currentSource.uploader?.username}</Text>
                     </Flex>
                 }
                 <SecureContent>
