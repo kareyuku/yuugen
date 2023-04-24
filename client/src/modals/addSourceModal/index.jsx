@@ -1,10 +1,13 @@
 import { Modal, Text, useDisclosure, Button, ModalOverlay, ModalContent, ModalBody, ModalFooter, Textarea, Input, Select } from "@chakra-ui/react"
 import { createSource } from "../../api/source";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default ({
     slug, episodeNumber
 }) => {  
+
+    const user = useSelector(state=> state.auth)
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [name, setName] = useState("");
@@ -26,8 +29,9 @@ export default ({
                         <Text>Nazwa Odtwarzacza</Text>
                         <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Wpisz nazwe odtwarzacza np. cda"/>
                         <Text mt={3}>Grupa Subberska</Text>
-                        <Select>
-                            <option value="none">Brak</option>
+                        <Select value={group} onChange={e => setGroup(e.target.value)}>
+                            <option value="">Brak</option>
+                            {user?.groups && user?.groups.map(group => <option value={group._id}>{group.name}</option>)}
                         </Select>
                         <Text mt={3}>Link do odwarzacza (EMBED)</Text>
                         <Input value={link} onChange={(e) => setLink(e.target.value)} placeholder="Link do odtwarzacza"/>

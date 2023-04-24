@@ -11,7 +11,7 @@ export default ({children}) => {
         const check = async () => {
             if(localStorage.getItem('isLoggedIn')) {
                 const isLogged = await userData();
-                if(isLogged) dispatch(setCredentials({username: isLogged.username, avatar: isLogged.avatar, rank: isLogged.rank}))
+                if(isLogged) dispatch(setCredentials({username: isLogged.username, avatar: isLogged.avatar, rank: isLogged.rank, groups: isLogged.groups}))
                 else localStorage.removeItem('isLoggedIn')
             }
         }

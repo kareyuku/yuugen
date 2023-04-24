@@ -23,7 +23,7 @@ export default ({
         const data = await loginUser({username, password});
 
         if(data) {
-            dispatch(setCredentials({username: data.username, avatar: data.avatar, rank: data.rank}))
+            dispatch(setCredentials({username: data.username, avatar: data.avatar, rank: data.rank, groups: data.groups}))
             toast({ description: "Pomyślnie zalogowano!", status: 'success' })
             onClose();
         } else toast({ description: "Nie poprawna nazwa użytkownika bądź hasło!", status: 'error' })
