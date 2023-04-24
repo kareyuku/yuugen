@@ -95,7 +95,7 @@ export class EpisodesService {
 
       if (!group) throw new BadRequestException("Nie ma grupy o podanym id.");
 
-      if (!(group.members.includes(user) || group.owner === user))
+      if (!(group.members.includes(user) || group.owner.equals(user)))
         throw new BadRequestException("Nie należysz to tej grupy.");
     }
 

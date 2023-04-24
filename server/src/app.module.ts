@@ -5,6 +5,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { PassportModule } from "@nestjs/passport";
 import { AnimeModule } from "./anime/anime.module";
+import { ProposalsModule } from './proposals/proposals.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AnimeModule } from "./anime/anime.module";
     UsersModule,
     AuthModule,
     AnimeModule,
+    ProposalsModule,
   ],
   controllers: [],
   providers: [],

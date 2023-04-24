@@ -14,6 +14,7 @@ const config_1 = require("@nestjs/config");
 const auth_module_1 = require("./auth/auth.module");
 const passport_1 = require("@nestjs/passport");
 const anime_module_1 = require("./anime/anime.module");
+const proposals_module_1 = require("./proposals/proposals.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,6 +30,7 @@ AppModule = __decorate([
             users_module_1.UsersModule,
             auth_module_1.AuthModule,
             anime_module_1.AnimeModule,
+            proposals_module_1.ProposalsModule,
         ],
         controllers: [],
         providers: [],

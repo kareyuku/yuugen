@@ -72,7 +72,7 @@ let EpisodesService = class EpisodesService {
             const group = await this.groupService.findGroupById(sourceDto.group);
             if (!group)
                 throw new common_1.BadRequestException("Nie ma grupy o podanym id.");
-            if (!(group.members.includes(user) || group.owner === user))
+            if (!(group.members.includes(user) || group.owner.equals(user)))
                 throw new common_1.BadRequestException("Nie należysz to tej grupy.");
         }
         const foundEpisodeIndex = anime.episodes.findIndex((epis) => epis.number === episode);
