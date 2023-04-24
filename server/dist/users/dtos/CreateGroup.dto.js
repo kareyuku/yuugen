@@ -21,5 +21,9 @@ __decorate([
     (0, class_validator_1.Allow)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "img", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Object)
+], CreateGroupDto.prototype, "owner", void 0);
 exports.CreateGroupDto = CreateGroupDto;
 //# sourceMappingURL=CreateGroup.dto.js.map

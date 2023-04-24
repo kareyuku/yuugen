@@ -16,10 +16,15 @@ exports.AnimeService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const Ranks_1 = require("../../../auth/utils/Ranks");
+const proposals_service_1 = require("../../../proposals/services/proposals/proposals.service");
 const anime_schema_1 = require("../../../schemas/anime.schema");
+const users_service_1 = require("../../../users/services/users/users.service");
 let AnimeService = class AnimeService {
-    constructor(animeModel) {
+    constructor(animeModel, userService, proposalService) {
         this.animeModel = animeModel;
+        this.userService = userService;
+        this.proposalService = proposalService;
     }
     async addAnime(animeDto) {
         await this.validateAnime(animeDto);
@@ -30,8 +35,15 @@ let AnimeService = class AnimeService {
             throw new common_1.InternalServerErrorException("Nie udało się utworzyć anime.");
         }
     }
-    async createAnime(animeDto) {
-        await this.addAnime(animeDto);
+    async createAnime(animeDto, requestedBy) {
+        const requestedUser = await this.userService.findUserById(requestedBy);
+        if (requestedUser.rank === Ranks_1.default.Admin) {
+            await this.addAnime(animeDto);
+            return "Pomyślnie utworzono anime.";
+        }
+        await this.validateAnime(animeDto);
+        await this.proposalService.addProposal(1, requestedBy, animeDto);
+        return "Pomyślnie dodano wniosek o utworzenie anime.";
     }
     async validateAnime(animeDto) {
         const anime = await this.animeModel.findOne({
@@ -68,7 +80,11 @@ let AnimeService = class AnimeService {
 AnimeService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, common_1.Inject)("USER_SERVICE")),
+    __param(2, (0, common_1.Inject)("PROPOSAL_SERVICE")),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        users_service_1.UsersService,
+        proposals_service_1.ProposalsService])
 ], AnimeService);
 exports.AnimeService = AnimeService;
 //# sourceMappingURL=anime.service.js.map

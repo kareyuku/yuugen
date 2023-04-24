@@ -1,17 +1,27 @@
 import {
   BadRequestException,
   ConflictException,
+  Inject,
   Injectable,
   InternalServerErrorException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, SortOrder } from "mongoose";
+import { Model, SortOrder, Types } from "mongoose";
 import { CreateAnimeDto } from "src/anime/dtos/CreateAnime.dto";
+import Ranks from "src/auth/utils/Ranks";
+import { ProposalsService } from "src/proposals/services/proposals/proposals.service";
+import { ProposalType } from "src/proposals/utils/ProposalTypes";
 import { Anime } from "src/schemas/anime.schema";
+import { UsersService } from "src/users/services/users/users.service";
 
 @Injectable()
 export class AnimeService {
-  constructor(@InjectModel(Anime.name) private animeModel: Model<Anime>) {}
+  constructor(
+    @InjectModel(Anime.name) private animeModel: Model<Anime>,
+    @Inject("USER_SERVICE") private readonly userService: UsersService,
+    @Inject("PROPOSAL_SERVICE")
+    private readonly proposalService: ProposalsService
+  ) {}
 
   async addAnime(animeDto: CreateAnimeDto): Promise<void> {
     await this.validateAnime(animeDto);
@@ -23,8 +33,25 @@ export class AnimeService {
     }
   }
 
-  async createAnime(animeDto: CreateAnimeDto): Promise<void> {
-    await this.addAnime(animeDto);
+  async createAnime(
+    animeDto: CreateAnimeDto,
+    requestedBy: Types.ObjectId
+  ): Promise<string> {
+    const requestedUser = await this.userService.findUserById(requestedBy);
+
+    if (requestedUser.rank === Ranks.Admin) {
+      await this.addAnime(animeDto);
+      return "Pomyślnie utworzono anime.";
+    }
+
+    await this.validateAnime(animeDto);
+    await this.proposalService.addProposal(
+      ProposalType.ANIME_CREATION,
+      requestedBy,
+      animeDto
+    );
+
+    return "Pomyślnie dodano wniosek o utworzenie anime.";
   }
 
   async validateAnime(animeDto: CreateAnimeDto): Promise<void> {

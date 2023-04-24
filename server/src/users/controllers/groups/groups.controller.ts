@@ -28,17 +28,11 @@ export class GroupsController {
     @Inject("GROUP_SERVICE") private readonly groupService: GroupsService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AdminGuard)
   @UsePipes(ValidationPipe)
   @Post()
-  async createGroup(
-    @Req() req: Request,
-    @Body() createGroupDto: CreateGroupDto
-  ) {
-    await this.groupService.createGroup(
-      createGroupDto,
-      new Types.ObjectId(req.user.toString())
-    );
+  async createGroup(@Body() createGroupDto: CreateGroupDto) {
+    await this.groupService.createGroup(createGroupDto);
     return OKResponse("Pomyślnie utworzono grupę.");
   }
 
@@ -50,7 +44,7 @@ export class GroupsController {
       throw new BadRequestException("Zły format id grupy.");
     }
 
-    const foundGroup = await this.groupService.findGroupById(groupId);
+    const foundGroup = await this.groupService.getGroupData(groupId);
     if (!foundGroup)
       throw new BadRequestException("Nie znaleziono podanej grupy.");
 

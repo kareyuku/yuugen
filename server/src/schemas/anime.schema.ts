@@ -64,7 +64,6 @@ export class Anime {
             link: { type: String },
             uploader: { type: Types.ObjectId, ref: "User" },
             group: { type: Types.ObjectId, ref: "Group" },
-            //group: {type: String},
             _id: false,
           },
         ],
@@ -82,7 +81,6 @@ export class Anime {
       name: string;
       link: string;
       uploader: Types.ObjectId;
-      //group: string;
       group: Types.ObjectId;
     }[];
   }[];

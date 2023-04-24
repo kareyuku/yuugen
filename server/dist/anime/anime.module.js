@@ -21,6 +21,7 @@ const tags_controller_1 = require("./controllers/tags/tags.controller");
 const tag_schema_1 = require("../schemas/tag.schema");
 const episodes_service_1 = require("./services/episodes/episodes.service");
 const episodes_controller_1 = require("./controllers/episodes/episodes.controller");
+const proposals_module_1 = require("../proposals/proposals.module");
 let AnimeModule = class AnimeModule {
 };
 AnimeModule = __decorate([
@@ -32,6 +33,7 @@ AnimeModule = __decorate([
                 { name: tag_schema_1.Tag.name, schema: tag_schema_1.TagSchema },
             ]),
             users_module_1.UsersModule,
+            proposals_module_1.ProposalsModule,
         ],
         controllers: [
             anime_controller_1.AnimeController,

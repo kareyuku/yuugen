@@ -12,6 +12,7 @@ import { TagsController } from "./controllers/tags/tags.controller";
 import { Tag, TagSchema } from "src/schemas/tag.schema";
 import { EpisodesService } from "./services/episodes/episodes.service";
 import { EpisodesController } from "./controllers/episodes/episodes.controller";
+import { ProposalsModule } from "src/proposals/proposals.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { EpisodesController } from "./controllers/episodes/episodes.controller";
       { name: Tag.name, schema: TagSchema },
     ]),
     UsersModule,
+    ProposalsModule,
   ],
   controllers: [
     AnimeController,
