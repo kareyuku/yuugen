@@ -7,6 +7,7 @@ import {
     Menu,
     MenuButton,
     MenuList,
+    Avatar,
   } from '@chakra-ui/react'
 
 import { MdVideoLibrary } from 'react-icons/md'
@@ -24,13 +25,13 @@ export default ({
     const {episodeNumber, slug} = useParams();
 
     const PlayerOption = ({
-        name, link, uploader
+        name, link, uploader, group
     }) => {
         return (
             <Flex onClick={() => {
                 setSource({name, link, uploader})
             }} bg={'#131624'} alignItems={'center'} borderRadius={'10px'} p={3} gap={3}>
-                <Text>{uploader.username} - {name}</Text>
+                <Text display={'flex'} alignItems={'center'} gap={3}>{group?.name ? <><Avatar w={'16px'} h={'16px'} src={group?.img}/> {group?.name}</> : uploader.username} - {name}</Text>
             </Flex>
         )
     }
@@ -69,7 +70,7 @@ export default ({
                         bg={'#131624'} _active={{bg: '#131624'}} _hover={{bg: '#131624'}} 
                         as={Button} rightIcon={<MdVideoLibrary />}>Player</MenuButton>
                         <MenuList border={'none'} bg={'transparent'} gap={3}>
-                            {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} link={player.link} uploader={player.uploader} />)}
+                            {currentEpisode?.sources?.map(player => <PlayerOption name={player.name} link={player.link} uploader={player.uploader} group={player.group} />)}
                         </MenuList>
                     </Menu>
 
@@ -79,7 +80,7 @@ export default ({
                 {currentSource?.link &&
                     <Flex flexDir={'column'} p={'1rem 1rem'} bg={'#252f49'} borderRadius={10} >
                         <Text>Informacje o wstawieniu</Text>
-                        <Text>Grupa: Brak</Text>
+                        <Text>Grupa: {currentSource?.group?.name || "Brak"}</Text>
                         <Text>Dodane przez: {currentSource.uploader?.username}</Text>
                     </Flex>
                 }
