@@ -13,10 +13,11 @@ import ProfilePage from "./pages/profilePage";
 import AdminPage from "./pages/adminPage";
 import IsLogged from "./components/isLogged";
 
-import './styles/modal.css';
-import './styles/slider.css';
-import './styles/tabs.css';
+import "./styles/modal.css";
+import "./styles/slider.css";
+import "./styles/tabs.css";
 import GroupPage from "./pages/groupPage";
+import theme from "./theme";
 
 const router = createBrowserRouter([
   {
@@ -44,25 +45,17 @@ const router = createBrowserRouter([
     element: <AdminPage />,
   },
   {
-    path: '/group/:groupId',
-    element: <GroupPage/>
-  }
+    path: "/group/:groupId",
+    element: <GroupPage />,
+  },
 ]);
 
-const theme = extendTheme({
-  styles: {
-    global: () => ({
-      body: {
-        bg: "#1b1f35"
-      }
-    })
-  }
-})
+const getTheme = theme;
 
 export default () => {
   return (
     <Provider store={store}>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider theme={getTheme}>
         <IsLogged>
           <RouterProvider router={router} />
         </IsLogged>

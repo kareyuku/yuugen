@@ -8,10 +8,14 @@ import {
   ModalBody,
   ModalFooter,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { NumberInput, NumberInputField } from "@chakra-ui/react";
 import { createEpisode } from "../../api/episode";
 import { useState } from "react";
+
+const validLink =
+  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
 
 export default ({ slug }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -20,19 +24,27 @@ export default ({ slug }) => {
   const [episodeNumber, setEpisodeNumber] = useState(1);
   const [img, setImg] = useState("");
 
+  const toast = useToast({
+    isClosable: true,
+    duration: 3000,
+    position: "top-right",
+  });
+
   const onSubmit = async () => {
-    createEpisode({ slug, title, episodeNumber, img });
+    if (!title) return toast({ description: "Musisz podać nazwe odcinka" });
+    if (title.length > 50)
+      return toast({ description: "Nazwa odcinka to maksymalnie 50 znaków" });
+    if (img && !img.match(validLink))
+      return toast({ description: "Link do obrazka jest nieprawidłowy" });
+    const response = await createEpisode({ slug, title, episodeNumber, img });
+    if (response?.msg)
+      toast({ description: response?.msg, status: "success" }) && onClose();
+    else toast({ description: response?.err, status: "error" });
   };
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        width={"100%"}
-        bg={"#131624"}
-        _active={{ bg: "#131624" }}
-        _hover={{ bg: "#131624" }}
-      >
+      <Button onClick={onOpen} width={"100%"}>
         Dodaj Odcinek
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -57,6 +69,7 @@ export default ({ slug }) => {
               onChange={(e) => setTitle(e.target.value)}
               focusBorderColor="transparent"
               placeholder="Wpisz nazwe odcinka"
+              maxLength={50}
             />
             <Text mt={3}>Link do obrazka odcinka</Text>
             <Input
