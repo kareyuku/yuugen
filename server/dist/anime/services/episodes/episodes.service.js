@@ -71,7 +71,7 @@ let EpisodesService = class EpisodesService {
     }
     async addSource(sourceDto, slug, episode, user) {
         const anime = await this.animeModel.findOne({ slug });
-        const index = await this.validateSource(sourceDto, episode, anime, user);
+        const index = await this.validateSource(sourceDto, episode, anime, user, true);
         anime.episodes[index].sources.push(Object.assign(Object.assign({}, sourceDto), { uploader: user }));
         try {
             await anime.save();
@@ -96,7 +96,7 @@ let EpisodesService = class EpisodesService {
             if (!(group.members.includes(user) || group.owner.equals(user)))
                 throw new common_1.BadRequestException(isFromProposal
                     ? "Użytkownik nie należy już do grupy."
-                    : "Nie należysz to tej grupy.");
+                    : "Nie należysz do tej grupy.");
         }
         const foundEpisodeIndex = anime.episodes.findIndex((epis) => epis.number === episode);
         if (foundEpisodeIndex === -1)

@@ -103,7 +103,13 @@ export class EpisodesService {
   ): Promise<void> {
     const anime = await this.animeModel.findOne({ slug });
 
-    const index = await this.validateSource(sourceDto, episode, anime, user);
+    const index = await this.validateSource(
+      sourceDto,
+      episode,
+      anime,
+      user,
+      true
+    );
 
     anime.episodes[index].sources.push({
       ...sourceDto,
@@ -143,7 +149,7 @@ export class EpisodesService {
         throw new BadRequestException(
           isFromProposal
             ? "Użytkownik nie należy już do grupy."
-            : "Nie należysz to tej grupy."
+            : "Nie należysz do tej grupy."
         );
     }
 
