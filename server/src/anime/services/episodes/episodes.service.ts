@@ -40,6 +40,7 @@ export class EpisodesService {
     episodeDto: CreateEpisodeDto,
     slug: string
   ): Promise<void> {
+    // Why dont take anime as argument and instead of two queries to database make one?
     const anime = await this.animeModel.findOne({ slug });
 
     if (!anime)
@@ -53,7 +54,7 @@ export class EpisodesService {
     episodeDto: CreateEpisodeDto,
     slug: string
   ): Promise<void> {
-    this.addEpisode(episodeDto, slug);
+    await this.addEpisode(episodeDto, slug);
   }
 
   // to do znalezienie epizodu o podanym numerze hi hi

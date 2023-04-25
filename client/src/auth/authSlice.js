@@ -5,7 +5,7 @@ const initialState = {
   avatar: "",
   rank: "",
   isLoggedIn: false,
-  groups: []
+  groups: [],
 };
 
 export const authSlice = createSlice({
@@ -13,7 +13,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      localStorage.setItem('isLoggedIn', true)
+      localStorage.setItem("isLoggedIn", true);
       state.username = action.payload.username;
       state.avatar = action.payload.avatar;
       state.rank = action.payload.rank;
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
       state.groups = action.payload.groups;
     },
     logOut: (state) => {
-      localStorage.removeItem('isLoggedIn')
+      localStorage.removeItem("isLoggedIn");
       state = initialState;
     },
   },

@@ -44,7 +44,7 @@ let EpisodesService = class EpisodesService {
             throw new common_1.BadRequestException("Epizod o podanym numerze już istnieje.");
     }
     async createEpisode(episodeDto, slug) {
-        this.addEpisode(episodeDto, slug);
+        await this.addEpisode(episodeDto, slug);
     }
     async deleteEpisode(slug, episode) {
         const anime = await this.animeModel.findOne({ slug });
