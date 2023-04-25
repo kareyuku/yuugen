@@ -13,7 +13,10 @@ export class Proposal {
   @Exclude()
   updatedAt: Date;
 
-  @Transform(({ obj }) => obj.addedBy.toString())
+  @Exclude()
+  __v: number;
+
+  //@Transform(({ obj }) => obj.addedBy.toString())
   @Prop({ required: true, type: Types.ObjectId, ref: "User" })
   addedBy: Types.ObjectId;
 

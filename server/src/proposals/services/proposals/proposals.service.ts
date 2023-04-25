@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { ProposalType } from "src/proposals/utils/ProposalTypes";
@@ -14,7 +14,19 @@ export class ProposalsService {
     proposalType: ProposalType,
     addedBy: Types.ObjectId,
     data: {}
-  ) {
-    console.log(data);
+  ): Promise<void> {
+    const proposal = new this.proposalModel({ proposalType, addedBy, data });
+
+    try {
+      await proposal.save();
+    } catch {
+      throw new InternalServerErrorException("Nie udało się utworzyć wniosku.");
+    }
+  }
+
+  async getProposals(): Promise<Proposal[]> {
+    return await this.proposalModel
+      .find()
+      .populate("addedBy", "username avatar -_id");
   }
 }

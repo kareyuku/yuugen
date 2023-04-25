@@ -26,15 +26,20 @@ export class EpisodesController {
   ) {}
 
   @Post(":slug")
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthenticatedGuard)
   @UsePipes(ValidationPipe)
   async createEpisode(
-    // to do dodac slug do dto
     @Body() createEpisodeDto: CreateEpisodeDto,
-    @Param("slug") slug: string
+    @Param("slug") slug: string,
+    @Req() req: Request
   ) {
-    await this.episodesService.createEpisode(createEpisodeDto, slug);
-    return OKResponse("Pomyślnie dodano epizod.");
+    return OKResponse(
+      await this.episodesService.createEpisode(
+        createEpisodeDto,
+        slug,
+        new Types.ObjectId(req.user.toString())
+      )
+    );
   }
 
   @Delete(":slug/:episode")
@@ -56,12 +61,13 @@ export class EpisodesController {
     @Body() createSourceDto: CreateSourceDto,
     @Req() req: Request
   ) {
-    await this.episodesService.createSource(
-      slug,
-      parseInt(episode),
-      createSourceDto,
-      new Types.ObjectId(req.user.toString())
+    return OKResponse(
+      await this.episodesService.createSource(
+        slug,
+        parseInt(episode),
+        createSourceDto,
+        new Types.ObjectId(req.user.toString())
+      )
     );
-    return OKResponse("Pomyślnie dodano źródło.");
   }
 }

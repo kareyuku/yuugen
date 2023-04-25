@@ -48,7 +48,7 @@ export class AnimeService {
     await this.proposalService.addProposal(
       ProposalType.ANIME_CREATION,
       requestedBy,
-      animeDto
+      { animeDto }
     );
 
     return "Pomyślnie dodano wniosek o utworzenie anime.";

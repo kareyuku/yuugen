@@ -5,7 +5,7 @@ import { Request } from "express";
 export declare class EpisodesController {
     private readonly episodesService;
     constructor(episodesService: EpisodesService);
-    createEpisode(createEpisodeDto: CreateEpisodeDto, slug: string): Promise<Object>;
+    createEpisode(createEpisodeDto: CreateEpisodeDto, slug: string, req: Request): Promise<Object>;
     deleteEpisode(slug: string, episode: string): Promise<Object>;
     createSource(slug: string, episode: string, createSourceDto: CreateSourceDto, req: Request): Promise<Object>;
 }
