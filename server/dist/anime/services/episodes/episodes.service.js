@@ -16,15 +16,13 @@ exports.EpisodesService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const anime_service_1 = require("../anime/anime.service");
 const anime_schema_1 = require("../../../schemas/anime.schema");
 const groups_service_1 = require("../../../users/services/groups/groups.service");
 const users_service_1 = require("../../../users/services/users/users.service");
 const Ranks_1 = require("../../../auth/utils/Ranks");
 const proposals_service_1 = require("../../../proposals/services/proposals/proposals.service");
 let EpisodesService = class EpisodesService {
-    constructor(animeService, groupService, proposalService, userService, animeModel) {
-        this.animeService = animeService;
+    constructor(groupService, proposalService, userService, animeModel) {
         this.groupService = groupService;
         this.proposalService = proposalService;
         this.userService = userService;
@@ -54,7 +52,7 @@ let EpisodesService = class EpisodesService {
             return "Pomyślnie dodano epizod.";
         }
         await this.validateEpisode(episodeDto, await this.animeModel.findOne({ slug }));
-        await this.proposalService.addProposal(2, requestedBy, { episodeDto, slug });
+        await this.proposalService.addProposal(2, requestedBy, { episode_data: episodeDto, anime_slug: slug });
         return "Pomyślnie dodano wniosek o utworzenie epizodu.";
     }
     async deleteEpisode(slug, episode) {
@@ -110,19 +108,17 @@ let EpisodesService = class EpisodesService {
             return "Pomyślnie utworzono źródło.";
         }
         await this.validateSource(sourceDto, episode, await this.animeModel.findOne({ slug }), requestedBy);
-        await this.proposalService.addProposal(3, requestedBy, { sourceDto, slug, episode });
+        await this.proposalService.addProposal(3, requestedBy, { source_data: sourceDto, anime_slug: slug, episode });
         return "Pomyślnie dodano wniosek o utworzenie źródła.";
     }
 };
 EpisodesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)("ANIME_SERVICE")),
-    __param(1, (0, common_1.Inject)("GROUP_SERVICE")),
-    __param(2, (0, common_1.Inject)("PROPOSAL_SERVICE")),
-    __param(3, (0, common_1.Inject)("USER_SERVICE")),
-    __param(4, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
-    __metadata("design:paramtypes", [anime_service_1.AnimeService,
-        groups_service_1.GroupsService,
+    __param(0, (0, common_1.Inject)("GROUP_SERVICE")),
+    __param(1, (0, common_1.Inject)("PROPOSAL_SERVICE")),
+    __param(2, (0, common_1.Inject)("USER_SERVICE")),
+    __param(3, (0, mongoose_1.InjectModel)(anime_schema_1.Anime.name)),
+    __metadata("design:paramtypes", [groups_service_1.GroupsService,
         proposals_service_1.ProposalsService,
         users_service_1.UsersService,
         mongoose_2.Model])

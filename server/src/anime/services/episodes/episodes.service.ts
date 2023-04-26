@@ -19,7 +19,7 @@ import { ProposalType } from "src/proposals/utils/ProposalTypes";
 @Injectable()
 export class EpisodesService {
   constructor(
-    @Inject("ANIME_SERVICE") private readonly animeService: AnimeService,
+    //@Inject("ANIME_SERVICE") private readonly animeService: AnimeService,
     @Inject("GROUP_SERVICE") private readonly groupService: GroupsService,
     @Inject("PROPOSAL_SERVICE")
     private readonly proposalService: ProposalsService,
@@ -71,7 +71,7 @@ export class EpisodesService {
     await this.proposalService.addProposal(
       ProposalType.EPISODE_CREATION,
       requestedBy,
-      { episodeDto, slug }
+      { episode_data: episodeDto, anime_slug: slug }
     );
 
     return "Pomyślnie dodano wniosek o utworzenie epizodu.";
@@ -187,7 +187,7 @@ export class EpisodesService {
     await this.proposalService.addProposal(
       ProposalType.SOURCE_CREATION,
       requestedBy,
-      { sourceDto, slug, episode }
+      { source_data: sourceDto, anime_slug: slug, episode }
     );
 
     return "Pomyślnie dodano wniosek o utworzenie źródła.";

@@ -42,7 +42,7 @@ let AnimeService = class AnimeService {
             return "Pomyślnie utworzono anime.";
         }
         await this.validateAnime(animeDto);
-        await this.proposalService.addProposal(1, requestedBy, { animeDto });
+        await this.proposalService.addProposal(1, requestedBy, { anime_data: animeDto });
         return "Pomyślnie dodano wniosek o utworzenie anime.";
     }
     async validateAnime(animeDto) {
