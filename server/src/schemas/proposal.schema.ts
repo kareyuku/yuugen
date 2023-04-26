@@ -24,7 +24,13 @@ export class Proposal {
   proposalType: number;
 
   @Prop({ required: true, type: {} })
-  data: {};
+  data: {
+    anime_data;
+    episode_data;
+    source_data;
+    slug;
+    episode;
+  };
 }
 
 export const ProposalScheme = SchemaFactory.createForClass(Proposal);
