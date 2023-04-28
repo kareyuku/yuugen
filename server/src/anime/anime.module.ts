@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { AnimeController } from "./controllers/anime/anime.controller";
 import { AnimeService } from "./services/anime/anime.service";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -21,8 +21,8 @@ import { ProposalsModule } from "src/proposals/proposals.module";
       { name: Review.name, schema: ReviewSchema },
       { name: Tag.name, schema: TagSchema },
     ]),
+    forwardRef(() => ProposalsModule),
     UsersModule,
-    ProposalsModule,
   ],
   controllers: [
     AnimeController,
@@ -48,5 +48,6 @@ import { ProposalsModule } from "src/proposals/proposals.module";
       useClass: EpisodesService,
     },
   ],
+  exports: ["ANIME_SERVICE"],
 })
 export class AnimeModule {}

@@ -24,27 +24,26 @@ let EpisodesController = class EpisodesController {
     constructor(episodesService) {
         this.episodesService = episodesService;
     }
-    async createEpisode(createEpisodeDto, slug) {
-        await this.episodesService.createEpisode(createEpisodeDto, slug);
-        return (0, responses_1.OKResponse)("Pomyślnie dodano epizod.");
+    async createEpisode(createEpisodeDto, slug, req) {
+        return (0, responses_1.OKResponse)(await this.episodesService.createEpisode(createEpisodeDto, slug, new mongoose_1.Types.ObjectId(req.user.toString())));
     }
     async deleteEpisode(slug, episode) {
         await this.episodesService.deleteEpisode(slug, parseInt(episode));
         return (0, responses_1.OKResponse)("Pomyślnie usunięto epizod.");
     }
     async createSource(slug, episode, createSourceDto, req) {
-        await this.episodesService.createSource(slug, parseInt(episode), createSourceDto, new mongoose_1.Types.ObjectId(req.user.toString()));
-        return (0, responses_1.OKResponse)("Pomyślnie dodano źródło.");
+        return (0, responses_1.OKResponse)(await this.episodesService.createSource(slug, parseInt(episode), createSourceDto, new mongoose_1.Types.ObjectId(req.user.toString())));
     }
 };
 __decorate([
     (0, common_1.Post)(":slug"),
-    (0, common_1.UseGuards)(LocalGuard_1.AdminGuard),
+    (0, common_1.UseGuards)(LocalGuard_1.AuthenticatedGuard),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)("slug")),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateEpisode_dto_1.CreateEpisodeDto, String]),
+    __metadata("design:paramtypes", [CreateEpisode_dto_1.CreateEpisodeDto, String, Object]),
     __metadata("design:returntype", Promise)
 ], EpisodesController.prototype, "createEpisode", null);
 __decorate([

@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  forwardRef,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, SortOrder, Types } from "mongoose";
@@ -17,10 +18,10 @@ import { UsersService } from "src/users/services/users/users.service";
 @Injectable()
 export class AnimeService {
   constructor(
+    @Inject(forwardRef(() => "PROPOSAL_SERVICE"))
+    private readonly proposalService: ProposalsService,
     @InjectModel(Anime.name) private animeModel: Model<Anime>,
-    @Inject("USER_SERVICE") private readonly userService: UsersService,
-    @Inject("PROPOSAL_SERVICE")
-    private readonly proposalService: ProposalsService
+    @Inject("USER_SERVICE") private readonly userService: UsersService
   ) {}
 
   async addAnime(animeDto: CreateAnimeDto): Promise<void> {
@@ -31,6 +32,19 @@ export class AnimeService {
     } catch {
       throw new InternalServerErrorException("Nie udało się utworzyć anime.");
     }
+  }
+
+  async validateAnime(animeDto: CreateAnimeDto): Promise<void> {
+    const anime = await this.animeModel.findOne({
+      $or: [{ title: animeDto.title, slug: animeDto.slug }],
+    });
+
+    if (!anime) return;
+
+    if (anime.title === animeDto.title)
+      throw new ConflictException("Anime o takiej nazwie już istnieje.");
+
+    throw new ConflictException("Anime o takim slug już istnieje.");
   }
 
   async createAnime(
@@ -48,23 +62,10 @@ export class AnimeService {
     await this.proposalService.addProposal(
       ProposalType.ANIME_CREATION,
       requestedBy,
-      animeDto
+      { anime_data: animeDto }
     );
 
     return "Pomyślnie dodano wniosek o utworzenie anime.";
-  }
-
-  async validateAnime(animeDto: CreateAnimeDto): Promise<void> {
-    const anime = await this.animeModel.findOne({
-      $or: [{ title: animeDto.title, slug: animeDto.slug }],
-    });
-
-    if (!anime) return;
-
-    if (anime.title === animeDto.title)
-      throw new ConflictException("Anime o takiej nazwie już istnieje.");
-
-    throw new ConflictException("Anime o takim slug już istnieje.");
   }
 
   async getAnimeBySlug(slug: string): Promise<Anime> {

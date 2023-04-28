@@ -11,22 +11,27 @@ import { AnimeService } from "../anime/anime.service";
 import { Anime } from "src/schemas/anime.schema";
 import { CreateSourceDto } from "src/anime/dtos/CreateSource.dto";
 import { GroupsService } from "src/users/services/groups/groups.service";
+import { UsersService } from "src/users/services/users/users.service";
+import Ranks from "src/auth/utils/Ranks";
+import { ProposalsService } from "src/proposals/services/proposals/proposals.service";
+import { ProposalType } from "src/proposals/utils/ProposalTypes";
 
 @Injectable()
 export class EpisodesService {
   constructor(
-    @Inject("ANIME_SERVICE") private readonly animeService: AnimeService,
+    //@Inject("ANIME_SERVICE") private readonly animeService: AnimeService,
     @Inject("GROUP_SERVICE") private readonly groupService: GroupsService,
+    @Inject("PROPOSAL_SERVICE")
+    private readonly proposalService: ProposalsService,
+    @Inject("USER_SERVICE") private readonly userService: UsersService,
     @InjectModel(Anime.name) private animeModel: Model<Anime>
   ) {}
 
   async addEpisode(episodeDto: CreateEpisodeDto, slug: string): Promise<void> {
-    await this.validateEpisode(episodeDto, slug);
-
     const anime = await this.animeModel.findOne({ slug });
+    await this.validateEpisode(episodeDto, anime);
 
     try {
-      // to do optimalization
       anime.episodes.push({ ...episodeDto, sources: undefined });
       await anime.save();
     } catch {
@@ -38,11 +43,8 @@ export class EpisodesService {
 
   async validateEpisode(
     episodeDto: CreateEpisodeDto,
-    slug: string
+    anime: Anime
   ): Promise<void> {
-    // Why dont take anime as argument and instead of two queries to database make one?
-    const anime = await this.animeModel.findOne({ slug });
-
     if (!anime)
       throw new BadRequestException("Nie znaleziono anime o podanym slug.");
 
@@ -52,9 +54,27 @@ export class EpisodesService {
 
   async createEpisode(
     episodeDto: CreateEpisodeDto,
-    slug: string
-  ): Promise<void> {
-    await this.addEpisode(episodeDto, slug);
+    slug: string,
+    requestedBy: Types.ObjectId
+  ): Promise<string> {
+    const requestedUser = await this.userService.findUserById(requestedBy);
+
+    if (requestedUser.rank === Ranks.Admin) {
+      await this.addEpisode(episodeDto, slug);
+      return "Pomyślnie dodano epizod.";
+    }
+
+    await this.validateEpisode(
+      episodeDto,
+      await this.animeModel.findOne({ slug })
+    );
+    await this.proposalService.addProposal(
+      ProposalType.EPISODE_CREATION,
+      requestedBy,
+      { episode_data: episodeDto, anime_slug: slug }
+    );
+
+    return "Pomyślnie dodano wniosek o utworzenie epizodu.";
   }
 
   // to do znalezienie epizodu o podanym numerze hi hi
@@ -75,14 +95,43 @@ export class EpisodesService {
     }
   }
 
-  async createSource(
+  async addSource(
+    sourceDto: CreateSourceDto,
     slug: string,
     episode: number,
-    sourceDto: CreateSourceDto,
     user: Types.ObjectId
-  ) {
+  ): Promise<void> {
     const anime = await this.animeModel.findOne({ slug });
 
+    const index = await this.validateSource(
+      sourceDto,
+      episode,
+      anime,
+      user,
+      true
+    );
+
+    anime.episodes[index].sources.push({
+      ...sourceDto,
+      uploader: user,
+    });
+
+    try {
+      await anime.save();
+    } catch {
+      throw new InternalServerErrorException(
+        "Zapisanie źródła nie powiodło się."
+      );
+    }
+  }
+
+  async validateSource(
+    sourceDto: CreateSourceDto,
+    episode: number,
+    anime: Anime,
+    user: Types.ObjectId,
+    isFromProposal: boolean = false
+  ): Promise<number> {
     if (!anime)
       throw new BadRequestException("Nie znaleziono anime o podanym slug.");
 
@@ -97,7 +146,11 @@ export class EpisodesService {
       if (!group) throw new BadRequestException("Nie ma grupy o podanym id.");
 
       if (!(group.members.includes(user) || group.owner.equals(user)))
-        throw new BadRequestException("Nie należysz to tej grupy.");
+        throw new BadRequestException(
+          isFromProposal
+            ? "Użytkownik nie należy już do grupy."
+            : "Nie należysz do tej grupy."
+        );
     }
 
     const foundEpisodeIndex = anime.episodes.findIndex(
@@ -109,17 +162,34 @@ export class EpisodesService {
         "Nie znaleziono odcinka o podanym numerze."
       );
 
-    anime.episodes[foundEpisodeIndex].sources.push({
-      ...sourceDto,
-      uploader: user,
-    });
+    return foundEpisodeIndex;
+  }
 
-    try {
-      await anime.save();
-    } catch {
-      throw new InternalServerErrorException(
-        "Zapisanie źródła nie powiodło się."
-      );
+  async createSource(
+    slug: string,
+    episode: number,
+    sourceDto: CreateSourceDto,
+    requestedBy: Types.ObjectId
+  ): Promise<string> {
+    const requestedUser = await this.userService.findUserById(requestedBy);
+
+    if (requestedUser.rank === Ranks.Admin) {
+      await this.addSource(sourceDto, slug, episode, requestedBy);
+      return "Pomyślnie utworzono źródło.";
     }
+
+    await this.validateSource(
+      sourceDto,
+      episode,
+      await this.animeModel.findOne({ slug }),
+      requestedBy
+    );
+    await this.proposalService.addProposal(
+      ProposalType.SOURCE_CREATION,
+      requestedBy,
+      { source_data: sourceDto, anime_slug: slug, episode }
+    );
+
+    return "Pomyślnie dodano wniosek o utworzenie źródła.";
   }
 }

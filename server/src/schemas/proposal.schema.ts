@@ -13,7 +13,10 @@ export class Proposal {
   @Exclude()
   updatedAt: Date;
 
-  @Transform(({ obj }) => obj.addedBy.toString())
+  @Exclude()
+  __v: number;
+
+  //@Transform(({ obj }) => obj.addedBy.toString())
   @Prop({ required: true, type: Types.ObjectId, ref: "User" })
   addedBy: Types.ObjectId;
 
@@ -21,7 +24,13 @@ export class Proposal {
   proposalType: number;
 
   @Prop({ required: true, type: {} })
-  data: {};
+  data: {
+    anime_data;
+    episode_data;
+    source_data;
+    slug;
+    episode;
+  };
 }
 
 export const ProposalScheme = SchemaFactory.createForClass(Proposal);

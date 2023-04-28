@@ -4,13 +4,13 @@ import { ProposalsService } from "src/proposals/services/proposals/proposals.ser
 import { Anime } from "src/schemas/anime.schema";
 import { UsersService } from "src/users/services/users/users.service";
 export declare class AnimeService {
+    private readonly proposalService;
     private animeModel;
     private readonly userService;
-    private readonly proposalService;
-    constructor(animeModel: Model<Anime>, userService: UsersService, proposalService: ProposalsService);
+    constructor(proposalService: ProposalsService, animeModel: Model<Anime>, userService: UsersService);
     addAnime(animeDto: CreateAnimeDto): Promise<void>;
-    createAnime(animeDto: CreateAnimeDto, requestedBy: Types.ObjectId): Promise<string>;
     validateAnime(animeDto: CreateAnimeDto): Promise<void>;
+    createAnime(animeDto: CreateAnimeDto, requestedBy: Types.ObjectId): Promise<string>;
     getAnimeBySlug(slug: string): Promise<Anime>;
     getAnimeData(slug: string): Promise<Anime>;
     getAnime(page: number, limit: number, sortBy: string, sortOrder: SortOrder): Promise<Anime[]>;

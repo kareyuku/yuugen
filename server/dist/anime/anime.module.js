@@ -32,8 +32,8 @@ AnimeModule = __decorate([
                 { name: review_schema_1.Review.name, schema: review_schema_1.ReviewSchema },
                 { name: tag_schema_1.Tag.name, schema: tag_schema_1.TagSchema },
             ]),
+            (0, common_1.forwardRef)(() => proposals_module_1.ProposalsModule),
             users_module_1.UsersModule,
-            proposals_module_1.ProposalsModule,
         ],
         controllers: [
             anime_controller_1.AnimeController,
@@ -59,6 +59,7 @@ AnimeModule = __decorate([
                 useClass: episodes_service_1.EpisodesService,
             },
         ],
+        exports: ["ANIME_SERVICE"],
     })
 ], AnimeModule);
 exports.AnimeModule = AnimeModule;
