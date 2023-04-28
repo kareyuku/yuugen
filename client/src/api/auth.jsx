@@ -1,10 +1,13 @@
 import axios from "axios";
 
-const api = "http://localhost:3001/api";
+const api = axios.create({
+  baseURL: "http://localhost:3001/api",
+  withCredentials: true,
+});
 
 const registerUser = async ({ username, email, password }) => {
   try {
-    const req = await axios.post(`${api}/users/create`, {
+    const req = await api.post(`/users/create`, {
       username,
       email,
       password,
@@ -18,11 +21,7 @@ const registerUser = async ({ username, email, password }) => {
 
 const loginUser = async ({ username, password }) => {
   try {
-    const req = await axios.post(
-      `${api}/auth/login`,
-      { username, password },
-      { withCredentials: true }
-    );
+    const req = await api.post(`/auth/login`, { username, password });
     return req.data;
   } catch (err) {
     return null;
@@ -31,7 +30,7 @@ const loginUser = async ({ username, password }) => {
 
 const userData = async () => {
   try {
-    const req = await axios.get(`${api}/user`, { withCredentials: true });
+    const req = await api.get(`/user`);
     return req.data;
   } catch (err) {
     return null;

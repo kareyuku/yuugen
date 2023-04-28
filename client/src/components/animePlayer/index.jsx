@@ -155,7 +155,7 @@ export default ({ currentEpisode }) => {
             {currentEpisode?.title && (
               <AddSourceModal slug={slug} episodeNumber={episodeNumber} />
             )}
-            {currentEpisode?.title && (
+            {currentEpisode?.title && ( // todo("Ustaw progres")
               <AddSourceModal slug={slug} episodeNumber={episodeNumber} />
             )}
           </Flex>
