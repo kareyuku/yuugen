@@ -1,52 +1,52 @@
 .yuugen-slide {
-    width: 14.2857142857%;
-    padding: 0 5px;
+  width: 14.2857142857% !important;
+  padding: 0 5px;
 }
 
-.yuugen-slde a {
-    border-radius: 1rem;
-    overflow: hidden;
-    background: #252f49;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    position: relative;
+.yuugen-slide a {
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #252f49;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .yuugen-slide div img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    border-radius: 1rem 1rem 0 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .yuugen-slide div {
-    position: relative;
-    padding-bottom: 140%;
+  position: relative;
+  padding-bottom: 140%;
 }
 
 @media screen and (max-width: 1445px) {
-    .yuugen-slide {
-        width: 16.6666666667%!important;
-    }
+  .yuugen-slide {
+    width: 16.6666666667% !important;
+  }
 }
 
 @media screen and (max-width: 1199.98px) {
-    .yuugen-slide {
-        width: 20%!important;
-    }
+  .yuugen-slide {
+    width: 20% !important;
+  }
 }
 
 @media screen and (max-width: 991.98px) {
-    .yuugen-slide {
-        width: 25%!important;
-    }
+  .yuugen-slide {
+    width: 25% !important;
+  }
 }
 
 @media screen and (max-width: 767.98px) {
-    .yuugen-slide {
-        width: 50%!important;
-    }
+  .yuugen-slide {
+    width: 50% !important;
+  }
 }
