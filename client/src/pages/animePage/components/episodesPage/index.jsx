@@ -10,8 +10,9 @@ export default ({ episodes }) => {
     return (
       <Link to={`episode/${number}`}>
         <Flex
-          bgColor={"#252f49"}
+          bgColor={"gray"}
           bgPos={"center"}
+          bgBlendMode={"multiply"}
           bgSize={"cover"}
           bgImage={image}
           justifyContent={"center"}
